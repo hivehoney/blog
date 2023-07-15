@@ -11,6 +11,10 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+backend/.idea/**
+frontend/.idea/**
+frontend/blog/.idea/**
+frontend/blog/dist/**
 
 # AWS User-specific
 .idea/**/aws.xml
