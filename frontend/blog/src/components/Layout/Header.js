@@ -16,10 +16,6 @@ import {
 const drawerWidth = 240;
 const navItems = ['Intro', 'Blog', 'Contact'];
 
-function MenuIcon() {
-    return null;
-}
-
 function Header(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -50,7 +46,7 @@ function Header(props) {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar component="nav" sx={{ bgcolor: "Black", height: '70px' }}>
+            <AppBar position="static" component="nav" sx={{ bgcolor: "Black", height: '70px' }}>
                 <Toolbar color="Black">
                     <Typography
                         variant="h5"

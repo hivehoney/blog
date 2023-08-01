@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from "prop-types";
-import {Box, Grid, Skeleton, Typography} from "@mui/material";
+import {Box, Container, Grid, Link, makeStyles, Skeleton, Typography} from "@mui/material";
 
 const data = [
     {
@@ -26,56 +26,71 @@ const data = [
     },
 ];
 
-function Media(props) {
+function Board(props) {
     const { loading = false } = props;
 
     return (
-        <Grid container wrap="nowrap">
-            {(loading ? Array.from(new Array(3)) : data).map((item, index) => (
-                <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5 }}>
-                    {item ? (
-                        <img
-                            style={{ width: 210, height: 118 }}
-                            alt={item.title}
-                            src={item.src}
-                        />
-                    ) : (
-                        <Skeleton variant="rectangular" width={210} height={118} />
-                    )}
+        <>
+        <Box sx={{ flexGrow: 1 }}>
+            <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
 
-                    {item ? (
-                        <Box sx={{ pr: 2 }}>
-                            <Typography gutterBottom variant="body2">
-                                {item.title}
-                            </Typography>
-                            <Typography display="block" variant="caption" color="text.secondary">
-                                {item.channel}
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                                {`${item.views} • ${item.createdAt}`}
-                            </Typography>
-                        </Box>
-                    ) : (
-                        <Box sx={{ pt: 0.5 }}>
-                            <Skeleton />
-                            <Skeleton width="60%" />
-                        </Box>
-                    )}
-                </Box>
-            ))}
-        </Grid>
+                {(loading ? Array.from(new Array(6)) : data).map((item, index) => (
+                    <Box key={index} sx={{ width: 300, marginRight: 5, my: 5 }}>
+                        {item ? (
+                            <img
+                                style={{ width: 300, height: 200 }}
+                                alt={item.title}
+                                src={item.src}
+                            />
+                        ) : (
+                            <Skeleton variant="rectangular" width={300} height={200} />
+                        )}
+                        {item ? (
+                            <Box sx={{ pr: 2 }}>
+                                <Typography gutterBottom variant="h6">
+                                    {item.title}
+                                </Typography>
+                                <Typography display="block" variant="caption" color="text.secondary">
+                                    {item.channel}
+                                </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                    {`${item.views} • ${item.createdAt}`}
+                                </Typography>
+                            </Box>
+                        ) : (
+                            <Box sx={{ pt: 0.5 }}>
+                                <Skeleton />
+                                <Skeleton width="60%" />
+                            </Box>
+                        )}
+                    </Box>
+                ))}
+            </Grid>
+        </Box>
+        </>
     );
 }
 
-Media.propTypes = {
+Board.propTypes = {
     loading: PropTypes.bool,
 };
 
-export default function YouTube() {
+export default function Tech() {
     return (
-        <Box sx={{ overflow: 'hidden' }}>
-            <Media loading />
-            <Media />
-        </Box>
+        <>
+        <Container maxWidth="lg">
+            <Typography variant="h4" sx={{ p: 5 }}>
+                Related Posts
+            </Typography>
+            <Box sx={{ overflow: 'hidden' }}>
+                <Board loading />
+                <Board />
+            </Box>
+        </Container>
+        </>
     );
 }
