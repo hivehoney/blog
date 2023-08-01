@@ -3,13 +3,29 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import RootRoutes from "./RootRoutes";
 import ErrorPage from "./errorPage";
+import Tech from "./pages/Tech";
+import Layout from "./Layout";
+
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <RootRoutes />,
+        element: <Layout />,
+        children: [
+            {
+                path: "blog/:tech",
+                element: <Tech />,
+                /*loader: async () => {
+                    const response = await fetch("http://localhost:8080/blog");
+                    if (!response.ok) {
+                    } else {
+                        const resData = await response.json();
+                        return resData.events;
+                    }
+                },*/
+            },
+        ],
         errorElement: <ErrorPage />,
     },
 ]);
