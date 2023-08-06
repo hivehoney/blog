@@ -4,7 +4,8 @@ import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import ErrorPage from "./errorPage";
 import Tech from "./pages/Tech";
-import Layout from "./Layout";
+import Layout from "./components/Layout/Layout";
+import PostEditor from "./pages/PostEditor";
 
 
 const router = createBrowserRouter([
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
-                path: "blog/:tech",
+                path: "blog/tech",
                 element: <Tech />,
                 /*loader: async () => {
                     const response = await fetch("http://localhost:8080/blog");
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
                     }
                 },*/
             },
+            {
+                path: "post/editor",
+                element: <PostEditor />,
+            },
         ],
         errorElement: <ErrorPage />,
     },
@@ -32,9 +37,7 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
