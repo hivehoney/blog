@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //@EnableSwagger2
 public class SwaggerConfig implements WebMvcConfigurer {
 
-    private String basePackage = "com.notice";
+    private String basePackage = "com.blog";
     private String title = "블로그";
     private String description = "블로그 API 명세서";
 

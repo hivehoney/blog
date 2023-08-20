@@ -9,19 +9,15 @@ import lombok.Getter;
 @Getter
 public class PostsRequest {
 
-    @ApiModelProperty(notes = "게시판 코드")
-    private String postCode;
+    @ApiModelProperty(notes = "post -> post 테이블에 저장")
+    private PostItemRequest postItemRequest;
 
-    @ApiModelProperty(notes = "게시판명")
-    private String name;
-
-    @ApiModelProperty(notes = "게시판 유형")
-    private int noticeType;
+    @ApiModelProperty(notes = "contents -> post와 연관된 content 테이블에 저장")
+    private ContentRequest contentRequest;
 
     @Builder
-    public PostsRequest(String postCode, String name, int noticeType) {
-        this.postCode = postCode;
-        this.name = name;
-        this.noticeType = noticeType;
+    public PostsRequest(PostItemRequest postItemRequest, ContentRequest contentRequest) {
+        this.postItemRequest = postItemRequest;
+        this.contentRequest = contentRequest;
     }
 }

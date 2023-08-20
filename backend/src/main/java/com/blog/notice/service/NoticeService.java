@@ -1,8 +1,9 @@
 package com.blog.notice.service;
 
+import com.blog.notice.model.request.PostsRequest;
+
 import java.util.List;
 
 public interface NoticeService {
-
-    String getNoticeList();
+    void registerPost(PostsRequest postsRequest);
 }

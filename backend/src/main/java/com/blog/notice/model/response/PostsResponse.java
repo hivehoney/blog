@@ -1,6 +1,6 @@
 package com.blog.notice.model.response;
 
-import com.blog.notice.domain.Posts;
+import com.blog.notice.domain.Post;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -12,39 +12,40 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PostsResponse {
 
+    @ApiModelProperty(notes = "post ID")
     private long id;
 
     @ApiModelProperty(notes = "게시판 코드")
-    private String postCode;
+    private long boardId;
 
-    @ApiModelProperty(notes = "게시판명")
-    private String name;
+    @ApiModelProperty(notes = "게시물 제목")
+    private String title;
 
-    @ApiModelProperty(notes = "게시판 유형")
-    private int postsType;
+    @ApiModelProperty(notes = "게시물 부제목")
+    private String subTitle;
 
     @ApiModelProperty(notes = "내용")
     private String contents;
 
     @ApiModelProperty(notes = "작성자")
-    private String userId;
-    
+    private String author;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime postsDate;
 
-    public PostsResponse(long id, String postCode, String name, int postsType, String contents,
-                         String userId, LocalDateTime postsDate) {
+    public PostsResponse(long id, long boardId, String title, String subTitle, String contents,
+                         String author, LocalDateTime postsDate) {
         this.id = id;
-        this.postCode = postCode;
-        this.name = name;
-        this.postsType = postsType;
+        this.boardId = boardId;
+        this.title = title;
+        this.subTitle = subTitle;
         this.contents = contents;
-        this.userId = userId;
+        this.author = author;
         this.postsDate = postsDate;
     }
 
-    public static PostsResponse from(Posts posts) {
-        return new PostsResponse(posts.getId(), posts.getPostCode(), posts.getName(), posts.getPostsType(), posts.getContents(),
-                posts.getUserId(), posts.getCreatedAt());
+    public static PostsResponse from(Post post, String contents) {
+        return new PostsResponse(post.getId(), post.getBoardId(), post.getTitle(), post.getSubTitle(), contents,
+                post.getAuthor(), post.getCreatedAt());
     }
 }
