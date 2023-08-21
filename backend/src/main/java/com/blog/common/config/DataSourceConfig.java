@@ -1,5 +1,6 @@
 package com.blog.common.config;
 
+import com.blog.common.util.AcmeCorpPhysicalNamingStrategy;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -20,12 +21,15 @@ import java.util.Map;
 
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.blog"},
+@EnableJpaRepositories(basePackages = {"com.blog.notice.repository"},
         entityManagerFactoryRef = "baseEntityManager", transactionManagerRef = "baseTransactionManager")
 @PropertySource("classpath:/application.properties")
 public class DataSourceConfig {
 
     private final Environment env;
+
+    @Autowired
+    AcmeCorpPhysicalNamingStrategy acmeCorpPhysicalNamingStrategy;
 
     @Autowired
     public DataSourceConfig(Environment env) {
@@ -72,6 +76,7 @@ public class DataSourceConfig {
         properties.put("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
         properties.put("hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql"));
         properties.put("hibernate.show_sql", env.getProperty("spring.jpa.properties.hibernate.show_sql"));
+        properties.put("hibernate.physical_naming_strategy", acmeCorpPhysicalNamingStrategy);
         return properties;
     }
 }
