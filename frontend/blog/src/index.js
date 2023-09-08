@@ -2,45 +2,59 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import ErrorPage from "./errorPage";
+import ErrorPage from "./pages/errorPage";
 import Tech from "./pages/Tech";
 import Layout from "./components/Layout/Layout";
 import PostEditor from "./pages/PostEditor";
+import {Provider} from "react-redux";
+import {applyMiddleware, compose, createStore} from "redux";
+import {composeWithDevTools} from "redux-devtools-extension";
+import rootReducer from "./redux";
+import {logger} from "redux-logger/src";
+import { configureStore } from '@reduxjs/toolkit'
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./sagas";
+import Editor from "./components/Blog/Editor";
+import {Outlet} from "react-router-dom";
 
+const sagaMiddleware = createSagaMiddleware();
+
+const enhancer =
+    process.env.NODE_ENV === "production"
+        ? compose(applyMiddleware(sagaMiddleware))
+        : composeWithDevTools(applyMiddleware(sagaMiddleware, logger));
+
+const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+    enhancer
+});
+
+// sagaMiddleware.run(rootSaga);
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
+        errorElement: <ErrorPage />,
         children: [
             {
-                path: "blog/tech",
-                element: <Tech />,
-                /*loader: async () => {
-                    const response = await fetch("http://localhost:8080/blog");
-                    if (!response.ok) {
-                    } else {
-                        const resData = await response.json();
-                        return resData.events;
-                    }
-                },*/
+                path: "blog",
+                children: [
+                    { path: "tech", element: <Tech /> },
+                    { path: "tech/editor", element: <PostEditor /> },
+                ],
             },
-            {
-                path: "post/editor",
-                element: <PostEditor />,
-            },
+            { path: "intro", element: <PostEditor />, },
         ],
-        errorElement: <ErrorPage />,
     },
 ]);
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <RouterProvider router={router} />
+    <Provider store={store}>
+        <RouterProvider router={router} />
+    </Provider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

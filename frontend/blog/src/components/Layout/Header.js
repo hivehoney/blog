@@ -7,6 +7,9 @@ import {
     Toolbar,
     Typography, useScrollTrigger
 } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { NavLink as RouterNavLink } from "react-router-dom";
+import { pageId } from "../../redux/slice/pageInfoSlice";
 
 function ElevationScroll(props) {
     const { children, window } = props;
@@ -26,30 +29,56 @@ ElevationScroll.propTypes = {
     window: PropTypes.func,
 };
 
-export default function Header(props) {
-    const navItems = ['Intro', 'Blog', 'Contact', 'Memoirs'];
+export default function Header() {
+    const dispatch = useDispatch();
+
+    const handlePageIdChange = (page) => {
+        dispatch(pageId(page));
+    };
+
+    const navItems = [
+        { name: 'Intro', path: '/intro' },
+        { name: 'Blog', path: '/blog/tech' },
+        { name: 'Contact', path: '/contact' },
+        { name: 'Memoirs', path: '/memoirs' },
+    ];
 
     return (
         <React.Fragment>
-            <CssBaseline />
-            <ElevationScroll {...props}>
-                <AppBar id="page-header" sx={{ bgcolor: "Black" }}>
+            <CssBaseline/>
+            <ElevationScroll>
+                <AppBar id="page-header" sx={{bgcolor: "Black"}}>
                     <Toolbar>
                         <Typography variant="h4" component="div"
-                                    sx={{flexGrow: 0.9, display: { xs: 'none', sm: 'block' }, fontWeight: "bold"}}>
-                            <Link href="/blog/tech" underline="none" color="White" sx={{ml:10}} >Hive</Link>
+                                    sx={{flexGrow: 0.9, display: {xs: 'none', sm: 'block'}, fontWeight: "bold"}}>
+                            <Link component={RouterNavLink} to="/" underline="none" color="White" sx={{ml: 10}}
+                                  onClick={() => handlePageIdChange("home")}>
+                                Hive
+                            </Link>
                         </Typography>
-                        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                        <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                             {navItems.map((item) => (
-                                <Button key={item} variant="h5" sx={{ color: '#fff', fontSize: 16 }}>
-                                 {item}
+                                <Button
+                                    key={item.name}
+                                    variant="h5"
+                                    sx={{ color: '#fff', fontSize: 16 }}
+                                    onClick={() => handlePageIdChange(item.name)}
+                                >
+                                    <Link
+                                        component={RouterNavLink}
+                                        to={item.path}
+                                        color="inherit"
+                                        underline="none"
+                                    >
+                                        {item.name}
+                                    </Link>
                                 </Button>
-                         ))}
+                            ))}
                         </Box>
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
-            <Toolbar />
+            <Toolbar/>
         </React.Fragment>
     )
 }

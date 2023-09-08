@@ -48,7 +48,6 @@ import { Indent, IndentBlock } from '@ckeditor/ckeditor5-indent';
 import { TextPartLanguage } from '@ckeditor/ckeditor5-language';
 import { AutoLink, Link, LinkImage } from '@ckeditor/ckeditor5-link';
 import { List, ListProperties, TodoList } from '@ckeditor/ckeditor5-list';
-import { Markdown } from '@ckeditor/ckeditor5-markdown-gfm';
 import { MediaEmbed, MediaEmbedToolbar } from '@ckeditor/ckeditor5-media-embed';
 import { Mention } from '@ckeditor/ckeditor5-mention';
 import { PageBreak } from '@ckeditor/ckeditor5-page-break';
@@ -78,8 +77,7 @@ import {
 	TableToolbar
 } from '@ckeditor/ckeditor5-table';
 import { TextTransformation } from '@ckeditor/ckeditor5-typing';
-import { Base64UploadAdapter } from '@ckeditor/ckeditor5-upload';
-import { EditorWatchdog } from '@ckeditor/ckeditor5-watchdog';
+import { SimpleUploadAdapter } from '@ckeditor/ckeditor5-upload';
 import { WordCount } from '@ckeditor/ckeditor5-word-count';
 
 
@@ -92,7 +90,7 @@ const plugins = [
 	AutoLink,
 	Autoformat,
 	Autosave,
-	Base64UploadAdapter,
+	SimpleUploadAdapter,
 	BlockQuote,
 	Bold,
 	CloudServices,
@@ -126,7 +124,6 @@ const plugins = [
 	LinkImage,
 	List,
 	ListProperties,
-	Markdown,
 	MediaEmbed,
 	MediaEmbedToolbar,
 	Mention,
@@ -240,7 +237,7 @@ const config = {
 			'tableCellProperties',
 			'tableProperties'
 		]
-	}
+	},
 }
 
 ClassicEditor.defaultConfig = config;

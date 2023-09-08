@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from "prop-types";
 import {Box, Button, Container, Grid, Link, makeStyles, Skeleton, Typography} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
-import Layout from "../components/Layout/Layout";
+import {Link as RouterLink, Route, Routes} from "react-router-dom";
 
 const data = [
     {
@@ -88,8 +88,10 @@ export default function Tech() {
             <Typography variant="h4" sx={{ p: 5 }}>
                 Related Posts
             </Typography>
-            <Link href="/post/editor" underline="none" color="White">
-                <Button variant="contained" endIcon={<EditIcon />}>Post</Button>
+            <Link component={RouterLink} to="editor" underline="none" color="White">
+                <Button variant="contained" endIcon={<EditIcon />}>
+                    Post
+                </Button>
             </Link>
             <Box sx={{ overflow: 'hidden' }}>
                 <Board loading />

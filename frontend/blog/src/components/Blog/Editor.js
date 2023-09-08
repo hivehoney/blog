@@ -1,24 +1,34 @@
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import CKEDITOR from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
 import styles from '../../assets/App.css';
-import {Container, CssBaseline} from "@mui/material";
+
 export default function Editor() {
     useEffect(() => {
         const editorConfig = {
-            header: document.getElementById('header'),
             content: document.getElementById('content'),
         };
 
         CKEDITOR.MultiRootEditor
-            .create(editorConfig)
+            .create(editorConfig, {
+                simpleUpload: {
+                    uploadUrl: 'http://localhost:8080/notice/imgUpload',
+                    withCredentials: true,
+                    headers: {
+                        'X-CSRF-TOKEN': 'CSRF-Token',
+                        Authorization: 'Bearer <JSON Web Token>'
+                    }
+                }
+            })
             .then( editor => {
                 window.editor = editor;
 
-                // Append toolbar to a proper container.
-                const toolbarContainer = document.getElementById( 'page-header' );
-                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+                if (document.querySelector('[role="toolbar"]')) {
+                    document.querySelector('[role="toolbar"]').remove();
+                }
 
-                // Make toolbar sticky when the editor is focused.
+                const toolbarContainer = document.getElementById('page-header');
+                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+
                 editor.ui.focusTracker.on( 'change:isFocused', () => {
                     if ( editor.ui.focusTracker.isFocused ) {
                         toolbarContainer.classList.add( 'sticky' );
@@ -34,14 +44,11 @@ export default function Editor() {
 
     return (
         <>
-            <div className="editor">
-                <div id="header">
-                    <p>제목</p>
-                </div>
-            </div>
-            <div className="editor">
-                <div id="content">
-                    <p>본문</p>
+            <div className={styles}>
+                <div className="editor">
+                    <div id="content">
+                        <p>본문</p>
+                    </div>
                 </div>
             </div>
         </>
