@@ -35,7 +35,7 @@ dependencies {
     implementation 'io.springfox:springfox-swagger2:3.0.0'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
     implementation group: 'org.hibernate', name: 'hibernate-core', version: '6.2.7.Final', ext: 'pom'
-
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 }
 
 tasks.named('test') {
