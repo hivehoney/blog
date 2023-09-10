@@ -17,20 +17,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Content {
-
     @Id
     @Column(unique = true, nullable = false)
     private String code;
-    @Lob
-    private String content;
+
+    @Column(columnDefinition = "TEXT")
+    private String contents;
 
     @Builder
-    public Content(String code, String content) {
+    public Content(String code, String contents) {
         this.code = code;
-        this.content = content;
+        this.contents = contents;
     }
 
-    public static Content of(String code, ContentRequest request) {
-        return new Content(code, request.getContent());
+    public static Content of(String code, String contents) {
+        return new Content(code, contents);
     }
 }

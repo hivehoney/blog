@@ -1,6 +1,5 @@
 package com.blog.common.model.response;
 
-
 import lombok.Getter;
 
 @Getter

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface NoticeService {
-    void registerPost(PostsRequest postsRequest);
+    String registerPost(PostsRequest postsRequest);
 
     String saveImages(MultipartFile file);
 }

@@ -28,7 +28,7 @@ public class CommonInterceptor extends WebRequestHandlerInterceptorAdapter {
             throws Exception {
 
         log.info("===================       START       ===================");
-        log.info(" Request URI \t:  " + request.getRequestURI());
+        log.info(" Request API \t:  " + request.getRequestURI());
 
         //시간을 가져온다
         long currentTime = System.currentTimeMillis();

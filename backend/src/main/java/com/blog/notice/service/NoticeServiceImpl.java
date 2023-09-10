@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
-import java.io.File;
 import java.io.IOException;
 
 @Slf4j
@@ -28,13 +25,15 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Transactional
     @Override
-    public void registerPost(PostsRequest postsRequest) {
+    public String registerPost(PostsRequest postsRequest) {
         Post post = Post.of(postsRequest.getPostItemRequest());
         post.setBoardId(2);//임시
-        Content content = Content.of(post.getCode(), postsRequest.getContentRequest());
+        Content content = Content.of(post.getCode(), postsRequest.getContentRequest().getContent());
 
         postRepository.save(post);
         contentRepository.save(content);
+
+        return "저장이 완료되었습니다";
     }
 
     @Override

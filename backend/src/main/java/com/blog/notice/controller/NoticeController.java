@@ -25,8 +25,7 @@ public class NoticeController extends ApiController {
     @ApiOperation(value = "content 등록", notes = "작성한 content를 등록 합니다.")
     @PostMapping(value = "/registerPost",  consumes = MediaType.APPLICATION_JSON_VALUE)
     public String registerPost(@RequestBody PostsRequest postsRequest) {
-        noticeService.registerPost(postsRequest);
-        return "check";
+        return noticeService.registerPost(postsRequest);
     }
 
     @ApiOperation(value = "IMG Upload", notes = "IMG를 업로드 합니다.")
