@@ -7,9 +7,7 @@ import {
     Toolbar,
     Typography, useScrollTrigger
 } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { NavLink as RouterNavLink } from "react-router-dom";
-import { pageId } from "../../redux/slice/pageInfoSlice";
 
 function ElevationScroll(props) {
     const { children, window } = props;
@@ -30,12 +28,6 @@ ElevationScroll.propTypes = {
 };
 
 export default function Header() {
-    const dispatch = useDispatch();
-
-    const handlePageIdChange = (page) => {
-        dispatch(pageId(page));
-    };
-
     const navItems = [
         { name: 'Intro', path: '/intro' },
         { name: 'Blog', path: '/blog/tech' },
@@ -51,8 +43,7 @@ export default function Header() {
                     <Toolbar>
                         <Typography variant="h4" component="div"
                                     sx={{flexGrow: 0.9, display: {xs: 'none', sm: 'block'}, fontWeight: "bold"}}>
-                            <Link component={RouterNavLink} to="/" underline="none" color="White" sx={{ml: 10}}
-                                  onClick={() => handlePageIdChange("home")}>
+                            <Link component={RouterNavLink} to="/" underline="none" color="White" sx={{ml: 10}}>
                                 Hive
                             </Link>
                         </Typography>
@@ -62,7 +53,6 @@ export default function Header() {
                                     key={item.name}
                                     variant="h5"
                                     sx={{ color: '#fff', fontSize: 16 }}
-                                    onClick={() => handlePageIdChange(item.name)}
                                 >
                                     <Link
                                         component={RouterNavLink}

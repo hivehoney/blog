@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import CKEDITOR from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
 import styles from '../../assets/App.css';
+import {API} from "../../config";
 
 export default function Editor() {
     useEffect(() => {
@@ -11,7 +12,7 @@ export default function Editor() {
         CKEDITOR.MultiRootEditor
             .create(editorConfig, {
                 simpleUpload: {
-                    uploadUrl: 'http://localhost:8080/notice/imgUpload',
+                    uploadUrl: API.IMGUPLOAD,
                     withCredentials: true,
                     headers: {
                         'X-CSRF-TOKEN': 'CSRF-Token',

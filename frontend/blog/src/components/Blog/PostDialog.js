@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import {useSelector} from "react-redux";
-import reducers from "../../redux/reducers";
 
 function PostDialog({ open, onClose, onSubmit, pageId }) {
     const [formData, setFormData] = useState({

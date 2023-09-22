@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {Button, CssBaseline, ThemeProvider, Container, Modal, Alert} from "@mui/material";
 import { createTheme, styled } from '@mui/material/styles';
 import PostDialog from "../components/Blog/PostDialog";
 import Editor from "../components/Blog/Editor";
-import {useDispatch, useSelector} from "react-redux"
 import AlertDialog from "../components/util/AlertDialog";
 import ReactRouterPrompt from "react-router-prompt";
-import {addPost} from "../redux/post";
+import usePostMutation from "../quires/usePostMutation";
 
 const CustomContainer = styled(Container)(({ theme }) => ({
     backgroundColor: '#FFFFFF',
@@ -21,8 +20,6 @@ const theme = createTheme({
 });
 
 export default function PostEditor() {
-    const dispatch = useDispatch();
-    const pageId = useSelector(state => state.pageId);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [showPrompt, setShowPrompt] = useState(true);
 
@@ -34,24 +31,25 @@ export default function PostEditor() {
         setIsDialogOpen(false);
     };
 
-    const handleSubmitPost = (postItemRequest) => {
-        const contentRequest = {
-            content: window.editor.getData({ rootName: 'content' }),
-        };
+    const { mutate: postMutation } = usePostMutation();
 
-        const data = {
+    const onSubmit = (postItemRequest) => {
+        const content = window.editor.getData({ rootName: 'content' });
+
+        if (!postItemRequest) {
+            postItemRequest = {
+                title: '임시 제목',
+            };
+        }
+
+        const request = {
             postItemRequest,
-            contentRequest,
+            content
         };
 
-        dispatch(addPost(data));
-        setShowPrompt(false);
-        console.log("handleAlertDialogClose calledssss");
-        window.history.back();
-    };
-
-    const handleAlertDialogClose = () => {
-        console.log("handleAlertDialogClose called");
+        if (postMutation(request)) {
+            setShowPrompt(false);
+        };
     };
 
     return (
@@ -65,7 +63,7 @@ export default function PostEditor() {
                                 message="작성사항이 저장되지 않을 수 있습니다."
                                 open={isActive}
                                 onClose={onCancel}
-                                onSubmit={handleAlertDialogClose}
+                                onSubmit={onSubmit}
                         />
                 )}
                 </ReactRouterPrompt>
@@ -73,7 +71,7 @@ export default function PostEditor() {
                     <Button variant="contained" onClick={handleOpenDialog}>
                         게시글 작성
                     </Button>
-                    <PostDialog open={isDialogOpen} onClose={handleCloseDialog} onSubmit={handleSubmitPost} pageId={pageId} />
+                    <PostDialog open={isDialogOpen} onClose={handleCloseDialog} onSubmit={onSubmit} />
                     <Editor />
                 </CustomContainer>
             </ThemeProvider>

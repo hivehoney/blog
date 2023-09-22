@@ -1,35 +1,39 @@
 import * as React from 'react';
 import PropTypes from "prop-types";
-import {Box, Button, Container, Grid, Link, makeStyles, Skeleton, Typography} from "@mui/material";
+import {Box, Button, Container, Grid, Link, Skeleton, Typography} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
-import {Link as RouterLink, Route, Routes} from "react-router-dom";
+import {Link as RouterLink} from "react-router-dom";
+import usePostQuery from "../quires/usePostQuery";
+import ErrorPage from "./errorPage";
 
+/*
 const data = [
     {
         src: 'https://i.ytimg.com/vi/pLqipJNItIo/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLBkklsyaw9FxDmMKapyBYCn9tbPNQ',
         title: 'Don Diablo @ Tomorrowland Main Stage 2019 | Official…',
-        channel: 'Don Diablo',
-        views: '396k views',
+        author: 'Don Diablo',
+        tag: '396k views',
         createdAt: 'a week ago',
     },
     {
         src: 'https://i.ytimg.com/vi/_Uu12zY01ts/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCpX6Jan2rxrCAZxJYDXppTP4MoQA',
         title: 'Queen - Greatest Hits',
-        channel: 'Queen Official',
-        views: '40M views',
+        author: 'Queen Official',
+        tag: '40M views',
         createdAt: '3 years ago',
     },
     {
         src: 'https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw',
         title: 'Calvin Harris, Sam Smith - Promises (Official Video)',
-        channel: 'Calvin Harris',
-        views: '130M views',
+        author: 'Calvin Harris',
+        tag: '130M views',
         createdAt: '10 months ago',
     },
 ];
+*/
 
 function Board(props) {
-    const { loading = false } = props;
+    const { loading = false, data } = props;
 
     return (
         <>
@@ -57,10 +61,10 @@ function Board(props) {
                                     {item.title}
                                 </Typography>
                                 <Typography display="block" variant="caption" color="text.secondary">
-                                    {item.channel}
+                                    {item.author}
                                 </Typography>
                                 <Typography variant="caption" color="text.secondary">
-                                    {`${item.views} • ${item.createdAt}`}
+                                    {`${item.createdAt} • ${item.tag}`}
                                 </Typography>
                             </Box>
                         ) : (
@@ -81,7 +85,16 @@ Board.propTypes = {
     loading: PropTypes.bool,
 };
 
-export default function Tech() {
+function Tech() {
+    const request = {
+        boardId: 2,
+        status: 1
+    };
+
+    const { data, error, isLoading } = usePostQuery({ data: request });
+
+    if (error) return <ErrorPage error />
+
     return (
         <>
         <Container maxWidth="lg">
@@ -94,10 +107,11 @@ export default function Tech() {
                 </Button>
             </Link>
             <Box sx={{ overflow: 'hidden' }}>
-                <Board loading />
-                <Board />
+                <Board loading={isLoading} data={data} />
             </Box>
         </Container>
         </>
     );
 }
+
+export default Tech;
