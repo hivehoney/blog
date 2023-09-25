@@ -1,7 +1,13 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import CKEDITOR from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
 import styles from '../../assets/App.css';
-import {API} from "../../config";
+import UploadAdapter from "../../common/utils/UploadAdapter";
+
+function MyCustomUploadAdapterPlugin(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        return new UploadAdapter(loader)
+    }
+}
 
 export default function Editor() {
     useEffect(() => {
@@ -11,14 +17,7 @@ export default function Editor() {
 
         CKEDITOR.MultiRootEditor
             .create(editorConfig, {
-                simpleUpload: {
-                    uploadUrl: API.IMGUPLOAD,
-                    withCredentials: true,
-                    headers: {
-                        'X-CSRF-TOKEN': 'CSRF-Token',
-                        Authorization: 'Bearer <JSON Web Token>'
-                    }
-                }
+                extraPlugins: [MyCustomUploadAdapterPlugin]
             })
             .then( editor => {
                 window.editor = editor;

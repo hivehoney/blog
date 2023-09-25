@@ -1,23 +1,11 @@
-import React, { useState } from "react";
-import {Button, CssBaseline, ThemeProvider, Container, Modal, Alert} from "@mui/material";
-import { createTheme, styled } from '@mui/material/styles';
+import React, {useState} from "react";
+import {Button, Container, CssBaseline, ThemeProvider} from "@mui/material";
+import {createTheme, styled} from '@mui/material/styles';
 import PostDialog from "../components/Blog/PostDialog";
 import Editor from "../components/Blog/Editor";
 import AlertDialog from "../components/util/AlertDialog";
 import ReactRouterPrompt from "react-router-prompt";
 import usePostMutation from "../quires/usePostMutation";
-
-const CustomContainer = styled(Container)(({ theme }) => ({
-    backgroundColor: '#FFFFFF',
-}));
-
-const theme = createTheme({
-    palette: {
-        background: {
-            default: '#F9F9F9',
-        },
-    },
-});
 
 export default function PostEditor() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -31,10 +19,12 @@ export default function PostEditor() {
         setIsDialogOpen(false);
     };
 
-    const { mutate: postMutation } = usePostMutation();
+    const { mutate } = usePostMutation();
 
     const onSubmit = (postItemRequest) => {
-        const content = window.editor.getData({ rootName: 'content' });
+        const contentRequest = {
+            content: window.editor.getData({ rootName: 'content' }),
+        };
 
         if (!postItemRequest) {
             postItemRequest = {
@@ -42,14 +32,8 @@ export default function PostEditor() {
             };
         }
 
-        const request = {
-            postItemRequest,
-            content
-        };
-
-        if (postMutation(request)) {
-            setShowPrompt(false);
-        };
+        mutate({ postItemRequest, contentRequest } );
+        setShowPrompt(false);
     };
 
     return (
@@ -78,3 +62,15 @@ export default function PostEditor() {
         </>
     );
 }
+
+const CustomContainer = styled(Container)(({ theme }) => ({
+    backgroundColor: '#FFFFFF',
+}));
+
+const theme = createTheme({
+    palette: {
+        background: {
+            default: '#F9F9F9',
+        },
+    },
+});

@@ -3,8 +3,10 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 
 function PostDialog({ open, onClose, onSubmit, pageId }) {
     const [formData, setFormData] = useState({
-        id: pageId,
+        boardId: "1",
+        code: "ABC123",
         title: '',
+        author: 'hive',
         subTitle: '',
         tag: '',
     });

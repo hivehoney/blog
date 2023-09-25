@@ -3,12 +3,12 @@ import axios from 'axios';
 import useApiError from "../common/useApiError";
 import {API} from "../config";
 
-const fetcher = (data) => axios.post(API.POST, data).then(({ data }) => JSON.parse(data));
+const fetcher = (data) => axios.post(API.POSTS, data).then(({ data }) => JSON.parse(data));
 
-const usePostQuery = ({ data }) => {
+const usePostListQuery = ({ data }) => {
     const { handleError } = useApiError();
 
-    return useQuery( "POST", () => fetcher(data), {
+    return useQuery( "POSTS", () => fetcher(data), {
         onError: (error) => {
             handleError(error);
         },
@@ -27,4 +27,4 @@ const usePostQuery = ({ data }) => {
     });
 };
 
-export default usePostQuery;
+export default usePostListQuery;
