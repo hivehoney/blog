@@ -1,14 +1,14 @@
 import {useQuery} from 'react-query';
 import axios from 'axios';
 import useApiError from "../common/useApiError";
-import {API} from "../config";
 
-const fetcher = (data) => axios.post(API.POST, data).then(({ data }) => JSON.parse(data));
+const fetcher = async (url, code) => await axios.post(url+code).then(({ data }) => JSON.parse(data));
 
-const usePostQuery = ({ data }) => {
+
+const usePostQuery = (queryKey, url, code) => {
     const { handleError } = useApiError();
 
-    return useQuery( "POST", () => fetcher(data), {
+    return useQuery(queryKey, () => fetcher(url, code), {
         onError: (error) => {
             handleError(error);
         },

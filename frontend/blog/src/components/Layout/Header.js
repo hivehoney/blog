@@ -39,7 +39,7 @@ export default function Header() {
         <React.Fragment>
             <CssBaseline/>
             <ElevationScroll>
-                <AppBar id="page-header" sx={{bgcolor: "Black"}}>
+                <AppBar id="page-header" sx={{bgcolor: "Black", height: '80px', justifyContent: 'center'}}>
                     <Toolbar>
                         <Typography variant="h4" component="div"
                                     sx={{flexGrow: 0.9, display: {xs: 'none', sm: 'block'}, fontWeight: "bold"}}>
