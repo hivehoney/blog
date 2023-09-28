@@ -30,7 +30,7 @@ public class Post extends BaseEntity {
     private String tag;
 
     public Post(long boardId, String code, String title, String subTitle, String author, String modifier
-            , int status, int views, String tag) {
+            , int status, String tag) {
         this.boardId = boardId;
         this.code = code;
         this.title = title;
@@ -38,14 +38,26 @@ public class Post extends BaseEntity {
         this.author = author;
         this.modifier = modifier;
         this.status = status;
-        this.views = views;
         this.tag = tag;
     }
 
-    public static Post of(PostItemRequest request) {
-        return new Post(request.getBoardId(), CodeGenerator.generateWithPrefix("POST"), request.getTitle(), request.getSubTitle(),
-                request.getAuthor(), null, request.getStatus(), 0, request.getTag());
+    public Post(long boardId, String code, String title, String author, int status) {
+        this.boardId = boardId;
+        this.code = code;
+        this.title = title;
+        this.author = author;
+        this.status = status;
     }
+
+    public static Post from(PostItemRequest request) {
+        return new Post(request.getBoardId(), request.getCode(), request.getTitle(), request.getSubTitle(),
+                request.getAuthor(), request.getModifier(), request.getStatus(), request.getTag());
+    }
+
+    public static Post of(long boardId, String author) {
+        return new Post(boardId, CodeGenerator.generateWithPrefix("POST"), "Temp Title", author, 1);
+    }
+
 
     @Getter
     public enum PostStatus {

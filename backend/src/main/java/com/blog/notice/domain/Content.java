@@ -1,9 +1,6 @@
 package com.blog.notice.domain;
 
-import com.blog.common.domain.BaseEntity;
-import com.blog.common.util.CodeGenerator;
 import com.blog.notice.model.request.ContentRequest;
-import com.blog.notice.model.request.PostItemRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -30,7 +27,7 @@ public class Content {
         this.contents = contents;
     }
 
-    public static Content of(String code, String contents) {
-        return new Content(code, contents);
+    public static Content of(ContentRequest contentRequest) {
+        return new Content(contentRequest.getCode(), contentRequest.getContent());
     }
 }

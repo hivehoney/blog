@@ -23,7 +23,10 @@ public class PostItemRequest {
     @ApiModelProperty(notes = "작성자")
     private String author;
 
-    @ApiModelProperty(notes = "상태값 (0:취소,1:정상)")
+    @ApiModelProperty(notes = "수정자")
+    private String modifier;
+
+    @ApiModelProperty(notes = "상태값 (0:취소,1:정상)", value = "1")
     private int status;
 
     @ApiModelProperty(notes = "태그")

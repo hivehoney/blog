@@ -1,6 +1,6 @@
 package com.blog.common.config;
 
-import com.blog.interceptor.CommonInterceptor;
+import com.blog.common.interceptor.CommonInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;

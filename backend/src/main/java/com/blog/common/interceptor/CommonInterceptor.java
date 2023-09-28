@@ -1,4 +1,4 @@
-package com.blog.interceptor;
+package com.blog.common.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
