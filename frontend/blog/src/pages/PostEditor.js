@@ -6,10 +6,16 @@ import Editor from "../components/Blog/Editor";
 import AlertDialog from "../components/util/AlertDialog";
 import ReactRouterPrompt from "react-router-prompt";
 import usePostMutation from "../quires/usePostMutation";
+import usePostQuery from "../quires/usePostQuery";
+import {API} from "../config";
+import axios from "axios";
+import {useQuery} from "react-query";
 
 export default function PostEditor() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [showPrompt, setShowPrompt] = useState(true);
+    const { data: postItemRequest } = useQuery('POSTINFO', async()  => await axios.get(API.POSTADD).then(({ data }) => JSON.parse(data).data));
+    const { mutate } = usePostMutation();
 
     const handleOpenDialog = () => {
         setIsDialogOpen(true);
@@ -19,18 +25,8 @@ export default function PostEditor() {
         setIsDialogOpen(false);
     };
 
-    const { mutate } = usePostMutation();
-
     const onSubmit = (postItemRequest) => {
-        const contentRequest = {
-            content: window.editor.getData({ rootName: 'content' }),
-        };
-
-        if (!postItemRequest) {
-            postItemRequest = {
-                title: '임시 제목',
-            };
-        }
+        const contentRequest = { content: window.editor.getData({ rootName: 'content' }) };
 
         mutate({ postItemRequest, contentRequest } );
         setShowPrompt(false);
@@ -55,7 +51,7 @@ export default function PostEditor() {
                     <Button variant="contained" onClick={handleOpenDialog}>
                         게시글 작성
                     </Button>
-                    <PostDialog open={isDialogOpen} onClose={handleCloseDialog} onSubmit={onSubmit} />
+                    <PostDialog open={isDialogOpen} onClose={handleCloseDialog} onSubmit={onSubmit} data={postItemRequest} />
                     <Editor />
                 </CustomContainer>
             </ThemeProvider>

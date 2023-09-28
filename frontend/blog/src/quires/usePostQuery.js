@@ -4,7 +4,6 @@ import useApiError from "../common/useApiError";
 
 const fetcher = async (url, code) => await axios.post(url+code).then(({ data }) => JSON.parse(data));
 
-
 const usePostQuery = (queryKey, url, code) => {
     const { handleError } = useApiError();
 

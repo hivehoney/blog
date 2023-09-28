@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 
-function PostDialog({ open, onClose, onSubmit, pageId }) {
-    const [formData, setFormData] = useState({
-        boardId: "1",
-        code: "ABC123",
-        title: '',
-        author: 'hive',
-        subTitle: '',
-        tag: '',
-    });
+function PostDialog({ open, onClose, onSubmit, data }) {
+    const [postData, setPostData] = useState({});
+
+    useEffect(() => {
+        if (data) {
+            setPostData(data);
+        }
+    }, [data]);
 
     const handleSubmit = () => {
-        onSubmit(formData);
+        onSubmit(postData);
         onClose();
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setPostData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
-    const isSubmitDisabled = !formData.title || !formData.subTitle;
+    const isSubmitDisabled = !postData.title || !postData.subTitle;
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -37,7 +36,7 @@ function PostDialog({ open, onClose, onSubmit, pageId }) {
                     label="제목"
                     fullWidth
                     name="title"
-                    value={formData.title}
+                    value={postData.title}
                     onChange={handleChange}
                 />
                 <TextField
@@ -45,7 +44,7 @@ function PostDialog({ open, onClose, onSubmit, pageId }) {
                     label="부제목"
                     fullWidth
                     name="subTitle"
-                    value={formData.subTitle}
+                    value={postData.subTitle}
                     onChange={handleChange}
                 />
                 <TextField
@@ -53,7 +52,7 @@ function PostDialog({ open, onClose, onSubmit, pageId }) {
                     label="태그"
                     fullWidth
                     name="tag"
-                    value={formData.tag}
+                    value={postData.tag}
                     onChange={handleChange}
                 />
             </DialogContent>

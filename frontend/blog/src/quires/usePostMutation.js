@@ -4,7 +4,7 @@ import useApiError from "../common/useApiError";
 import {API} from "../config";
 import {Posts} from "../common/types/post";
 
-const patchPost = async (post) => await axios.post(API.ADDPOST, post), usePostMutation = () => {
+const patchPost = async (post) => await axios.post(API.POSTUPDATE, post), usePostMutation = () => {
     const queryClient = useQueryClient();
     const {handleError} = useApiError();
 
@@ -17,7 +17,7 @@ const patchPost = async (post) => await axios.post(API.ADDPOST, post), usePostMu
             window.history.back();
         },
         onSettled: () => {
-            queryClient.invalidateQueries("data");
+            // queryClient.invalidateQueries("data");
         }
         // mutate 요청이 성공한 후 queryClient.invalidateQueries 함수를 통해
         // useTodosQuery에서 불러온 API Response의 Cache를 초기화
