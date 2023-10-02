@@ -5,8 +5,10 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class PostsRequest {
 
     @ApiModelProperty(notes = "post -> post 테이블에 저장")

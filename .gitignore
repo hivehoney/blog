@@ -12,6 +12,9 @@
 .idea/**/dictionaries
 .idea/**/shelf
 backend/.idea/**
+backend/imgUpload/**
+backend/src/main/generated/**
+backend/src/test/**
 frontend/.idea/**
 frontend/blog/.idea/**
 frontend/blog/dist/**

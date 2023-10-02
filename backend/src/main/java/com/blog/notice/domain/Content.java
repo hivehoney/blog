@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * 게시판 정보 Entity
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
 public class Content {
     @Id
     @Column(unique = true, nullable = false)
@@ -27,7 +29,15 @@ public class Content {
         this.contents = contents;
     }
 
-    public static Content of(ContentRequest contentRequest) {
+    public static Content from(ContentRequest contentRequest) {
         return new Content(contentRequest.getCode(), contentRequest.getContent());
+    }
+
+    public static Content of(String code) {
+        return new Content(code, "임시 저장된 문서입니다.");
+    }
+
+    public void updateContents(String contents){
+        this.contents = contents;
     }
 }

@@ -9,7 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, String>, PostRepositoryCustom {
-    PostsResponse searchById(String id);
+    PostsResponse searchByCode(String code);
 
     List<Post> findBySearchOption(PostItemRequest request);
+
+    Long countPostsByCode(String code);
+
+    void updatePost(Post post);
+
+    Post findTopByTitleAndAuthor(String title, String author);
 }

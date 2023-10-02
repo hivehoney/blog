@@ -4,12 +4,14 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class PostItemRequest {
 
     @ApiModelProperty(notes = "게시판 ID")
-    private long boardId;
+    private int boardId;
 
     @Column(unique = true, nullable = false)
     private String code;
@@ -33,12 +35,13 @@ public class PostItemRequest {
     private String tag;
 
     @Builder
-    public PostItemRequest(long boardId, String code, String title, String subTitle, String author, int status, String tag) {
+    public PostItemRequest(int boardId, String code, String title, String subTitle, String author, String modifier, int status, String tag) {
         this.boardId = boardId;
         this.code = code;
         this.title = title;
         this.subTitle = subTitle;
         this.author = author;
+        this.modifier = modifier;
         this.status = status;
         this.tag = tag;
     }

@@ -7,7 +7,11 @@ import com.blog.notice.model.response.PostsResponse;
 import java.util.List;
 
 public interface PostRepositoryCustom {
-    PostsResponse searchById(String id);
+    PostsResponse searchByCode(String id);
 
     List<Post> findBySearchOption(PostItemRequest request);
+
+    Long countPostsByCode(String code);
+
+    void updatePost(Post post);
 }
