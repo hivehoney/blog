@@ -13,7 +13,12 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         clean: true
-    }, // 출력
+    },
+    resolve: {
+        fallback: {
+            "assert": require.resolve("assert/"),
+        },
+    },
     module : { //모듈 연결 설정
         rules : [{
             test: /\.js?/, // 대상 설정

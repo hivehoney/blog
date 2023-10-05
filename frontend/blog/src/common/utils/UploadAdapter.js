@@ -1,8 +1,10 @@
 import {API} from "../../config";
 
 export default class UploadAdapter {
-    constructor(loader) {
+
+    constructor(loader, postCode) {
         this.loader = loader;
+        this.postCode = postCode;
     }
 
     upload() {
@@ -41,7 +43,8 @@ export default class UploadAdapter {
 
     _sendRequest(file) {
         const data = new FormData()
-        data.append('upload',file)
+        data.append('upload', file)
+        data.append('postCode', this.postCode)
         this.xhr.send(data)
     }
 }

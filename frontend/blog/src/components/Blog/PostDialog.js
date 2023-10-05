@@ -1,29 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import {useQueryClient} from "react-query";
 
 function PostDialog({ open, onClose, onSubmit, data }) {
-    const [postData, setPostData] = useState({});
-
-    useEffect(() => {
-        if (data) {
-            setPostData(data);
-        }
-    }, [data]);
+    const [formData, setFormData] = useState(data);
 
     const handleSubmit = () => {
-        onSubmit(postData);
+        onSubmit(formData);
         onClose();
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setPostData((prevData) => ({
+        setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
-    const isSubmitDisabled = !postData.title || !postData.subTitle;
+    const isSubmitDisabled = !formData.title || !formData.subTitle;
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -36,7 +31,7 @@ function PostDialog({ open, onClose, onSubmit, data }) {
                     label="제목"
                     fullWidth
                     name="title"
-                    value={postData.title}
+                    value={formData.title}
                     onChange={handleChange}
                 />
                 <TextField
@@ -44,7 +39,7 @@ function PostDialog({ open, onClose, onSubmit, data }) {
                     label="부제목"
                     fullWidth
                     name="subTitle"
-                    value={postData.subTitle}
+                    value={formData.subTitle}
                     onChange={handleChange}
                 />
                 <TextField
@@ -52,7 +47,7 @@ function PostDialog({ open, onClose, onSubmit, data }) {
                     label="태그"
                     fullWidth
                     name="tag"
-                    value={postData.tag}
+                    value={formData.tag}
                     onChange={handleChange}
                 />
             </DialogContent>

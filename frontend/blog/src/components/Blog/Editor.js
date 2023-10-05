@@ -1,15 +1,24 @@
-import {useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import CKEDITOR from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
 import styles from '../../assets/App.css';
 import UploadAdapter from "../../common/utils/UploadAdapter";
+import {useQueryClient} from "react-query";
+import {Avatar, Box, CircularProgress, Typography} from "@mui/material";
+import {deepOrange} from "@mui/material/colors";
+import LongMenu from "../util/LongMenu";
+import HorizonLine from "../util/HorizonLine";
 
 function MyCustomUploadAdapterPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-        return new UploadAdapter(loader)
+        return new UploadAdapter(loader, postCode)
     }
 }
 
-export default function Editor() {
+let postCode;
+
+export default function Editor({code, data}) {
+    postCode = code;
+
     useEffect(() => {
         const editorConfig = {
             content: document.getElementById('content'),
@@ -47,7 +56,15 @@ export default function Editor() {
             <div className={styles}>
                 <div className="editor">
                     <div id="content">
-                        <p>본문</p>
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                minHeight: '100vh',
+                            }}
+                            dangerouslySetInnerHTML={{
+                                __html: (data) ? data : '내용을 입력해 주세요',
+                            }}
+                        ></Typography>
                     </div>
                 </div>
             </div>

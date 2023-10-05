@@ -16,7 +16,7 @@ const router = createBrowserRouter([
                 path: "blog",
                 children: [
                     { path: "tech", element: <Tech /> },
-                    { path: "tech/:code", element: <Post /> },
+                    { path: "tech/detail/:code", element: <Post /> },
                     { path: "tech/editor", element: <PostEditor /> },
                 ],
             },

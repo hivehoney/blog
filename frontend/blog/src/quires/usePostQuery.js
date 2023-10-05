@@ -1,29 +1,44 @@
-import {useQuery} from 'react-query';
+import {useQuery, useQueryClient} from 'react-query';
 import axios from 'axios';
 import useApiError from "../common/useApiError";
+import {useEffect} from "react";
+import {API} from "../config";
 
-const fetcher = async (url, code) => await axios.post(url+code).then(({ data }) => JSON.parse(data));
+const QUERY_KEY = "POST";
 
-const usePostQuery = (queryKey, url, code) => {
-    const { handleError } = useApiError();
+export function getQueryKey(response) {
+    return response === undefined ? [QUERY_KEY] : [QUERY_KEY, response];
+}
 
-    return useQuery(queryKey, () => fetcher(url, code), {
-        onError: (error) => {
-            handleError(error);
-        },
-        select: (data) => {
-            if (data && data.status === 200) {
-                return data.data;
-            } else {
-                const error = {
-                    status: "404",
-                    message: '세션 정보가 없습니다.',
-                    code: data,
-                };
-                handleError(error);
-            }
-        },
+async function getPost(code, options) {
+    const { data } = await axios.get(API.POST, {
+        params: { code },
+        signal: options?.signal,
+        headers: { Authorization: "my-access-token" },
     });
+    return JSON.parse(data).data;
+}
+
+export function usePostQuery(code) {
+    const queryClient = useQueryClient();
+
+    const query = useQuery(
+        QUERY_KEY,
+        ({ signal }) => getPost(code, { signal }),
+        { staleTime: 60000, keepPreviousData: true }
+    );
+
+    //다음 데이터 로딩
+   /* useEffect(() => {
+        if (query.data && query.data.meta) {
+            queryClient.prefetchQuery(
+                QUERY_KEY,
+                ({ signal }) => getPost(code, { signal }),
+                { staleTime: 60000 },
+            );
+        }
+    }, [query.data, queryClient]);*/
+
+    return query;
 };
 
-export default usePostQuery;

@@ -1,6 +1,5 @@
 import {Avatar, Box, Typography} from "@mui/material";
 import {deepOrange} from "@mui/material/colors";
-import HorizonLine from "../util/HorizonLine";
 import React from "react";
 
 const PostTitle = ({ title, author, date }) => {
@@ -12,7 +11,6 @@ const PostTitle = ({ title, author, date }) => {
             <Typography variant="h6" component="h6" sx={{ mr: 3 }}>{author}</Typography>
             <Typography variant="subtitle1" color="gray">{date}</Typography>
         </Box>
-        <HorizonLine />
         </>
     );
 };

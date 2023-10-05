@@ -19,34 +19,34 @@ function Board(props) {
                 spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
 
                 {(loading ? Array.from(new Array(6)) : data).map((item, index) => (
-                        <Box key={index} sx={{ width: 300, marginRight: 5, my: 5 }}>
-                            {item ? (
-                                <Link component={RouterLink} to={item.code} underline="none" color="White">
-                                    <img
-                                        style={{ width: 300, height: 200 }}
-                                        alt={item.title}
-                                        src={item.src}
-                                    />
-                                    <Box sx={{ pr: 2 }}>
-                                        <Typography gutterBottom variant="h6">
-                                            {item.title}
-                                        </Typography>
-                                        <Typography display="block" variant="caption" color="text.secondary">
-                                            {item.author}
-                                        </Typography>
-                                        <Typography variant="caption" color="text.secondary">
-                                            {`${item.createdAt} • ${item.tag}`}
-                                        </Typography>
-                                    </Box>
-                                </Link>
-                            ) : (
-                                <Box sx={{ pt: 0.5 }}>
-                                    <Skeleton variant="rectangular" width={300} height={200} />
-                                    <Skeleton />
-                                    <Skeleton width="60%" />
+                    <Box key={index} sx={{ width: 300, marginRight: 5, my: 5 }}>
+                        {item ? (
+                            <Link component={RouterLink} to={`detail/${item.code}`} underline="none" color="White">
+                                <img
+                                    style={{ width: 300, height: 200 }}
+                                    alt={item.title}
+                                    src={item.src}
+                                />
+                                <Box sx={{ pr: 2 }}>
+                                    <Typography gutterBottom variant="h6">
+                                        {item.title}
+                                    </Typography>
+                                    <Typography display="block" variant="caption" color="text.secondary">
+                                        {item.author}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                        {`${item.createdAt} • ${item.tag}`}
+                                    </Typography>
                                 </Box>
-                            )}
-                        </Box>
+                            </Link>
+                        ) : (
+                            <Box sx={{ pt: 0.5 }}>
+                                <Skeleton variant="rectangular" width={300} height={200} />
+                                <Skeleton />
+                                <Skeleton width="60%" />
+                            </Box>
+                        )}
+                    </Box>
                 ))}
             </Grid>
         </Box>
