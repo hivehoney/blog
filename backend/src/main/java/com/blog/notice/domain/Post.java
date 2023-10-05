@@ -9,53 +9,50 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 /**
  * 게시물 정보 Entity
  */
 @Entity
 @Getter
+@Table(name = "blog_post")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseEntity {
 
-    @Setter
-    private int boardId;
+    @Id
     @Column(unique = true, nullable = false)
-    private String code;
+    private String postCode;
     private String title;
     private String subTitle;
-    private String author;
-    private String modifier;
+    private String authorId;
     private int status;
     private int views;
+    private String bannerImage;
     private String tag;
 
-    public Post(int boardId, String code, String title, String subTitle, String author, String modifier
-            , int status, String tag) {
-        this.boardId = boardId;
-        this.code = code;
+    public Post(String postCode, String title, String subTitle, String authorId, int status, String tag) {
+        this.postCode = postCode;
         this.title = title;
         this.subTitle = subTitle;
-        this.author = author;
-        this.modifier = modifier;
+        this.authorId = authorId;
         this.status = status;
         this.tag = tag;
     }
 
-    public Post(int boardId, String code, String title, String author, int status) {
-        this.boardId = boardId;
-        this.code = code;
+    public Post(String postCode, String title, String authorId, int status) {
+        this.postCode = postCode;
         this.title = title;
-        this.author = author;
+        this.authorId = authorId;
         this.status = status;
     }
 
     public static Post from(PostItemRequest request) {
-        return new Post(request.getBoardId(), request.getCode(), request.getTitle(), request.getSubTitle(),
-                request.getAuthor(), request.getModifier(), request.getStatus(), request.getTag());
+        return new Post(request.getPostCode(), request.getTitle(), request.getSubTitle(),
+                request.getAuthorId(), request.getStatus(), request.getTag());
     }
 
-    public static Post of(int boardId, String author) {
-        return new Post(boardId, CodeGenerator.generateWithPrefix("POST"), "Temp Title", author, 1);
+    public static Post of(String author) {
+        return new Post(CodeGenerator.generateWithPrefix("POST"), "Temp Title", author, 1);
     }
 
     @Getter

@@ -17,10 +17,7 @@ import java.time.LocalDateTime;
 public class PostsResponse {
 
     @ApiModelProperty(notes = "post code")
-    private String code;
-
-    @ApiModelProperty(notes = "게시판 코드")
-    private long boardId;
+    private String postCode;
 
     @ApiModelProperty(notes = "게시물 제목")
     private String title;
@@ -32,7 +29,7 @@ public class PostsResponse {
     private String contents;
 
     @ApiModelProperty(notes = "작성자")
-    private String author;
+    private String authorId;
 
     @ApiModelProperty(notes = "태그")
     private String tag;
@@ -42,20 +39,19 @@ public class PostsResponse {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime postsDate;
 
-    public PostsResponse(String code, long boardId, String title, String subTitle, String contents,
-                         String author, String tag, LocalDateTime postsDate) {
-        this.code = code;
-        this.boardId = boardId;
+    public PostsResponse(String postCode, String title, String subTitle, String contents,
+                         String authorId, String tag, LocalDateTime postsDate) {
+        this.postCode = postCode;
         this.title = title;
         this.subTitle = subTitle;
         this.contents = contents;
-        this.author = author;
+        this.authorId = authorId;
         this.tag = tag;
         this.postsDate = postsDate;
     }
 
     public static PostsResponse from(Post post, String contents) {
-        return new PostsResponse(post.getCode(), post.getBoardId(), post.getTitle(), post.getSubTitle(), contents,
-                post.getAuthor(), post.getTag(), post.getCreatedAt());
+        return new PostsResponse(post.getPostCode(), post.getTitle(), post.getSubTitle(), contents,
+                post.getAuthorId(), post.getTag(), post.getCreatedAt());
     }
 }

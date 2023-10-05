@@ -7,16 +7,16 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ContentRequest {
+public class ContentsRequest {
 
     @ApiModelProperty(notes = "postCode")
-    private String code;
+    private String postCode;
     @ApiModelProperty(notes = "내용")
-    private String content;
+    private String contents;
 
     @Builder
-    public ContentRequest(String code, String content) {
-        this.code = code;
-        this.content = content;
+    public ContentsRequest(String postCode, String contents) {
+        this.postCode = postCode;
+        this.contents = contents;
     }
 }

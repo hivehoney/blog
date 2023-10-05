@@ -1,6 +1,5 @@
 package com.blog.notice.service;
 
-import com.blog.notice.domain.Post;
 import com.blog.notice.model.request.PostItemRequest;
 import com.blog.notice.model.request.PostsRequest;
 import com.blog.notice.model.response.PostItemResponse;

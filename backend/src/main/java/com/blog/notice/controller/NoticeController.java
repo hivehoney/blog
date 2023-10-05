@@ -1,7 +1,7 @@
 package com.blog.notice.controller;
 
 import com.blog.common.controller.ApiController;
-import com.blog.notice.model.request.ContentRequest;
+import com.blog.notice.model.request.ContentsRequest;
 import com.blog.notice.model.request.PostItemRequest;
 import com.blog.notice.model.request.PostsRequest;
 import com.blog.notice.model.response.PostItemResponse;
@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -36,8 +38,8 @@ public class NoticeController extends ApiController {
     }
 
     @ApiOperation(value = "post 조회", notes = "작성된 Post를 조회 합니다.")
-    @RequestMapping(value = "/getPost/{code}", method = RequestMethod.GET)
-    public PostsResponse getPost(@PathVariable("code") String code) {
+    @RequestMapping(value = "/getPost", method = RequestMethod.GET)
+    public PostsResponse getPost(@RequestParam(value = "code", required = false) String code) {
         return noticeService.getPost(code);
     }
 
@@ -46,12 +48,12 @@ public class NoticeController extends ApiController {
     public String updatePost(@RequestBody HashMap<String, Object> postParams) throws IOException {
         //객체 생성
         ObjectMapper objectMapper = new ObjectMapper();
-        PostItemRequest postItemRequest = objectMapper.convertValue(postParams.get("postItemRequest"), PostItemRequest.class);
-        ContentRequest contentRequest = objectMapper.convertValue(postParams.get("contentRequest"), ContentRequest.class);
+        PostItemRequest postItemRequest = objectMapper.convertValue(postParams.get("postInfo"), PostItemRequest.class);
+        ContentsRequest contentsRequest = objectMapper.convertValue(postParams.get("content"), ContentsRequest.class);
 
         PostsRequest postsRequest = PostsRequest.builder()
                 .postItemRequest(postItemRequest)
-                .contentRequest(contentRequest)
+                .contentsRequest(contentsRequest)
                 .build();
 
         List<String> imgFiles = (List<String>) postParams.get("imgFile");
@@ -64,7 +66,9 @@ public class NoticeController extends ApiController {
 
     @ApiOperation(value = "post 등록", notes = "post를 등록 합니다.")
     @RequestMapping(value = "/registerPost")
-    public String registerPost() { return noticeService.registerPost(); }
+    public String registerPost() {
+        return noticeService.registerPost();
+    }
 
     @ApiOperation(value = "IMG Upload", notes = "IMG를 업로드 합니다.")
     @PostMapping(value = "/imgUpload",  consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

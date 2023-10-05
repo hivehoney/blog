@@ -1,6 +1,6 @@
 package com.blog.notice.repository.Querydsl;
 
-public interface ContentRepositoryCustom {
+public interface ContentsRepositoryCustom {
 
 
 }

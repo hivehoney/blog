@@ -2,6 +2,7 @@ package com.blog.notice.model.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostItemRequest {
 
-    @ApiModelProperty(notes = "게시판 ID")
-    private int boardId;
-
+    @Id
     @Column(unique = true, nullable = false)
-    private String code;
+    private String postCode;
     
     @ApiModelProperty(notes = "제목")
     private String title;
@@ -23,10 +22,7 @@ public class PostItemRequest {
     private String subTitle;
 
     @ApiModelProperty(notes = "작성자")
-    private String author;
-
-    @ApiModelProperty(notes = "수정자")
-    private String modifier;
+    private String authorId;
 
     @ApiModelProperty(notes = "상태값 (0:취소,1:정상)", value = "1")
     private int status;
@@ -35,13 +31,11 @@ public class PostItemRequest {
     private String tag;
 
     @Builder
-    public PostItemRequest(int boardId, String code, String title, String subTitle, String author, String modifier, int status, String tag) {
-        this.boardId = boardId;
-        this.code = code;
+    public PostItemRequest(String postCode, String title, String subTitle, String authorId, int status, String tag) {
+        this.postCode = postCode;
         this.title = title;
         this.subTitle = subTitle;
-        this.author = author;
-        this.modifier = modifier;
+        this.authorId = authorId;
         this.status = status;
         this.tag = tag;
     }

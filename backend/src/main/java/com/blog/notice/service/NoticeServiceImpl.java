@@ -1,13 +1,13 @@
 package com.blog.notice.service;
 
 import com.blog.common.util.FileUploadUtils;
-import com.blog.notice.domain.Content;
+import com.blog.notice.domain.Contents;
 import com.blog.notice.domain.Post;
 import com.blog.notice.model.request.PostItemRequest;
 import com.blog.notice.model.request.PostsRequest;
 import com.blog.notice.model.response.PostItemResponse;
 import com.blog.notice.model.response.PostsResponse;
-import com.blog.notice.repository.ContentRepository;
+import com.blog.notice.repository.ContentsRepository;
 import com.blog.notice.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class NoticeServiceImpl implements NoticeService {
 
     private final PostRepository postRepository;
-    private final ContentRepository contentRepository;
+    private final ContentsRepository contentsRepository;
 
     /**
      * 게시물을 업데이트하고 해당 내용을 저장합니다.
@@ -41,7 +41,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public String updatePost(PostsRequest postsRequest) {
         // 업데이트할 게시물의 코드
-        String postCode = postsRequest.getPostItemRequest().getCode();
+        String postCode = postsRequest.getPostItemRequest().getPostCode();
 
         // 게시물 코드가 비어 있으면 예외
         if (!StringUtils.hasText(postCode)) {
@@ -58,9 +58,9 @@ public class NoticeServiceImpl implements NoticeService {
         Post post = Post.from(postsRequest.getPostItemRequest());
         postRepository.updatePost(post);//수정필요
 
-        Content content = Content.of(postCode);
-        content.updateContents(postsRequest.getContentRequest().getContent());
-        contentRepository.save(content);
+        Contents contents = Contents.of(postCode);
+        contents.updateContents(postsRequest.getContentsRequest().getContents());
+        contentsRepository.save(contents);
 
         return postCode;
     }
@@ -78,14 +78,14 @@ public class NoticeServiceImpl implements NoticeService {
         //기존 생성된 post가 있으면 해당 코드
         Post post = postRepository.findTopByTitleAndAuthor("Temp Title", "TAEUK");
         if (post == null) {
-            post = Post.of(2, "TAEUK");
-            Content content = Content.of(post.getCode());
+            post = Post.of("TAEUK");
+            Contents content = Contents.of(post.getPostCode());
 
             postRepository.save(post);
-            contentRepository.save(content);
+            contentsRepository.save(content);
         }
 
-        return post.getCode();
+        return post.getPostCode();
     }
 
     @Override

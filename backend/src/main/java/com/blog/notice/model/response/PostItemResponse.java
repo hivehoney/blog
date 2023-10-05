@@ -17,10 +17,7 @@ import java.time.LocalDateTime;
 public class PostItemResponse {
 
     @ApiModelProperty(notes = "post code")
-    private String code;
-
-    @ApiModelProperty(notes = "게시판 코드")
-    private int boardId;
+    private String postCode;
 
     @ApiModelProperty(notes = "게시물 제목")
     private String title;
@@ -29,7 +26,7 @@ public class PostItemResponse {
     private String subTitle;
 
     @ApiModelProperty(notes = "작성자")
-    private String author;
+    private String authorId;
 
     @ApiModelProperty(notes = "태그")
     private String tag;
@@ -42,29 +39,27 @@ public class PostItemResponse {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime postsDate;
 
-    public PostItemResponse(String code, int boardId, String title, String subTitle,
-                            String author, String tag, int view, LocalDateTime postsDate) {
-        this.code = code;
-        this.boardId = boardId;
+    public PostItemResponse(String postCode, String title, String subTitle,
+                            String authorId, String tag, int view, LocalDateTime postsDate) {
+        this.postCode = postCode;
         this.title = title;
         this.subTitle = subTitle;
-        this.author = author;
+        this.authorId = authorId;
         this.tag = tag;
         this.view = view;
         this.postsDate = postsDate;
     }
 
     public static PostItemResponse from(Post post) {
-        return new PostItemResponse(post.getCode(), post.getBoardId(), post.getTitle(), post.getSubTitle(),
-                post.getAuthor(), post.getTag(), post.getViews(), post.getCreatedAt());
+        return new PostItemResponse(post.getPostCode(), post.getTitle(), post.getSubTitle(),
+                post.getAuthorId(), post.getTag(), post.getViews(), post.getCreatedAt());
     }
 
     public PostItemResponse(Post val) {
-        this.code = val.getCode();
-        this.boardId = val.getBoardId();
+        this.postCode = val.getPostCode();
         this.title = val.getTitle();
         this.subTitle = val.getSubTitle();
-        this.author = val.getAuthor();
+        this.authorId = val.getAuthorId();
         this.tag = val.getTag();
         this.view = val.getViews();
         this.postsDate = val.getCreatedAt();

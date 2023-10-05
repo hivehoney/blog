@@ -1,8 +1,6 @@
 package com.blog.notice.model.request;
 
 import io.swagger.annotations.ApiModelProperty;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +13,11 @@ public class PostsRequest {
     private PostItemRequest postItemRequest;
 
     @ApiModelProperty(notes = "contents -> post와 연관된 content 테이블에 저장")
-    private ContentRequest contentRequest;
+    private ContentsRequest contentsRequest;
 
     @Builder
-    public PostsRequest(PostItemRequest postItemRequest, ContentRequest contentRequest) {
+    public PostsRequest(PostItemRequest postItemRequest, ContentsRequest contentsRequest) {
         this.postItemRequest = postItemRequest;
-        this.contentRequest = contentRequest;
+        this.contentsRequest = contentsRequest;
     }
 }
