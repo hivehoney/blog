@@ -4,10 +4,10 @@ import com.blog.common.domain.BaseEntity;
 import com.blog.common.util.CodeGenerator;
 import com.blog.notice.model.request.PostItemRequest;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 
 /**
@@ -15,16 +15,16 @@ import lombok.Setter;
  */
 @Entity
 @Getter
-@Table(name = "blog_post")
+@Table(name = "blogPost")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseEntity {
 
-    @Id
     @Column(unique = true, nullable = false)
     private String postCode;
     private String title;
     private String subTitle;
     private String authorId;
+    @Setter
     private int status;
     private int views;
     private String bannerImage;
@@ -52,7 +52,7 @@ public class Post extends BaseEntity {
     }
 
     public static Post of(String author) {
-        return new Post(CodeGenerator.generateWithPrefix("POST"), "Temp Title", author, 1);
+        return new Post(CodeGenerator.generateWithPrefix("POST"), "Temp Title", author, 2);
     }
 
     @Getter

@@ -17,5 +17,7 @@ public interface PostRepository extends JpaRepository<Post, String>, PostReposit
 
     void updatePost(Post post);
 
-    Post findTopByTitleAndAuthor(String title, String author);
+    Post findTopByStatus(int status);
+
+    Post findByPostCode(String postCode);
 }

@@ -9,9 +9,10 @@ import com.blog.notice.model.response.PostsResponse;
 import com.blog.notice.service.NoticeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,38 +26,45 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/notice")
+@RequestMapping("/api/notice")
 public class NoticeController extends ApiController {
+
+    private final Logger logger = LogManager.getLogger(NoticeController.class);
 
     private final NoticeService noticeService;
 
     @ApiOperation(value = "post 목록 조회", notes = "Post 목록을 조회 합니다.")
-    @RequestMapping(value = "/getPostsList",  consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<PostItemResponse> getPostsList(HttpServletRequest request,
-                                               @RequestBody PostItemRequest postItemRequest) {
+    @RequestMapping(value = "/getPostsList", method = RequestMethod.POST)
+    public List<PostItemResponse> getPostsList(@RequestBody PostItemRequest postItemRequest) {
         return noticeService.getPostList(postItemRequest);
     }
 
     @ApiOperation(value = "post 조회", notes = "작성된 Post를 조회 합니다.")
     @RequestMapping(value = "/getPost", method = RequestMethod.GET)
-    public PostsResponse getPost(@RequestParam(value = "code", required = false) String code) {
-        return noticeService.getPost(code);
+    public PostsResponse getPost(@RequestParam(value = "code", required = false) String postCode) {
+        return noticeService.getPost(postCode);
+    }
+
+    @ApiOperation(value = "post 삭제", notes = "작성한 Post를 삭제 합니다.")
+    @RequestMapping(value = "/deletePost", method = RequestMethod.PATCH)
+    public String deletePost(@RequestBody HashMap<String, Object> map) {
+        return noticeService.deletePost((String) map.get("postCode"));
     }
 
     @ApiOperation(value = "post 수정", notes = "작성한 post 수정 합니다.")
     @RequestMapping(value = "/updatePost", method = RequestMethod.PATCH)
-    public String updatePost(@RequestBody HashMap<String, Object> postParams) throws IOException {
+    public String updatePost(@RequestBody HashMap<String, Object> map) throws IOException {
         //객체 생성
         ObjectMapper objectMapper = new ObjectMapper();
-        PostItemRequest postItemRequest = objectMapper.convertValue(postParams.get("postInfo"), PostItemRequest.class);
-        ContentsRequest contentsRequest = objectMapper.convertValue(postParams.get("content"), ContentsRequest.class);
+        PostItemRequest postItemRequest = objectMapper.convertValue(map.get("postInfo"), PostItemRequest.class);
+        ContentsRequest contentsRequest = objectMapper.convertValue(map.get("content"), ContentsRequest.class);
 
         PostsRequest postsRequest = PostsRequest.builder()
                 .postItemRequest(postItemRequest)
                 .contentsRequest(contentsRequest)
                 .build();
 
-        List<String> imgFiles = (List<String>) postParams.get("imgFile");
+        List<String> imgFiles = (List<String>) map.get("imgFile");
 
         //본문 등록
         noticeService.clearImages(imgFiles, noticeService.updatePost(postsRequest));
@@ -75,8 +83,8 @@ public class NoticeController extends ApiController {
     public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam(value = "upload", required = false) MultipartFile request,
                                                            @RequestParam(value = "postCode") String postCode) throws IOException {
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("url", "C:\\Users\\Administrator\\IdeaProjects\\blog\\backend\\"+noticeService.saveImages(request, postCode));
-
+        paramMap.put("url", "/" + postCode + "/" + noticeService.saveImages(request, postCode));
+        logger.info(paramMap);
         return ResponseEntity.ok(paramMap);
     }
 }

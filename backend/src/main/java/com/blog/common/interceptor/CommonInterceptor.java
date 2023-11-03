@@ -35,7 +35,6 @@ public class CommonInterceptor extends WebRequestHandlerInterceptorAdapter {
         request.setAttribute("sTime", currentTime);
         log.info("요청시간: {}", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(currentTime));
 
-
         // TODO Auto-generated method stub
         return super.preHandle(request, response, handler);
     }

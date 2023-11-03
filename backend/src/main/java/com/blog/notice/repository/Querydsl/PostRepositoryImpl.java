@@ -70,6 +70,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         JPAUpdateClause clause = jpaQueryFactory
                 .update(qpost)
                 .set(qpost.updatedAt, Expressions.constant(LocalDateTime.now()))
+                .set(qpost.status, post.getStatus())
                 .where(qpost.postCode.eq(post.getPostCode()));
 
                 if (hasText(post.getTitle())) clause.set(qpost.title, post.getTitle());
@@ -77,9 +78,5 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 if (hasText(post.getTag())) clause.set(qpost.tag, post.getTag());
 
                 clause.execute();
-    }
-
-    private BooleanExpression titleEq(String title) {
-        return hasText(title) ? qpost.title.eq(title) : null;
     }
 }

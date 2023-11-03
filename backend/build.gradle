@@ -13,6 +13,9 @@ java {
 }
 
 configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -46,21 +49,21 @@ dependencies {
     implementation "com.querydsl:querydsl-core"
     implementation "com.querydsl:querydsl-collections"
 
-        annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
     annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '3.1.2'
+
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.21.0'
+    implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
 
-def querydslSrcDir = "$buildDir/generated/querydsl"
+def querydslSrcDir = "src/main/generated/querydsl"
 
-sourceSets {
-    main.java.srcDirs += [ querydslSrcDir ]
+tasks.withType(JavaCompile) {
+    options.generatedSourceOutputDirectory = file(querydslSrcDir)
 }
-
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-
 
 clean {
     // clean 실행 시 생성된 QClass 삭제

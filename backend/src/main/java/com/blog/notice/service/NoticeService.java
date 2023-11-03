@@ -18,6 +18,8 @@ public interface NoticeService {
 
     void clearImages(List<String> imgFiles, String postCode) throws IOException;
 
+    String deletePost(String postCode);
+
     List<PostItemResponse> getPostList(PostItemRequest request);
 
     PostsResponse getPost(String postCode);

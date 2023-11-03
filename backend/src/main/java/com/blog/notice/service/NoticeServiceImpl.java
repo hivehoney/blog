@@ -1,6 +1,7 @@
 package com.blog.notice.service;
 
 import com.blog.common.util.FileUploadUtils;
+import com.blog.notice.controller.NoticeController;
 import com.blog.notice.domain.Contents;
 import com.blog.notice.domain.Post;
 import com.blog.notice.model.request.PostItemRequest;
@@ -11,6 +12,8 @@ import com.blog.notice.repository.ContentsRepository;
 import com.blog.notice.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -27,6 +30,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
+
+    private final Logger logger = LogManager.getLogger(NoticeController.class);
 
     private final PostRepository postRepository;
     private final ContentsRepository contentsRepository;
@@ -56,10 +61,9 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
         Post post = Post.from(postsRequest.getPostItemRequest());
-        postRepository.updatePost(post);//수정필요
+        postRepository.updatePost(post);
 
-        Contents contents = Contents.of(postCode);
-        contents.updateContents(postsRequest.getContentsRequest().getContents());
+        Contents contents = Contents.from(postsRequest.getContentsRequest());
         contentsRepository.save(contents);
 
         return postCode;
@@ -75,10 +79,11 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional
     @Override
     public String registerPost() {
-        //기존 생성된 post가 있으면 해당 코드
-        Post post = postRepository.findTopByTitleAndAuthor("Temp Title", "TAEUK");
+        //임시 저장물
+        Post post = postRepository.findTopByStatus(2);
+
         if (post == null) {
-            post = Post.of("TAEUK");
+            post = Post.of("hive");
             Contents content = Contents.of(post.getPostCode());
 
             postRepository.save(post);
@@ -98,7 +103,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
         String fileName = System.currentTimeMillis()+ StringUtils.cleanPath(file.getOriginalFilename());
-        Path uploadDir = Paths.get("imgUpload", postCode);
+        Path uploadDir = Paths.get("/home/blog/back/imgUpload", postCode);
 
         if (!Files.exists(uploadDir)) {
             Files.createDirectories(uploadDir);
@@ -110,11 +115,19 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public void clearImages(List<String> imgFiles, String postCode) {
 
-        Path postDir = Paths.get("imgUpload", postCode);
+        Path postDir = Paths.get("/home/blog/back/imgUpload", postCode);
 
-        if (Files.exists(postDir)) {
+        if (Files.exists(postDir) || !imgFiles.isEmpty()) {
             FileUploadUtils.cleanDir(postDir, imgFiles);
         }
+    }
+
+    @Override
+    public String deletePost(String postCode) {
+        Post post = postRepository.findByPostCode(postCode);
+        post.setStatus(0);
+        postRepository.save(post);
+        return "삭제완료";
     }
 
     @Transactional(readOnly = true)

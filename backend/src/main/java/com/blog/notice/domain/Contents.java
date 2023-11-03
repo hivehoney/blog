@@ -16,7 +16,7 @@ import org.hibernate.annotations.DynamicUpdate;
  */
 @Entity
 @Getter
-@Table(name = "blog_contents")
+@Table(name = "blogContents")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate
 public class Contents {
