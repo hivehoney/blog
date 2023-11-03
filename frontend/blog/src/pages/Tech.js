@@ -4,7 +4,7 @@ import {Box, Button, Container, Grid, Link, Skeleton, Typography} from "@mui/mat
 import EditIcon from '@mui/icons-material/Edit';
 import {Link as RouterLink} from "react-router-dom";
 import ErrorPage from "./errorPage";
-import usePostListQuery from "../quires/usePostListQuery";
+import {usePostListQuery} from "../quires/usePostListQuery";
 
 function Board(props) {
     const { loading = false, data } = props;
@@ -21,7 +21,7 @@ function Board(props) {
                 {(loading ? Array.from(new Array(6)) : data).map((item, index) => (
                     <Box key={index} sx={{ width: 300, marginRight: 5, my: 5 }}>
                         {item ? (
-                            <Link component={RouterLink} to={`detail/${item.code}`} underline="none" color="White">
+                            <Link component={RouterLink} to={`detail/${item.postCode}`} underline="none" color="White">
                                 <img
                                     style={{ width: 300, height: 200 }}
                                     alt={item.title}
@@ -32,10 +32,10 @@ function Board(props) {
                                         {item.title}
                                     </Typography>
                                     <Typography display="block" variant="caption" color="text.secondary">
-                                        {item.author}
+                                        {item.authorId}
                                     </Typography>
                                     <Typography variant="caption" color="text.secondary">
-                                        {`${item.createdAt} • ${item.tag}`}
+                                        {`${item.postsDate} • ${item.tag}`}
                                     </Typography>
                                 </Box>
                             </Link>
@@ -59,12 +59,11 @@ Board.propTypes = {
 };
 
 function Tech() {
-    const request = {
-        boardId: 2,
+    const postItemRequest = {
         status: 1
     };
 
-    const { data, error, isLoading } = usePostListQuery({ data: request });
+    const { data, isLoading, error } = usePostListQuery(postItemRequest);
 
     if (error) return <ErrorPage error />
 
@@ -86,9 +85,11 @@ function Tech() {
                     </Button>
                 </Link>
             </Typography>
-            <Box sx={{ overflow: 'hidden' }}>
-                <Board loading={isLoading} data={data} />
-            </Box>
+            {data != undefined && !isLoading && (
+                <Box sx={{ overflow: 'hidden' }}>
+                    <Board loading={isLoading} data={data} />
+                </Box>
+                )}
         </Container>
         </>
     );

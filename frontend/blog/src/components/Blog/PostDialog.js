@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import {useQueryClient} from "react-query";
+import React, {useState} from 'react';
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
+import InputFileUpload from "../util/InputFileUpload";
 
-function PostDialog({ open, onClose, onSubmit, data }) {
+function PostDialog({ open, onClose, onSubmit, data, postCode }) {
     const [formData, setFormData] = useState(data);
 
     const handleSubmit = () => {
-        onSubmit(formData);
+        onSubmit(formData, 1);
         onClose();
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -50,6 +51,7 @@ function PostDialog({ open, onClose, onSubmit, data }) {
                     value={formData.tag}
                     onChange={handleChange}
                 />
+                <InputFileUpload code={postCode} handleChange={handleChange} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} color="primary">

@@ -55,13 +55,16 @@ const LongMenu = ({ handleEdit, handleDelete }) => {
                 onClose={handleClose}
             >
                 {menuItems.map((item, index) => (
-                    <>
-                    <MenuItem key={item.key} onClick={item.onClick}>
-                            <ListItemText primary={item.text} style={{ color: item.color, mr: 50 }} />
-                            <ListItemIcon> {item.icon} </ListItemIcon>
-                    </MenuItem>
-                    {index === 0 && <Divider />}
-                    </>
+                    [
+                        <MenuItem key={item.key} onClick={item.onClick}>
+                            <ListItemText
+                                primary={item.text}
+                                style={{ color: item.color, marginRight: 50 }}
+                            />
+                            <ListItemIcon>{item.icon}</ListItemIcon>
+                        </MenuItem>,
+                        index === 0 && <Divider key={`divider-${item.key}`} />
+                    ]
                 ))}
             </Menu>
         </div>

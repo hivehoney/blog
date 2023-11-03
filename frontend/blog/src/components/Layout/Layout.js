@@ -2,7 +2,7 @@ import * as React from "react";
 import {Outlet} from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import {Container, CssBaseline, ThemeProvider} from "@mui/material";
+import {CssBaseline, ThemeProvider} from "@mui/material";
 import theme from "../../assets/Theme";
 import StyledDiv from "../../assets/styles";
 

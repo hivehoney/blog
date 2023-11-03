@@ -14,9 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function AlertDialog({ title, message, open, onClose, onSubmit }) {
     const handleSubmit = () => {
-        onSubmit();
-        onClose();
-        return;
+        onSubmit(null, 2);
     };
 
     return (
@@ -35,8 +33,8 @@ export default function AlertDialog({ title, message, open, onClose, onSubmit })
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose}>취소</Button>
-                    <Button onClick={handleSubmit}>저장</Button>
+                    <Button onClick={onClose}>나가기</Button>
+                    <Button onClick={handleSubmit}>임시 저장</Button>
                 </DialogActions>
             </Dialog>
         </div>

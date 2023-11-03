@@ -1,7 +1,5 @@
 import {useQuery, useQueryClient} from 'react-query';
 import axios from 'axios';
-import useApiError from "../common/useApiError";
-import {useEffect} from "react";
 import {API} from "../config";
 
 const QUERY_KEY = "POST";
@@ -11,7 +9,7 @@ export function getQueryKey(response) {
 }
 
 async function getPost(code, options) {
-    const { data } = await axios.get(API.POST, {
+    const { data } = await axios.get(`${API.POST}`, {
         params: { code },
         signal: options?.signal,
         headers: { Authorization: "my-access-token" },

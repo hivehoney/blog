@@ -79,3 +79,21 @@ th, td {
 #content {
     min-height: 100vh;
 }
+
+#circle {
+    background-color : white;
+    border-radius: 50%;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#circle {
+    display: table-cell;
+    vertical-align: middle;
+    text-align:center;
+}

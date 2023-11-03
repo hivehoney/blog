@@ -1,12 +1,8 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect} from "react";
 import CKEDITOR from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
 import styles from '../../assets/App.css';
 import UploadAdapter from "../../common/utils/UploadAdapter";
-import {useQueryClient} from "react-query";
-import {Avatar, Box, CircularProgress, Typography} from "@mui/material";
-import {deepOrange} from "@mui/material/colors";
-import LongMenu from "../util/LongMenu";
-import HorizonLine from "../util/HorizonLine";
+import {Typography} from "@mui/material";
 
 function MyCustomUploadAdapterPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -38,7 +34,7 @@ export default function Editor({code, data}) {
                 const toolbarContainer = document.getElementById('page-header');
                 toolbarContainer.appendChild(editor.ui.view.toolbar.element);
 
-                editor.ui.focusTracker.on( 'change:isFocused', () => {
+                editor.ui.focusTracker.on('change:isFocused', () => {
                     if ( editor.ui.focusTracker.isFocused ) {
                         toolbarContainer.classList.add( 'sticky' );
                     } else {

@@ -17,7 +17,7 @@ export default class UploadAdapter {
 
     _initRequest() {
         const xhr = this.xhr = new XMLHttpRequest();
-        xhr.open('POST', API.IMGUPLOAD, true);
+        xhr.open('POST', `${API.IMGUPLOAD}`, true);
         xhr.responseType = 'json';
     }
 
@@ -36,7 +36,7 @@ export default class UploadAdapter {
             }
 
             resolve({
-                default: response.data.url //업로드된 파일 주소
+                default: `${API.IMGURL}` + response.data.url
             })
         })
     }

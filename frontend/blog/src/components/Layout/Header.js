@@ -53,16 +53,13 @@ export default function Header() {
                                     key={item.name}
                                     variant="h5"
                                     sx={{ color: '#fff', fontSize: 16 }}
+                                    component={RouterNavLink}
+                                    to={item.path}
+                                    color="inherit"
+                                    underline="none"
                                 >
-                                    <Link
-                                        component={RouterNavLink}
-                                        to={item.path}
-                                        color="inherit"
-                                        underline="none"
-                                    >
-                                        {item.name}
-                                    </Link>
-                                </Button>
+                                {item.name}
+                            </Button>
                             ))}
                         </Box>
                     </Toolbar>

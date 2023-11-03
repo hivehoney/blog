@@ -17,8 +17,9 @@
     "assert": "^2.1.0",
     "axios": "^1.5.0",
     "craco-alias": "^3.0.1",
-    "dotenv": "^16.3.1",
     "html-webpack-plugin": "^5.5.3",
+    "http-proxy-middleware": "^2.0.6",
+    "process": "^0.11.10",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,7 +32,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "webpack --config webpack.config.js",
     "test": "craco test",
     "dev": "webpack-dev-server",
     "eject": "react-scripts eject"
@@ -67,5 +68,5 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://tae-uk.com:8080"
 }

@@ -5,6 +5,7 @@ import Tech from "../pages/Tech";
 import PostEditor from "../pages/PostEditor";
 import React from "react";
 import Post from "../pages/Post";
+import Temp from "../pages/Temp";
 
 const router = createBrowserRouter([
     {
@@ -16,11 +17,13 @@ const router = createBrowserRouter([
                 path: "blog",
                 children: [
                     { path: "tech", element: <Tech /> },
-                    { path: "tech/detail/:code", element: <Post /> },
+                    { path: "tech/detail/:postCode", element: <Post /> },
                     { path: "tech/editor", element: <PostEditor /> },
                 ],
             },
-            { path: "intro", element: <PostEditor />, },
+            { path: "intro", element: <Temp />, },
+            { path: "contact", element: <Temp />, },
+            { path: "memoirs", element: <Temp />, },
         ],
     },
 ]);
