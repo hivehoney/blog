@@ -18,6 +18,9 @@ public class PostItemRequest {
     @ApiModelProperty(notes = "제목")
     private String title;
 
+    @ApiModelProperty(notes = "배너이미지")
+    private String bannerImage;
+
     @ApiModelProperty(notes = "부제목")
     private String subTitle;
 
@@ -31,9 +34,10 @@ public class PostItemRequest {
     private String tag;
 
     @Builder
-    public PostItemRequest(String postCode, String title, String subTitle, String authorId, int status, String tag) {
+    public PostItemRequest(String postCode, String title, String bannerImage, String subTitle, String authorId, int status, String tag) {
         this.postCode = postCode;
         this.title = title;
+        this.bannerImage = bannerImage;
         this.subTitle = subTitle;
         this.authorId = authorId;
         this.status = status;

@@ -74,6 +74,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .where(qpost.postCode.eq(post.getPostCode()));
 
                 if (hasText(post.getTitle())) clause.set(qpost.title, post.getTitle());
+                if (hasText(post.getBannerImage())) clause.set(qpost.bannerImage, post.getBannerImage());
                 if (hasText(post.getSubTitle())) clause.set(qpost.subTitle, post.getSubTitle());
                 if (hasText(post.getTag())) clause.set(qpost.tag, post.getTag());
 

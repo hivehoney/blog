@@ -30,9 +30,10 @@ public class Post extends BaseEntity {
     private String bannerImage;
     private String tag;
 
-    public Post(String postCode, String title, String subTitle, String authorId, int status, String tag) {
+    public Post(String postCode, String title, String bannerImage, String subTitle, String authorId, int status, String tag) {
         this.postCode = postCode;
         this.title = title;
+        this.bannerImage = bannerImage;
         this.subTitle = subTitle;
         this.authorId = authorId;
         this.status = status;
@@ -47,7 +48,7 @@ public class Post extends BaseEntity {
     }
 
     public static Post from(PostItemRequest request) {
-        return new Post(request.getPostCode(), request.getTitle(), request.getSubTitle(),
+        return new Post(request.getPostCode(), request.getTitle(), request.getBannerImage(), request.getSubTitle(),
                 request.getAuthorId(), request.getStatus(), request.getTag());
     }
 
