@@ -66,10 +66,11 @@ public class NoticeController extends ApiController {
 
         List<String> imgFiles = (List<String>) map.get("imgFile");
 
+        String postCode = noticeService.updatePost(postsRequest);
         //본문 등록
-        noticeService.clearImages(imgFiles, noticeService.updatePost(postsRequest));
+        noticeService.clearImages(imgFiles, postCode);
 
-        return "저장 되었습니다.";
+        return postCode;
     }
 
     @ApiOperation(value = "post 등록", notes = "post를 등록 합니다.")

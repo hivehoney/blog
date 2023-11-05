@@ -2,24 +2,32 @@ import axios from 'axios';
 import {useMutation, useQueryClient} from 'react-query';
 import {API} from "../config";
 
-async function patchPost(data) {
-    const { res } = await axios.patch(`${API.POSTUPDATE}`, data,
-        // { headers: { Authorization: "my-access-token" } }
+async function patchPost(req) {
+    const  response  = await fetch(`${API.POSTUPDATE}`, {
+            method: "PATCH",
+            body: JSON.stringify(req),
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Accept': 'application/json',
+                // 'Authorization': 'my-access-token'
+            },
+        },
     );
-    return res;
+    const responseData = await response.json();
+
+    return responseData.data;
 }
 
 export function usePostMutation() {
     const queryClient = useQueryClient();
 
-    return useMutation((data) =>
-        patchPost(data), {
-        onMutate: async (data) => {
-            // use the query key generator from useGetIssues
-            console.log("onMutate")
-        },
-        onSuccess: function () {
-
-        },
+    return useMutation((req) =>
+        patchPost(req), {
+            onMutate: async (data) => {
+                console.log("onMutate")
+            },
+            onSuccess: (data) => {
+                queryClient.invalidateQueries(["POSTCODE", data], { exact: true });
+            },
     });
 }

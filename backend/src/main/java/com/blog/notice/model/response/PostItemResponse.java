@@ -22,6 +22,9 @@ public class PostItemResponse {
     @ApiModelProperty(notes = "게시물 제목")
     private String title;
 
+    @ApiModelProperty(notes = "배너 이미지")
+    private String bannerImage;
+
     @ApiModelProperty(notes = "게시물 부제목")
     private String subTitle;
 
@@ -39,10 +42,11 @@ public class PostItemResponse {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime postsDate;
 
-    public PostItemResponse(String postCode, String title, String subTitle,
+    public PostItemResponse(String postCode, String title, String bannerImage, String subTitle,
                             String authorId, String tag, int view, LocalDateTime postsDate) {
         this.postCode = postCode;
         this.title = title;
+        this.bannerImage = bannerImage;
         this.subTitle = subTitle;
         this.authorId = authorId;
         this.tag = tag;
@@ -51,13 +55,14 @@ public class PostItemResponse {
     }
 
     public static PostItemResponse from(Post post) {
-        return new PostItemResponse(post.getPostCode(), post.getTitle(), post.getSubTitle(),
+        return new PostItemResponse(post.getPostCode(), post.getTitle(), post.getBannerImage(), post.getSubTitle(),
                 post.getAuthorId(), post.getTag(), post.getViews(), post.getCreatedAt());
     }
 
     public PostItemResponse(Post val) {
         this.postCode = val.getPostCode();
         this.title = val.getTitle();
+        this.bannerImage = val.getBannerImage();
         this.subTitle = val.getSubTitle();
         this.authorId = val.getAuthorId();
         this.tag = val.getTag();

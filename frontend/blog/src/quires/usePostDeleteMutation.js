@@ -16,10 +16,9 @@ export function usePostDeleteMutation() {
         patchPost(data), {
         onMutate: async (data) => {
             // use the query key generator from useGetIssues
-            console.log("onMutate")
         },
         onSuccess: function () {
-
+            queryClient.invalidateQueries(['POSTLIST'], { exact: true });
         },
     });
 }

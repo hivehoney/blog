@@ -7,7 +7,7 @@
         <!-- 로그 파일 이름 -->
         <property name="LOG_FILE_NAME" value="${LOG_FILE_PATH}/spring-log.log"/>
         <!-- 로그 파일 패턴 -->
-        <property name="LOG_FILE_PATTERN" value="${LOG_FILE_PATH}/spring_%d{yyyy-MM-dd-hh}_%i.log.gz"/>
+        <property name="LOG_FILE_PATTERN" value="${LOG_FILE_PATH}/spring_%d{yyyy-MM-dd}_%i.log.gz"/>
         <Property name="DEFAULT_PATTERN">[%d{yyyy-MM-dd HH:mm:ss.SSS}] %5p ${sys:PID} --- [%15.15t] %-40.40c{1.} : %m%n%xwEx</Property>
         <Property name="COLOR_PATTERN">[%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint}] %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c}{cyan} %clr{:}{faint} %m%n%xwEx</Property>
         <Property name="TEST_PATTERN">%d %5p [%c] %m%n</Property>

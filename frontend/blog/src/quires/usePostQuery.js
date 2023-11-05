@@ -1,27 +1,31 @@
 import {useQuery, useQueryClient} from 'react-query';
-import axios from 'axios';
 import {API} from "../config";
 
-const QUERY_KEY = "POST";
+const QUERY_KEY = "POSTCODE";
 
 export function getQueryKey(response) {
     return response === undefined ? [QUERY_KEY] : [QUERY_KEY, response];
 }
 
 async function getPost(code, options) {
-    const { data } = await axios.get(`${API.POST}`, {
-        params: { code },
+    const response = await fetch(`${API.POST}?code=${code}`, {
+        method: "GET",
         signal: options?.signal,
-        headers: { Authorization: "my-access-token" },
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
     });
-    return JSON.parse(data).data;
+    const responseData = await response.json();
+
+    return JSON.parse(responseData).data;
 }
 
 export function usePostQuery(code) {
     const queryClient = useQueryClient();
 
     const query = useQuery(
-        QUERY_KEY,
+        [QUERY_KEY, code],
         ({ signal }) => getPost(code, { signal }),
         { staleTime: 60000, keepPreviousData: true }
     );

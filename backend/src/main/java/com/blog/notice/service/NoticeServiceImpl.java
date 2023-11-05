@@ -1,5 +1,6 @@
 package com.blog.notice.service;
 
+import com.blog.common.constants.Const;
 import com.blog.common.util.FileUploadUtils;
 import com.blog.notice.controller.NoticeController;
 import com.blog.notice.domain.Contents;
@@ -103,7 +104,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
         String fileName = System.currentTimeMillis()+ StringUtils.cleanPath(file.getOriginalFilename());
-        Path uploadDir = Paths.get("/home/blog/back/imgUpload", postCode);
+        Path uploadDir = Paths.get(Const.devImg, postCode);
 
         if (!Files.exists(uploadDir)) {
             Files.createDirectories(uploadDir);
@@ -114,20 +115,25 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public void clearImages(List<String> imgFiles, String postCode) {
-
-        Path postDir = Paths.get("/home/blog/back/imgUpload", postCode);
+        Path postDir = Paths.get(Const.devImg, postCode);
 
         if (Files.exists(postDir) || !imgFiles.isEmpty()) {
             FileUploadUtils.cleanDir(postDir, imgFiles);
         }
     }
 
+    @Transactional
     @Override
     public String deletePost(String postCode) {
         Post post = postRepository.findByPostCode(postCode);
+
+        if (post == null) {
+            throw new IllegalStateException("Post code cannot be empty");
+        }
+
         post.setStatus(0);
         postRepository.save(post);
-        return "삭제완료";
+        return "삭제 되었습니다.";
     }
 
     @Transactional(readOnly = true)

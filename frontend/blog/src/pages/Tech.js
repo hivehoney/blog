@@ -25,7 +25,7 @@ function Board(props) {
                                 <img
                                     style={{ width: 300, height: 200 }}
                                     alt={item.title}
-                                    src={item.src}
+                                    src={item.bannerImage}
                                 />
                                 <Box sx={{ pr: 2 }}>
                                     <Typography gutterBottom variant="h6">
