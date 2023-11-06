@@ -2,7 +2,6 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import axios from "axios";
 import {API} from "../../config";
 
 export default function InputFileUpload({ code, handleChange }) {
@@ -37,41 +36,54 @@ export default function InputFileUpload({ code, handleChange }) {
         });
     }
 
+    async function uploadImage() {
+        try {
+            if (image.image_file) {
+                const formData = new FormData();
+
+                formData.append('upload', image.image_file);
+                formData.append('postCode', code);
+
+                const response = await fetch(`${API.IMGUPLOAD}`, {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const responseText = await response.text();
+                    const img = JSON.parse(responseText);
+                    const imgSrc = `${API.IMGURL}` + JSON.parse(img).data.url;
+
+                    handleChange({
+                        target: {
+                            name: "bannerImage",
+                            value: imgSrc
+                        },
+                    });
+
+                    setImage({
+                        image_file: "",
+                        preview_URL: imgSrc,
+                    });
+                    alert("서버에 등록이 완료되었습니다!");
+                } else {
+                    throw new Error('이미지 업로드 실패');
+                }
+
+                // const imgSrc = `${API.IMGURL}` + JSON.parse(imgSrc).data.url;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+
     useEffect(()=> {
         // 컴포넌트가 언마운트되면 createObjectURL()을 통해 생성한 기존 URL을 폐기
         return () => {
             URL.revokeObjectURL(image.preview_URL)
         }
     }, [])
-
-    const onSubmit = async () => {
-        if (image.image_file) {
-            const formData = new FormData();
-
-            formData.append('upload', image.image_file);
-            formData.append('postCode', code);
-
-            const { imgSrc } = await axios.post(`${API.IMGUPLOAD}`, formData);
-            alert("서버에 등록이 완료되었습니다!");
-
-            const img = `${API.IMGURL}` + JSON.parse(imgSrc).data.url;
-
-            setImage({
-                image_file: "",
-                preview_URL: img,
-            });
-
-            handleChange({
-                target: {
-                    name: "bannerImage",
-                    value: img
-                },
-            });
-
-        } else {
-            alert("사진을 등록하세요!")
-        }
-    }
 
     return (
         <div className="uploader-wrapper">
@@ -91,7 +103,7 @@ export default function InputFileUpload({ code, handleChange }) {
                 <Button type="primary" variant="contained" onClick={() => inputRef.click()}>
                     Preview
                 </Button>
-                <Button color="success" variant="contained" startIcon={<CloudUploadIcon />} onClick={onSubmit}>
+                <Button color="success" variant="contained" startIcon={<CloudUploadIcon />} onClick={uploadImage}>
                     Upload
                 </Button>
             </div>

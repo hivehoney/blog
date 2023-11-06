@@ -1,5 +1,5 @@
 import {useQuery, useQueryClient} from 'react-query';
-import {API} from "../config";
+import {API} from "../../config";
 
 const QUERY_KEY = "POSTLIST";
 

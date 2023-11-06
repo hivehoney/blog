@@ -4,7 +4,7 @@ import {Box, Button, Container, Grid, Link, Skeleton, Typography} from "@mui/mat
 import EditIcon from '@mui/icons-material/Edit';
 import {Link as RouterLink} from "react-router-dom";
 import ErrorPage from "./errorPage";
-import {usePostListQuery} from "../quires/usePostListQuery";
+import {usePostListQuery} from "../quires/post/usePostListQuery";
 
 function Board(props) {
     const { loading = false, data } = props;

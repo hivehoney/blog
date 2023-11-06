@@ -61,6 +61,10 @@ export default function Header() {
                                 {item.name}
                             </Button>
                             ))}
+                            <Button variant="contained" component={RouterNavLink} to='/login'
+                                    style={{backgroundColor: '#FFFFFF', color: '#000000', borderRadius: '30px'}}>
+                                Login
+                            </Button>
                         </Box>
                     </Toolbar>
                 </AppBar>

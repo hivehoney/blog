@@ -9,7 +9,7 @@ import {API} from "../config";
 import axios from "axios";
 import {useQuery, useQueryClient} from "react-query";
 import * as utils from "../common/utils/StringUtil";
-import {usePostMutation} from "../quires/usePostMutation";
+import {usePostMutation} from "../quires/post/usePostMutation";
 import {useLocation} from "react-router-dom";
 import {theme1} from "../assets/Theme";
 
@@ -62,8 +62,8 @@ export default function PostEditor() {
     };
 
     const onCancel = () => {
-        // deleteMutation.mutate({postCode}); 추후 삭제
         document.querySelector('[role="toolbar"]').remove();
+        window.history.back();
         setShowPrompt(false);
     };
 

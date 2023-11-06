@@ -6,8 +6,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import LongMenu from "../components/util/LongMenu";
 import HorizonLine from "../components/util/HorizonLine";
 import {deepOrange} from "@mui/material/colors";
-import {usePostQuery} from "../quires/usePostQuery";
-import {usePostDeleteMutation} from "../quires/usePostDeleteMutation";
+import {usePostQuery} from "../quires/post/usePostQuery";
+import {usePostDeleteMutation} from "../quires/post/usePostDeleteMutation";
 
 export default function Post() {
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Post() {
         <>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <CustomContainer maxWidth="md" sx={{ paddingTop: 10 }}>
+                <CustomContainer maxWidth="lg" sx={{ paddingTop: 10 }}>
                         {isLoading ? (
                             <Box sx={{ display: 'flex', height: '100vh', justifyContent: 'center', alignItems: 'center' }}>
                             <CircularProgress />

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {useMutation, useQueryClient} from 'react-query';
-import {API} from "../config";
+import {API} from "../../config";
 
 async function patchPost(req) {
     const  response  = await fetch(`${API.POSTUPDATE}`, {

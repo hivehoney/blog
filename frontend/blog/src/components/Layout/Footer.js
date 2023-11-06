@@ -17,8 +17,8 @@ export default function Footer() {
                 <Container maxWidth="sm">
                     <Typography variant="body2" color="text.secondary" align="center">
                         {"Copyright © "}
-                        <Link color="inherit" href="https://www.hive.com/">
-                            https://www.hive.com/
+                        <Link color="inherit" href="http://tae-uk.com">
+                            http://tae-uk.com
                         </Link>{" "}
                         {new Date().getFullYear()}
                         {"."}
