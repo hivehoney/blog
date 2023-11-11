@@ -21,7 +21,7 @@ import java.util.Map;
 
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.blog.notice.repository"},
+@EnableJpaRepositories(basePackages = {"com.blog.notice.repository", "com.blog.user.repository"},
         entityManagerFactoryRef = "baseEntityManager", transactionManagerRef = "baseTransactionManager")
 @PropertySource("classpath:/application.properties")
 public class DataSourceConfig {

@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 
-    private final Logger logger = LogManager.getLogger(NoticeController.class);
+    private final Logger logger = LogManager.getLogger(NoticeServiceImpl.class);
 
     private final PostRepository postRepository;
     private final ContentsRepository contentsRepository;
