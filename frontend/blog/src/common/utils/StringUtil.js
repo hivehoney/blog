@@ -1,3 +1,4 @@
+import { Alert } from "@mui/material";
 
 export function extractFilenames(text) {
     // 정규표현식을 사용하여 img 태그 안의 src 속성 값을 추출합니다.
@@ -21,3 +22,8 @@ export function extractFilenames(text) {
     return filenames;
 };
 
+export function alterMessgae(type, text) {
+    return (
+        <Alert severity={type}>{text}</Alert>
+    );
+}
