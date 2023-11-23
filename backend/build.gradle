@@ -57,6 +57,14 @@ dependencies {
 
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.21.0'
     implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.1.5'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.1.4'
+
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.1'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.1'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.1'
 }
 
 def querydslSrcDir = "src/main/generated/querydsl"

@@ -6,8 +6,7 @@ import com.blog.user.model.request.UserRequest;
 import com.blog.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    private final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
 
@@ -28,9 +25,16 @@ public class UserServiceImpl implements UserService {
      * @return 생성된 게시물의 코드
      */
     @Transactional
-    @Override
     public void registerUser(UserRequest userRequest) {
-        User userInfo = User.from(userRequest, User.Role.USER);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        User userInfo = User.builder()
+                .userId(userRequest.getUserId())
+                .password(passwordEncoder.encode(userRequest.getPassword()))
+                .name(userRequest.getLastName()+userRequest.getFirstName())
+                .email(userRequest.getEmail())
+                .role(User.Role.USER)
+                .build();
 
         User user = (User) userRepository.findByUserId(userInfo.getUserId())
                 .map(entity -> {

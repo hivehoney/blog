@@ -63,8 +63,8 @@ public class User extends BaseTimeEntity {
 
     @Getter
     public enum Role {
-        GUEST("GUEST", "게스트"),
-        USER("USER", "사용자");
+        GUEST("ROLE_GUEST", "게스트"),
+        USER("ROLE_USER", "사용자");
 
         private final String key;
         private final String title;
