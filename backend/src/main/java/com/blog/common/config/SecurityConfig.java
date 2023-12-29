@@ -1,9 +1,11 @@
 package com.blog.common.config;
 
+import com.blog.common.constants.Const;
 import com.blog.common.interceptor.JwtAccessDeniedHandler;
 import com.blog.common.interceptor.JwtAuthenticationEntryPoint;
 import com.blog.common.util.JwtAuthenticationFilter;
 import com.blog.common.util.JwtTokenUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +21,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -51,6 +58,26 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .formLogin(formLogin -> formLogin.disable())
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowCredentials(true);
+                        config.addExposedHeader("accessToken");
+                        config.addExposedHeader("refreshToken");
+                        config.addAllowedOrigin(Const.devSev);
+                        config.addAllowedHeader("Authorization");
+                        config.addAllowedHeader("Content-Type");
+                        config.setExposedHeaders(Arrays.asList("Authorization", "Authorization-refresh"));
+                        config.addAllowedMethod("*");
+                        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                        source.registerCorsConfiguration("/**", config);
+                        return config;
+
+//                        config.addAllowedMethod(Arrays.asList("GET", "POST", "PATCH", "DELETE").toString());
+                    }
+
+                }))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenUtil), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(spec -> spec.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(spec -> spec
@@ -58,7 +85,8 @@ public class SecurityConfig {
                         .accessDeniedHandler(jwtAccessDeniedHandler)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/notice/deletePost", "/api/notice/updatePost", "/api/notice/registerPost").authenticated()
+                        .requestMatchers("/api/notice/deletePost", "/api/notice/updatePost", "/api/notice/registerPost",
+                                "/api/notice/imgUpload").authenticated()
                         .requestMatchers("/api/mypage/**").authenticated()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()

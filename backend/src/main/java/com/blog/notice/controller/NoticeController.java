@@ -41,14 +41,14 @@ public class NoticeController extends ApiController {
 
     @ApiOperation(value = "post 조회", notes = "작성된 Post를 조회 합니다.")
     @RequestMapping(value = "/getPost", method = RequestMethod.GET)
-    public PostsResponse getPost(@RequestParam(value = "code", required = false) String postCode) {
+    public PostsResponse getPost(@RequestParam(value = "code") String postCode) {
         return noticeService.getPost(postCode);
     }
 
     @ApiOperation(value = "post 삭제", notes = "작성한 Post를 삭제 합니다.")
     @RequestMapping(value = "/deletePost", method = RequestMethod.PATCH)
-    public String deletePost(@RequestBody HashMap<String, Object> map) {
-        return noticeService.deletePost((String) map.get("postCode"));
+    public String deletePost(@RequestBody PostItemRequest request) {
+        return noticeService.deletePost(request.getPostCode());
     }
 
     @ApiOperation(value = "post 수정", notes = "작성한 post 수정 합니다.")
@@ -74,7 +74,7 @@ public class NoticeController extends ApiController {
     }
 
     @ApiOperation(value = "post 등록", notes = "post를 등록 합니다.")
-    @RequestMapping(value = "/registerPost")
+    @RequestMapping(value = "/registerPost", method = RequestMethod.PATCH)
     public String registerPost() {
         return noticeService.registerPost();
     }

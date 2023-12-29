@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private static final Logger logger = LogManager.getLogger(UserController.class);
+    private static final Logger logger = LogManager.getLogger(AuthService.class);
 
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;

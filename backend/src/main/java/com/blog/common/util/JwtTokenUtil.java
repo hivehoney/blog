@@ -25,7 +25,7 @@ import java.util.Date;
 @Transactional(readOnly = true)
 public class JwtTokenUtil implements InitializingBean {
 
-    private static final Logger logger = LogManager.getLogger(FileUploadUtils.class);
+    private static final Logger logger = LogManager.getLogger(JwtTokenUtil.class);
 
     private final UserDetailsServiceImpl userDetailsService;
     private final RedisService redisService;
@@ -86,7 +86,6 @@ public class JwtTokenUtil implements InitializingBean {
 
         return new Auth.TokenDto(accessToken, refreshToken);
     }
-
 
     // == 토큰으로부터 정보 추출 == //
     public Claims getClaims(String token) {

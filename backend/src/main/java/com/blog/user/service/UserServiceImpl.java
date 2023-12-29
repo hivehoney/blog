@@ -18,11 +18,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     /**
-     * 임시 게시물을 생성하고 해당 게시물의 코드를 반환합니다.
+     * 유저 정보를 확인하고 없을 경우 유저를 생성하고 해당 유저 정보를 반환합니다.
      *
-     * @param 'boardId' 게시물이 속한 게시판 ID
-     * @param 'author'  작성자 이름
-     * @return 생성된 게시물의 코드
+     * @param 'userRequest' 사용자 정보
+     * @return 생성된 유저 정보
      */
     @Transactional
     public void registerUser(UserRequest userRequest) {

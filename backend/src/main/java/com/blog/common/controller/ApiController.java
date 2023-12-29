@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -88,6 +89,13 @@ public class ApiController {
     public ResponseEntity handleEntityNotFoundException(EntityNotFoundException e){
         logger.error("[EntityNotFoundException] cause:{}, message: {}", NestedExceptionUtils.getMostSpecificCause(e),e.getMessage());
         ErrorCode errorCode = UserErrorCode.MEMBER_NOT_FOUND_ERROR;
+        ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(),errorCode.getCode(), errorCode.getMessage());
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
+    }
+
+    @ExceptionHandler
+    protected ResponseEntity<ErrorResponse> handleBadCredentialException(BadCredentialsException e) {
+        ErrorCode errorCode = CommonErrorCode.LOGIN_FAIL;
         ErrorResponse errorResponse = ErrorResponse.of(errorCode.getHttpStatus(),errorCode.getCode(), errorCode.getMessage());
         return ResponseEntity.status(errorCode.getHttpStatus()).body(errorResponse);
     }

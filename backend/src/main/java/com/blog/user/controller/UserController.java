@@ -1,13 +1,12 @@
 package com.blog.user.controller;
 
 import com.blog.common.controller.ApiController;
-import com.blog.common.util.FileUploadUtils;
-import com.blog.notice.service.NoticeService;
 import com.blog.user.domain.Auth;
 import com.blog.user.model.request.UserRequest;
 import com.blog.user.service.AuthService;
 import com.blog.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
@@ -45,10 +44,11 @@ public class UserController extends ApiController {
         HttpCookie httpCookie = ResponseCookie.from("refresh-token", tokenDto.getRefreshToken())
                 .maxAge(COOKIE_EXPIRATION)
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .build();
 
-        return ResponseEntity.ok()
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, httpCookie.toString())
                 // AT 저장
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getAccessToken())

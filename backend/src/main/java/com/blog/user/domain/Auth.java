@@ -30,7 +30,6 @@ public class Auth {
         private String userId;
         private String password;
 
-
         @Builder
         @JsonCreator
         public SignupDto(@JsonProperty("userId") String userId, @JsonProperty("password") String password) {
