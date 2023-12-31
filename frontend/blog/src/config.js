@@ -7,6 +7,6 @@ export const API = {
     POSTDELETE: `/api/notice/deletePost`,
     POST: `/api/notice/getPost`,
     USERREGISTER: `/api/user/register`,
-    LOGIN: `/api/user/signin`,
+    LOGIN: `/api/user/login`,
     MYPAGE: `/api/mypage`,
 };

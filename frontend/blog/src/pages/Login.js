@@ -10,32 +10,67 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {alterMessgae} from "../common/utils/StringUtil";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useUserInfo} from "../quires/useLoginQuery";
+import {setCookie} from "../common/utils/Cookies";
+import {useRecoilState} from "recoil";
+import {tokenState} from "../common/recoil/GlobalState";
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="http://tae-uk.com/">
-                tae-uk.com
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-    const handleSubmit = (event) => {
+    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState(null);
+    const { loginUser } = useUserInfo();
+    const [token, setToken] = useRecoilState(tokenState);
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+
+        if (!data.get('email')) {
+            setErrorMessage('Email을 입력해 주세요');
+            clearErrorMessageAfterDelay();
+            return;
+        }
+
+        if (!data.get('password')) {
+            setErrorMessage('Password를 입력해 주세요');
+            clearErrorMessageAfterDelay();
+            return;
+        }
+
+        await loginUser.mutate({
+            userId: data.get("email"),
+            password: data.get("password"),
+        },{
+            onSuccess: (token) => {
+                // 응답에서 헤더 정보를 추출
+                const accessToken = token.headers.authorization.replace('Bearer ', '');
+
+                if(accessToken){
+                    setCookie('accessToken', accessToken, {
+                        path: '/',
+                        expires: new Date(Date.now() + 2 * 60 * 60 * 1000)
+                    });
+                    setToken(accessToken);
+                }
+                navigate("/blog/tech");
+            },
+            onError: (error) => {
+                setErrorMessage('회원정보가 틀렸습니다.');
+                clearErrorMessageAfterDelay();
+            }
         });
+    };
+
+    const clearErrorMessageAfterDelay = () => {
+        setTimeout(() => {
+            setErrorMessage(null);
+        }, 10000);
     };
 
     return (
@@ -66,6 +101,9 @@ export default function SignInSide() {
                             alignItems: 'center',
                         }}
                     >
+                        {errorMessage && (
+                            alterMessgae('error', errorMessage)
+                        )}
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
@@ -106,11 +144,11 @@ export default function SignInSide() {
                                 Sign In
                             </Button>
                             <Grid container>
-                                <Grid item xs>
+                                {/*<Grid item xs>
                                     <Link href="#" variant="body2">
                                         Forgot password?
                                     </Link>
-                                </Grid>
+                                </Grid>*/}
                                 <Grid item>
                                     <Link href="/register" variant="body2">
                                         {"Don't have an account? Sign Up"}
@@ -123,5 +161,18 @@ export default function SignInSide() {
                 </Grid>
             </Grid>
         </ThemeProvider>
+    );
+}
+
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit" href="http://tae-uk.com/">
+                tae-uk.com
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
     );
 }

@@ -1,6 +1,4 @@
 export default function ErrorPage(error) {
-    console.error(error);
-
     return (
         <div id="error-page">
             <h1>Oops!</h1>

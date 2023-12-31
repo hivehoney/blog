@@ -1,3 +1,4 @@
-export default function getIsLogin() {
-    return !!localStorage.getItem('userId')
-}
+import Cookies from 'js-cookie';
+
+const isLogin = () =>  !!Cookies.get('token')
+export default isLogin;

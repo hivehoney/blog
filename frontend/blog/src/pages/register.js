@@ -48,9 +48,9 @@ export default function SignUp() {
     const [passwordError, setPasswordError] = useState('');
     const [firstNameError, setFirstNameError] = useState('');
     const [lastNameError, setLastNameError] = useState('');
-    const registerMutation = useRegisterMutation();
+    const { mutate, isError, isSuccess } = useRegisterMutation();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         // 조건이 하나라도 안 맞을 경우
@@ -58,11 +58,7 @@ export default function SignUp() {
             return alterMessgae("error", USER_REG_SUCCESS);
         }
 
-        registerMutation.mutate(formData);
-        
-        if (registerMutation.isSuccess) {
-           console.log("확인")
-        }
+        mutate(formData);
     };
 
     const handleChange = (e) => {
@@ -102,8 +98,8 @@ export default function SignUp() {
                         alignItems: 'center',
                     }}
                 >
-                    {registerMutation.isSuccess && alterMessgae('success', USER_REG_SUCCESS)}
-                    {registerMutation.isError && alterMessgae('error', '회원가입 실패')}
+                    {isError && alterMessgae('error', '회원가입 실패')}
+                    {isSuccess && alterMessgae('success', USER_REG_SUCCESS)}
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
