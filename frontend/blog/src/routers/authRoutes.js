@@ -1,20 +1,22 @@
 import React from "react";
 import loadable from '@loadable/component'
-import PostEditor from "../pages/PostEditor";
+import PostEditor from "../pages/Blog/PostEditor";
+import SignUp from "../pages/register";
+import PublicRoute from "./PublicRoute";
+import ErrorFallback from "../common/ErrorFallback";
 
-const PublicRoute = loadable(() => import('./PublicRoute'))
+// const PublicRoute = loadable(() => import('./PublicRoute'))
 const Layout = loadable(() => import('../components/Layout/Layout'))
 const ErrorPage = loadable(() => import('../pages/errorPage'))
 const SignInSide = loadable(() => import('../pages/Login'))
-const SignUp = loadable(() => import('../pages/register'))
-const Tech = loadable(() => import('../pages/Tech'))
-const Post = loadable(() => import('../pages/Post'))
+const Tech = loadable(() => import('../pages/Blog/Tech'))
+const Post = loadable(() => import('../pages/Blog/Post'))
 const Temp = loadable(() => import('../pages/Temp'))
 
 export default {
     path: '/',
     element: <PublicRoute />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorFallback />,
     children: [
         {
             path:"", element: <Layout />
