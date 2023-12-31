@@ -90,15 +90,3 @@ export default function Post() {
         </>
     );
 }
-
-const CustomContainer = styled(Container)(({ theme }) => ({
-    backgroundColor: '#FFFFFF',
-}));
-
-const theme = createTheme({
-    palette: {
-        background: {
-            default: '#F9F9F9',
-        },
-    },
-});

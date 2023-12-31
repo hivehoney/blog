@@ -26,10 +26,10 @@ ElevationScroll.propTypes = {
 export default function Header() {
     const [token, setToken] = useRecoilState(tokenState);
     const navItems = [
-        {name: 'Intro', path: '/intro'},
-        {name: 'Blog', path: '/blog/tech'},
-        {name: 'Contact', path: '/contact'},
-        {name: 'Memoirs', path: '/memoirs'},
+        {name: 'ABOUT ME', path: '/intro/about'},
+        {name: 'RESUME', path: '/contact'},
+        {name: 'BLOG', path: '/blog/tech'},
+        {name: 'PROJECT', path: '/memoirs'},
     ];
     const logoutToken = () => {
         setToken('');

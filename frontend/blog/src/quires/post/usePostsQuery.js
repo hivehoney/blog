@@ -1,26 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {API} from "../../config";
-import {axiosAPI, axiosAuthAPI} from "../../api/api";
-
-export async function getPost(code) {
-    const response = await axiosAPI.get(`${API.POST}?code=${code.postCode}`)
-    return response
-}
-
-export async function deletePost(postCode) {
-    const response = await axiosAuthAPI.patch(`${API.POSTDELETE}`, postCode)
-    return response
-}
-
-export async function updatePost(data) {
-    const response = await axiosAuthAPI.patch(`${API.POSTUPDATE}`, data)
-    return response
-}
-
-export async function addPost() {
-    const response = await axiosAuthAPI.patch(`${API.POSTADD}`)
-    return response.data
-}
+import {addPost, deletePost, getPost, updatePost} from "../../api/blog";
 
 const QUERY_KEY = "POSTCODE";
 

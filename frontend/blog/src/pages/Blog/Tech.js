@@ -6,6 +6,8 @@ import {Link as RouterLink} from "react-router-dom";
 import ErrorPage from "../errorPage";
 import {usePostListQuery} from "../../quires/post/usePostListQuery";
 import PageHeader from "../../components/Layout/PageHeader";
+import {useRecoilState} from "recoil";
+import {tokenState} from "../../common/recoil/GlobalState";
 
 function Board(props) {
     const { loading = false, data } = props;
@@ -61,6 +63,7 @@ Board.propTypes = {
 };
 
 function Tech() {
+    const [token, setToken] = useRecoilState(tokenState);
     const postItemRequest = {
         status: 1
     };
@@ -71,20 +74,18 @@ function Tech() {
     return (
         <>
         <Container maxWidth="false">
-            <PageHeader title={"Related Posts"}>
+            <PageHeader title={"Related Posts"} />
+            {!token && (
                 <Link component={RouterLink} to="editor" underline="none" color="White">
                     <Button
                         variant="contained"
                         endIcon={<EditIcon />}
-                        sx={{
-                            textAlign: 'left',
-                            float: 'right'
-                        }}
+                        sx={{ textAlign: 'left', float: 'right' }}
                     >
                         Post
                     </Button>
                 </Link>
-            </PageHeader>
+            )}
             {data != undefined && !isLoading && (
                 <Box sx={{ overflow: 'hidden', maxWidth: '1800px', margin: '0 auto' }}>
                     <Board loading={isLoading} data={data} />

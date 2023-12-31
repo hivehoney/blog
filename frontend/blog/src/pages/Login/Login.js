@@ -11,13 +11,13 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {alterMessgae} from "../common/utils/StringUtil";
+import {alterMessgae} from "../../common/utils/StringUtil";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {useUserInfo} from "../quires/useLoginQuery";
-import {setCookie} from "../common/utils/Cookies";
+import {useUserInfo} from "../../quires/useLoginQuery";
+import {setCookie} from "../../common/utils/Cookies";
 import {useRecoilState} from "recoil";
-import {tokenState} from "../common/recoil/GlobalState";
+import {tokenState} from "../../common/recoil/GlobalState";
 
 const defaultTheme = createTheme();
 
@@ -150,7 +150,7 @@ export default function SignInSide() {
                                     </Link>
                                 </Grid>*/}
                                 <Grid item>
-                                    <Link href="/register" variant="body2">
+                                    <Link href="/Login/register" variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>

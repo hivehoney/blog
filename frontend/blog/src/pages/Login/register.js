@@ -11,13 +11,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useRegisterMutation} from "../quires/useRegisterMutation";
-import {Alert, FormHelperText} from "@mui/material";
+import {FormHelperText} from "@mui/material";
 import {useState} from "react";
-import {validateEmail, validateName, validatePassword} from "../common/utils/Validation";
+import {validateEmail, validateName, validatePassword} from "../../common/utils/Validation";
 import {styled} from "@mui/system";
-import {USER_REG_SUCCESS} from "../common/utils/constant";
-import {alterMessgae} from "../common/utils/StringUtil";
+import {USER_REG_SUCCESS} from "../../common/utils/constant";
+import {alterMessgae} from "../../common/utils/StringUtil";
+import {useUserInfo} from "../../quires/useLoginQuery";
+import {useNavigate} from "react-router-dom";
 
 const FormHelperTexts = styled(FormHelperText)`
   width: 100%;
@@ -42,13 +43,14 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState();
     const [emailError, setEmailError] = useState('');
     const [passwordState, setPasswordState] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [firstNameError, setFirstNameError] = useState('');
     const [lastNameError, setLastNameError] = useState('');
-    const { mutate, isError, isSuccess } = useRegisterMutation();
+    const { addUser } = useUserInfo();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -58,7 +60,15 @@ export default function SignUp() {
             return alterMessgae("error", USER_REG_SUCCESS);
         }
 
-        mutate(formData);
+        await addUser(formData, {
+            onSuccess: () => {
+                alterMessgae('success', USER_REG_SUCCESS)
+                navigate("/login");
+            },
+            onError: () => {
+                alterMessgae('error', '회원가입 실패')
+            }
+        });
     };
 
     const handleChange = (e) => {
@@ -98,8 +108,6 @@ export default function SignUp() {
                         alignItems: 'center',
                     }}
                 >
-                    {isError && alterMessgae('error', '회원가입 실패')}
-                    {isSuccess && alterMessgae('success', USER_REG_SUCCESS)}
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
@@ -175,7 +183,7 @@ export default function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="/login" variant="body2">
+                                <Link href="/Login/Login" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>
