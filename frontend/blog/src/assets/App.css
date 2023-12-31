@@ -2,9 +2,9 @@
 
 /* 전체 페이지의 글꼴과 배경색 설정 */
 body {
-    font-family: Arial, sans-serif;
+    font-family: "NotoSans";
     min-height: 100vh;
-    width: 100%;
+    width: 100vw;
     margin: 0;
     padding: 0;
 }
@@ -96,4 +96,9 @@ th, td {
     display: table-cell;
     vertical-align: middle;
     text-align:center;
+}
+
+@font-face {
+    font-family: "NotoSans";
+    src: url("./font/NotoSansKR-VariableFont_wght.ttf");
 }
