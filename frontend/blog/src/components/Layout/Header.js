@@ -1,16 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {
-    AppBar,
-    Box, Button, Container, CssBaseline,
-    Link,
-    Toolbar,
-    Typography, useScrollTrigger
-} from "@mui/material";
-import { NavLink as RouterNavLink } from "react-router-dom";
+import {AppBar, Box, Button, CssBaseline, Link, Toolbar, Typography, useScrollTrigger} from "@mui/material";
+import {NavLink as RouterNavLink} from "react-router-dom";
+import {useRecoilState} from "recoil";
+import {tokenState} from "../../common/recoil/GlobalState";
 
 function ElevationScroll(props) {
-    const { children, window } = props;
+    const {children, window} = props;
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
@@ -28,12 +24,16 @@ ElevationScroll.propTypes = {
 };
 
 export default function Header() {
+    const [token, setToken] = useRecoilState(tokenState);
     const navItems = [
-        { name: 'Intro', path: '/intro' },
-        { name: 'Blog', path: '/blog/tech' },
-        { name: 'Contact', path: '/contact' },
-        { name: 'Memoirs', path: '/memoirs' },
+        {name: 'Intro', path: '/intro'},
+        {name: 'Blog', path: '/blog/tech'},
+        {name: 'Contact', path: '/contact'},
+        {name: 'Memoirs', path: '/memoirs'},
     ];
+    const logoutToken = () => {
+        setToken('');
+    };
 
     return (
         <React.Fragment>
@@ -52,19 +52,26 @@ export default function Header() {
                                 <Button
                                     key={item.name}
                                     variant="h5"
-                                    sx={{ color: '#fff', fontSize: 16 }}
+                                    sx={{color: '#fff', fontSize: 16}}
                                     component={RouterNavLink}
                                     to={item.path}
                                     color="inherit"
                                     underline="none"
                                 >
-                                {item.name}
-                            </Button>
+                                    {item.name}
+                                </Button>
                             ))}
-                            <Button variant="contained" component={RouterNavLink} to='/login'
-                                    style={{backgroundColor: '#FFFFFF', color: '#000000', borderRadius: '30px'}}>
-                                Login
-                            </Button>
+                            {token ? (
+                                <Button variant="contained" component={RouterNavLink} onClick={logoutToken}
+                                        style={{backgroundColor: '#FFFFFF', color: '#000000', borderRadius: '30px'}}>
+                                    LOGOUT
+                                </Button>
+                            ) : (
+                                <Button variant="contained" component={RouterNavLink} to='/login'
+                                        style={{backgroundColor: '#FFFFFF', color: '#000000', borderRadius: '30px'}}>
+                                    Login
+                                </Button>
+                            )}
                         </Box>
                     </Toolbar>
                 </AppBar>
