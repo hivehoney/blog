@@ -20,13 +20,13 @@ export default function Layout() {
                 <ScrollRestoration />
                 <CssBaseline />
                 <Header />
-                    <StyledDiv>
-                        <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <Outlet showFooter={showFooter} />
-                        </Suspense>
-                        </ErrorBoundary>
-                    </StyledDiv>
+                <StyledDiv>
+                    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Outlet showFooter={showFooter} />
+                    </Suspense>
+                    </ErrorBoundary>
+                </StyledDiv>
                 {showFooter && <Footer />}
             </ThemeProvider>
         </>

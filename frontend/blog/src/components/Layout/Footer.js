@@ -10,11 +10,11 @@ export default function Footer() {
                         theme.palette.mode === "light"
                             ? theme.palette.grey[200]
                             : theme.palette.grey[800],
-                    p: 6,
+                    p: 5,
                 }}
                 component="footer"
             >
-                <Container maxWidth="sm">
+                <Container maxWidth="xs">
                     <Typography variant="body2" color="text.secondary" align="center">
                         {"Copyright © "}
                         <Link color="inherit" href="http://tae-uk.com">

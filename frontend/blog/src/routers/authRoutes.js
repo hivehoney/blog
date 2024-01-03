@@ -4,6 +4,9 @@ import PostEditor from "../pages/Blog/PostEditor";
 import SignUp from "../pages/Login/register";
 import PublicRoute from "./PublicRoute";
 import ErrorFallback from "../common/ErrorFallback";
+import About from "../pages/Intro/About";
+import Resume from "../pages/Intro/Resume";
+import Projects from "../pages/Intro/Projects";
 
 // const PublicRoute = loadable(() => import('./PublicRoute'))
 const Layout = loadable(() => import('../components/Layout/Layout'))
@@ -19,9 +22,6 @@ export default {
     errorElement: <ErrorFallback />,
     children: [
         {
-            path:"", element: <Layout />
-        },
-        {
             children: [
                 {path: '/login', element: <SignInSide />},
                 {path: '/register', element: <SignUp />},
@@ -36,8 +36,14 @@ export default {
                 { path: "tech/editor", element: <PostEditor /> },
             ],
         },
-        { path: "intro", element: <Layout />, children: [{path:"about", element: <Temp />}]},
-        { path: "contact", element: <Layout />, children: [{path:"", element: <Temp />}]},
-        { path: "memoirs", element: <Layout />, children: [{path:"", element: <Temp />}]},
+        {
+            path: "intro",
+            element: <Layout />,
+            children: [
+                {path:"about", element: <About />},
+                {path:"resume", element: <Resume />},
+                {path:"projects", element: <Projects />},
+            ]
+        },
     ],
 }

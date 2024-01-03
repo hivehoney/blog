@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Box, Container, CssBaseline, ThemeProvider, Typography} from "@mui/material";
+import {CssBaseline, ThemeProvider, Typography} from "@mui/material";
 import {theme1} from "../assets/Theme";
 
 export default function Temp() {
