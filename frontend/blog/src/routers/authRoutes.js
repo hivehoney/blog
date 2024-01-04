@@ -7,8 +7,8 @@ import ErrorFallback from "../common/ErrorFallback";
 import About from "../pages/Intro/About";
 import Resume from "../pages/Intro/Resume";
 import Projects from "../pages/Intro/Projects";
+import {Navigate} from "react-router";
 
-// const PublicRoute = loadable(() => import('./PublicRoute'))
 const Layout = loadable(() => import('../components/Layout/Layout'))
 const ErrorPage = loadable(() => import('../pages/errorPage'))
 const SignInSide = loadable(() => import('../pages/Login/Login'))
@@ -21,6 +21,9 @@ export default {
     element: <PublicRoute />,
     errorElement: <ErrorFallback />,
     children: [
+        {
+            path: "*", element: <Navigate to="/intro/about" />
+        },
         {
             children: [
                 {path: '/login', element: <SignInSide />},

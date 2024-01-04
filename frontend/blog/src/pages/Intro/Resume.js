@@ -59,7 +59,7 @@ const Resume = () => {
     return (
         <>
             <Grid container>
-                <Grid item xs={12} className="main-bg-color02" sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid item xs={12} className="sub-bg-color" sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Stack spacing={2} alignItems="center" sx={{ width: '800px' }}>
                         <Typography component="h3" className="font weight" variant="h3" sx={{ p: 15, display: "flex", alignItems: "center" }}>
                             <div className="flag-bullet" style={{ marginRight: "10px" }} />
@@ -82,7 +82,7 @@ const Resume = () => {
                             ))}
                         </Box>
                         <Box sx={{ width: '100%' }}>
-                            <Paper elevation={3}>
+                            <Paper elevation={3} className="template-card">
                                 <Grid container sx={{ padding: 5, justifyContent: 'center', mb: 5 }}>
                                     <Grid item xs={12}>
                                          <Typography variant="h5" className="font weight" sx={{ mb: 2 }}>
@@ -90,7 +90,7 @@ const Resume = () => {
                                         </Typography>
                                     </Grid>
                                     {skillData.map((entry, index) => (
-                                        <Grid item xs={2} sm={4} md={4} key={index}>
+                                        <Grid item xs={2} sm={4} md={4} key={index} className="font">
                                             {entry.skill}
                                         </Grid>
                                     ))}

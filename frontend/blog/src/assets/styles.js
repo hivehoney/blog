@@ -1,10 +1,9 @@
-import { styled } from '@mui/system';
-import theme from "./Theme";
+import {styled} from '@mui/system';
 
 const StyledDiv = styled('div')({
-    fontFamily: 'NotoSans',
-    minHeight: '100vh',
+    minHeight: '90vh',
     width: '100vw',
+    minWidth: '850px',
     display: 'flex',
     justifyContent: 'center',
     padding: 0,

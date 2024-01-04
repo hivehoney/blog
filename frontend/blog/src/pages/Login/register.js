@@ -60,7 +60,9 @@ export default function SignUp() {
             return alterMessgae("error", USER_REG_SUCCESS);
         }
 
-        await addUser(formData, {
+        alterMessgae('error', '현재는 가입신청이 불가능 합니다.')
+
+        /*await addUser(formData, {
             onSuccess: () => {
                 alterMessgae('success', USER_REG_SUCCESS)
                 navigate("/login");
@@ -68,7 +70,7 @@ export default function SignUp() {
             onError: () => {
                 alterMessgae('error', '회원가입 실패')
             }
-        });
+        });*/
     };
 
     const handleChange = (e) => {
@@ -178,12 +180,13 @@ export default function SignUp() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            disabled={true}
                         >
                             Sign Up
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="/Login/Login" variant="body2">
+                                <Link href="/login" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>

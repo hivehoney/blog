@@ -7,15 +7,15 @@ import {
     CssBaseline,
     SwipeableDrawer,
     Toolbar,
-    Typography,
     useMediaQuery,
     useScrollTrigger
 } from "@mui/material";
-import {NavLink as RouterNavLink} from "react-router-dom";
+import {NavLink as RouterNavLink, useNavigate} from "react-router-dom";
 import {useRecoilState} from "recoil";
 import {tokenState} from "../../common/recoil/GlobalState";
 import SegmentIcon from '@mui/icons-material/Segment';
 import {Stack} from "@mui/joy";
+import ToggleTheme from "../../assets/ToggleTheme";
 
 function ElevationScroll(props) {
     const {children, window} = props;
@@ -36,6 +36,7 @@ ElevationScroll.propTypes = {
 };
 
 export default function Header() {
+    const navigate = useNavigate();
     const [token, setToken] = useRecoilState(tokenState);
     const [state, setState] = React.useState({ right: false });
     const navItems = [
@@ -47,6 +48,7 @@ export default function Header() {
 
     const logoutToken = () => {
         setToken('');
+        navigate("/intro/about");
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -95,11 +97,9 @@ export default function Header() {
             <ElevationScroll>
                 <AppBar id="page-header">
                     <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Button component={RouterNavLink} to="/intro/about">
-                            <Typography variant="h4" className="font weight">
-                                Hive
-                            </Typography>
-                        </Button>
+                        <a href="/intro/about" className="font weight">
+                            <h1>Hive</h1>
+                        </a>
                         {isMobile ? (
                             <>
                                 <Button onClick={toggleDrawer('right', true)}><SegmentIcon /></Button>
@@ -114,12 +114,15 @@ export default function Header() {
                                 </SwipeableDrawer>
                             </>
                         ) : (
-                            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 {navItems.map((item, index) => (
                                     <a key={item.name} href={item.path} className="font_bar">
                                         {item.name}
                                     </a>
                                 ))}
+                                <div style={{ marginLeft: "-20px" }}>
+                                    <ToggleTheme />
+                                </div>
                                 {token ? (
                                     <Button variant="contained" component={RouterNavLink} onClick={logoutToken} className="" style={{ backgroundColor: '#000000', color: '#FFFFFF', borderRadius: '30px' }}>
                                         LOGOUT

@@ -4,20 +4,11 @@ export default function Footer() {
 
     return (
         <>
-            <Box
-                sx={{
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === "light"
-                            ? theme.palette.grey[200]
-                            : theme.palette.grey[800],
-                    p: 5,
-                }}
-                component="footer"
-            >
-                <Container maxWidth="xs">
-                    <Typography variant="body2" color="text.secondary" align="center">
-                        {"Copyright © "}
-                        <Link color="inherit" href="http://tae-uk.com">
+            <Box component="footer">
+                <Container maxWidth="lg">
+                    <Typography variant="body2" className="font weight" align="center">
+                        {"Copyright © by Taeuk Ha"}<br />
+                        <Link href="http://tae-uk.com" className="font weight" sx={{textDecoration: 'none'}}>
                             http://tae-uk.com
                         </Link>{" "}
                         {new Date().getFullYear()}

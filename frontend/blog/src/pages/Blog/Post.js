@@ -1,6 +1,5 @@
 import React from "react";
-import {Avatar, Box, CircularProgress, Container, Typography} from "@mui/material";
-import {createTheme, styled} from "@mui/material/styles";
+import {Avatar, Box, CircularProgress, Typography} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 import LongMenu from "../../components/util/LongMenu";
 import HorizonLine from "../../components/util/HorizonLine";
@@ -37,7 +36,7 @@ export default function Post() {
                 </Box>
             ) : (
                 <>
-                    <Grid container component="main" sx={{ height: '100%', width: '100vw', position: 'relative' }}>
+                    <Grid container component="main" className="main-bg-content">
                         <PageImage imgSrc={data.bannerImage} title={data.title} />
                         <Grid
                             item
@@ -53,17 +52,17 @@ export default function Post() {
                                 marginTop: 10,
                             }}
                         >
-                            <Typography variant="h4" component="h4" sx={{ mb: 5 }}>
+                            <Typography variant="h4" component="h4" className="font weight" sx={{ mb: 5 }}>
                                 {data.title}
                             </Typography>
                             <Box sx={{ display: 'flex', flexWrap: 'nowrap', mb: 3, alignItems: 'center' }}>
                                 <Avatar sx={{ bgcolor: deepOrange[500], width: 30, height: 30, mr: 2 }}>
                                     {data.authorId}
                                 </Avatar>
-                                <Typography variant="h6" component="h6" sx={{ mr: 3 }}>
+                                <Typography className="font weight" variant="h6" component="h6" sx={{ mr: 3 }}>
                                     {data.authorId}
                                 </Typography>
-                                <Typography variant="subtitle1" color="gray">
+                                <Typography className="font" variant="subtitle1" color="gray">
                                     {data.postsDate}
                                 </Typography>
                                 {token && (
@@ -78,6 +77,7 @@ export default function Post() {
                             <HorizonLine />
                             <Typography
                                 variant="body1"
+                                className="font"
                                 dangerouslySetInnerHTML={{
                                     __html: data.contents,
                                 }}

@@ -1,18 +1,178 @@
 /* 기본 스타일 설정 */
+:root {
+    --main-bg-color: #ffffff;
+    --sub-bg-color: #E6DACE;
+    --sub-bg-color2: #F8F9FA;
+    --main-head-color: #ffffff;
+    --main-footer-color: #ffffff;
+    --template-card-color: #F4ECE6;
+    --template-card-color2: #f8f9fa;
+    --template-card-color3: #ffffff;
+    --font-color: #000;
+    --container-bar: #0050FF;
+
+    --color-black: #000;
+    --color-white: #fff;
+    --color-accent: #03045e;
+    --color-bg: #caf0f8;
+    --color-bg-darker: #ade8f4;
+    --color-bg-sidebar: #fff;
+    --color-bg-nav-hover: #e8f8fb;
+    --color-bg-actived: #023e8a;
+    --color-border: #03045e;
+    --color-text: #03045e;
+    --color-text-actived: #fff;
+    --color-text-hover: #0096c7;
+    --color-badge: #fff;
+
+    --font_0: normal normal bold 100px/1.4em 'Poppins-Semibold', 'NotoSans';
+    --font_1: normal normal normal 16px/1.4em 'NotoSans';
+    --font_2: normal normal bold 35px/1.4em 'Poppins-Semibold', 'NotoSans';
+    --font_3: normal normal bold 27px/1.4em 'Poppins-Semibold', 'NotoSans';
+    --font_4: normal normal bold 25px/1.4em 'Poppins-Semibold', 'NotoSans';
+    --font_5: normal normal bold 25px/1.4em 'NotoSans';
+    --font_6: normal normal bold 20px/1.4em 'Poppins-Semibold', 'NotoSans';
+    --font_7: normal normal normal 20px/1.4em 'NotoSans';
+    --font_8: normal normal normal 17px/1.4em 'NotoSans';
+    --font_9: normal normal normal 14px/1.4em 'NotoSans';
+    --font_10: normal normal normal 12px/1.4em 'NotoSans';
+}
+
+html.dark {
+    --main-bg-color: #121212;
+    --sub-bg-color: #2D3135;
+    --sub-bg-color2: #2D3135;
+    --main-head-color: #222222;
+    --main-footer-color: #212529;
+    --template-card-color: #1E1E1E;
+    --template-card-color2: #1E1E1E;
+    --template-card-color3: #1E1E1E;
+    --container-bar: #0050FF;
+    --font-color: #ffffff;
+    --color-accent: #495057;
+    --color-bg: #212529;
+    --color-bg-darker: #495057;
+    --color-bg-sidebar: #343a40;
+    --color-bg-nav-hover: #222;
+    --color-bg-actived: #495057;
+    --color-border: #f8f9fa;
+    --color-text: #dee2e6;
+    --color-text-actived: #fff;
+    --color-text-hover: #adb5bd;
+    --color-badge: #495057;
+}
+
+.sub-bg-color {
+    background-color: var(--sub-bg-color);
+}
+
+.sub-bg-color2 {
+    background-color: var(--sub-bg-color2);
+}
+
+.main-bg-color {
+    background-color: var(--main-bg-color);
+}
+
+.template-card {
+    background-color: var(--template-card-color) !important;
+}
+
+.template-card2 {
+    background-color: var(--template-card-color2);
+}
+
+.template-card3 {
+    background-color: var(--template-card-color3) !important;
+}
+
+.main-bg-content {
+    background-color: var(--template-card-color2);
+}
+
+.avatar-container {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.flag-indicator {
+    width: 10px;
+    height: 50px;
+    background-color: var(--container-bar);
+}
+
+.flag-bullet {
+    width: 20px;
+    height: 20px;
+    background-color: var(--container-bar);
+}
 
 /* 전체 페이지의 글꼴과 배경색 설정 */
 body {
+    min-width: 850px;
     font-family: "NotoSans";
-    min-height: 100vh;
-    width: 100vw;
     margin: 0;
-    padding: 0;
+}
+
+header {
+    background-color: var(--main-head-color) !important;
+    height: 80px;
+    justify-content: center;
+}
+
+footer {
+    background-color: var(--main-footer-color);
+    height: 80px;
+    padding: 30px;
+}
+
+.font {
+    font-family: "Poppins-Semibold";
+    color: var(--font-color);
+}
+
+.font.weight{
+    font-family: "Poppins-Semibold";
+    font-weight: bold;
+}
+
+.font_bar{
+    fonnt: var(--font_7);
+    font-weight: bold;
+    color: var(--font-color);
+    margin-right: 20px;
+}
+
+.font_bar02{
+    color: var(--font-color);
+    font-family: "NotoSans";
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 2;
+}
+
+.font6 {
+    font: var(--font_2);
+}
+
+.blue {
+    color: #0050FF;
+}
+
+.button {
+    backgroundColor: var(--color-black) !important;
+    color: var(--color-white);
 }
 
 /* 전체 링크의 색상과 밑줄 제거 */
 a {
-    color: #007bff;
     text-decoration: none;
+    color: var(--font-color);
 }
 
 /* 링크에 마우스를 올렸을 때 색상 변경 */
@@ -33,7 +193,7 @@ img {
 
 /* 버튼 스타일 설정 */
 button {
-    background-color: #007bff;
+    background-color: #dee2e6;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -101,4 +261,9 @@ th, td {
 @font-face {
     font-family: "NotoSans";
     src: url("./font/NotoSansKR-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "Poppins-Semibold";
+    src: url("./font/Poppins/Poppins-SemiBold.ttf");
 }

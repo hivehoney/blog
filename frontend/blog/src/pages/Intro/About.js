@@ -11,8 +11,8 @@ import {NavLink as RouterNavLink} from "react-router-dom";
 const About = () => {
     return (
         <>
-            <Grid container>
-                <Grid item xs={5} className="main-bg-color02" />
+            <Grid container className="main-bg-color">
+                <Grid item xs={5} className="sub-bg-color" />
                 <Box
                     sx={{ position: 'relative', display: 'flex',
                         '& > :not(style)': {
@@ -24,7 +24,7 @@ const About = () => {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <Paper elevation={3} className="template-card">
+                    <Paper elevation={3} className="template-card" style={{ position: 'absolute', transform: 'translate(-90%)' }}>
                         <Box className="avatar-container">
                             <Avatar src={myImage} sx={{ width: 230, height: 230 }} />
                             <Typography component="h3" className="font weight" variant="h3" sx={{ p: 5 }}>
@@ -56,7 +56,7 @@ const About = () => {
                             <Button
                                 variant="contained"
                                 component={RouterNavLink}
-                                to="/intro/project"
+                                to="/intro/projects"
                                 className="button"
                                 sx={{ borderRadius: '30px', fontSize: '18px', padding: '1px 50px' }}
                             >

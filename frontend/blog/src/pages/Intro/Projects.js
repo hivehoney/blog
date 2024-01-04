@@ -28,8 +28,8 @@ const Projects = () => {
     return (
         <>
             <Grid container>
-                <Grid item xs={12} className="main-bg-color02" sx={{ display: "flex", justifyContent: "center" }}>
-                    <Stack alignItems="center" sx={{ width: '800px' }}>
+                <Grid item xs={12} className="sub-bg-color" sx={{ display: "flex", justifyContent: "center" }}>
+                    <Stack alignItems="center" sx={{ width: "800px" }}>
                         <Typography className="font weight" component="h3" variant="h3" sx={{ mt: 15, display: "flex", alignItems: "center" }}>
                             <div className="flag-bullet" style={{ marginRight: "10px" }} />
                             Projects

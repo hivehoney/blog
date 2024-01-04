@@ -9,6 +9,7 @@ import {useQueryErrorResetBoundary} from "@tanstack/react-query";
 import ErrorFallback from "../../common/ErrorFallback";
 import {ErrorBoundary} from "react-error-boundary";
 import StyledDiv from "../../assets/styles";
+import {DarkModeProvider} from "../../assets/useDarkMode";
 
 export default function Layout() {
     const { reset } = useQueryErrorResetBoundary();
@@ -16,19 +17,21 @@ export default function Layout() {
 
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <ScrollRestoration />
-                <CssBaseline />
-                <Header />
-                <StyledDiv>
-                    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <Outlet showFooter={showFooter} />
-                    </Suspense>
-                    </ErrorBoundary>
-                </StyledDiv>
-                {showFooter && <Footer />}
-            </ThemeProvider>
+            <DarkModeProvider>
+                <ThemeProvider theme={theme}>
+                    <ScrollRestoration />
+                    <CssBaseline />
+                    <Header />
+                    <StyledDiv>
+                        <ErrorBoundary FallbackComponent={ErrorFallback} onReset={reset}>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Outlet showFooter={showFooter} />
+                        </Suspense>
+                        </ErrorBoundary>
+                    </StyledDiv>
+                    {showFooter && <Footer />}
+                </ThemeProvider>
+            </DarkModeProvider>
         </>
     )
 };
