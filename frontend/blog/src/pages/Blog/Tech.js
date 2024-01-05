@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {Box, Button, Grid, Link, Skeleton} from "@mui/material";
+import {useState} from 'react';
+import {Box, Button, Container, Grid, Link, Skeleton} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import {Link as RouterLink} from "react-router-dom";
-import ErrorPage from "../errorPage";
 import {usePostListQuery} from "../../quires/post/usePostListQuery";
 import PageHeader from "../../components/Layout/PageHeader";
 import {useRecoilState} from "recoil";
@@ -11,10 +11,8 @@ import PostCard from "../../components/Blog/PostCard";
 
 function Tech() {
     const [token, setToken] = useRecoilState(tokenState);
-    const postItemRequest = { status: 1 };
-    const { data, isLoading, error } = usePostListQuery(postItemRequest);
-
-    if (error) return <ErrorPage error />
+    const [search, setSearch] = useState(null);
+    const { data, moreDataHandler, hasNextPage } = usePostListQuery("");
 
     return (
         <>
@@ -27,7 +25,7 @@ function Tech() {
                         </Button>
                     </Link>
                 )}
-                {(!isLoading ? data : Array.from(new Array(6))).map((item, index) =>
+                {(data ? data : Array.from(new Array(6))).map((item, index) =>
                     item ? (
                         <PostCard key={index} item={item} />
                     ) : (
@@ -37,6 +35,11 @@ function Tech() {
                             <Skeleton width="60%" />
                         </Box>
                     )
+                )}
+                {hasNextPage && (
+                    <Button onClick={moreDataHandler}>
+                        Load More
+                    </Button>
                 )}
             </Grid>
         </>

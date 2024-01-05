@@ -29,3 +29,7 @@ export function getErrorMessage(status) {
             };
     }
 };
+
+export const  page = 3;
+export const  size = 3;
+export const  sort = "DESC";

@@ -24,7 +24,7 @@ const About = () => {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <Paper elevation={3} className="template-card" style={{ position: 'absolute', transform: 'translate(-90%)' }}>
+                    <Paper elevation={3} className="template-card" style={{ position: 'absolute', transform: 'translate(-80%)' }}>
                         <Box className="avatar-container">
                             <Avatar src={myImage} sx={{ width: 230, height: 230 }} />
                             <Typography component="h3" className="font weight" variant="h3" sx={{ p: 5 }}>
@@ -36,11 +36,11 @@ const About = () => {
                             </Typography>
                         </Box>
                     </Paper>
-                    <Box sx={{ paddingLeft: 10 }}>
-                        <Typography component="h1" className="font weight" variant="h1" sx={{ mb:3 }}>
+                    <Box sx={{ paddingLeft: 20 }}>
+                        <Typography component="h1" className="font weight" variant="h1" sx={{ mb:5 }}>
                             Hello
                         </Typography>
-                        <Typography component="h4" className="font" variant="h4" sx={{ mb:5 }}>
+                        <Typography component="h4" className="font" variant="h4" sx={{ mb:5, width: 450 }}>
                             Here's who I am & what I do
                         </Typography>
                         <Box sx={{ display: 'flex' }}>
@@ -63,12 +63,13 @@ const About = () => {
                                 PROJECT
                             </Button>
                         </Box>
-                        <Typography component="h5" className="font" variant="h5" sx={{ mt: 3 }} >
-                            Here's who I am & what I do
+                        <Typography component="h6" className="font" variant="h6" sx={{ mt: 5, width: 450 }} >
+                            I'm a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.
                         </Typography>
                     </Box>
                 </Box>
             </Grid>
+
         </>
     );
 };

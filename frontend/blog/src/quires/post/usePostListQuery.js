@@ -1,20 +1,32 @@
-import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {useInfiniteQuery, useQuery, useQueryClient} from "@tanstack/react-query";
 import {getPostList} from "../../api/blog";
+import {useState} from "react";
 
 const QUERY_KEY = "POSTLIST";
 
-export const usePostListQuery = (postItemRequest) => {
+export const usePostListQuery = (keyword) => {
     const queryClient = useQueryClient();
 
-    const { data, isLoading, error } = useQuery({
+    const { data, fetchNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery({
         queryKey: [QUERY_KEY],
-        queryFn: () => getPostList(postItemRequest),
-        config: {staleTime: 60000, keepPreviousData: true},
+        queryFn: ({pageParam}) => getPostList({pageParam, keyword}),
+        getNextPageParam: (lastPage) => {
+            return lastPage.last ? undefined : lastPage.data[lastPage.size-1].postsDate;
+        },
+        initialPageParam: "",
     });
 
+    const moreDataHandler = () => {
+        if (hasNextPage) {
+            return fetchNextPage();
+        }
+    };
+
+    var allPageData = data.pages.map((page) =>page.data);
+
     return {
-        data: JSON.parse(data).data,
-        isLoading,
-        error
+        data: [].concat(...allPageData),
+        moreDataHandler,
+        hasNextPage
     };
 }

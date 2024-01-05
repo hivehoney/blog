@@ -21,9 +21,8 @@ export default {
     element: <PublicRoute />,
     errorElement: <ErrorFallback />,
     children: [
-        {
-            path: "*", element: <Navigate to="/intro/about" />
-        },
+        {path: "*", element: <Navigate to="/intro/about" />},
+        {path: "", element: <Navigate to="/intro/about" />},
         {
             children: [
                 {path: '/login', element: <SignInSide />},
