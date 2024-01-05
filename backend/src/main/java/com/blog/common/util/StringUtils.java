@@ -24,4 +24,8 @@ public class StringUtils {
         }
         return str.toString();
     }
+
+    public static boolean usingTernaryOperator(Number num) {
+        return num == null || num.intValue() == 0;
+    }
 }

@@ -25,6 +25,9 @@ public class PostsResponse {
     @ApiModelProperty(notes = "게시물 부제목")
     private String subTitle;
 
+    @ApiModelProperty(notes = "배너 이미지")
+    private String bannerImage;
+
     @ApiModelProperty(notes = "내용")
     private String contents;
 
@@ -39,11 +42,12 @@ public class PostsResponse {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime postsDate;
 
-    public PostsResponse(String postCode, String title, String subTitle, String contents,
+    public PostsResponse(String postCode, String title, String subTitle, String bannerImage, String contents,
                          String authorId, String tag, LocalDateTime postsDate) {
         this.postCode = postCode;
         this.title = title;
         this.subTitle = subTitle;
+        this.bannerImage = bannerImage;
         this.contents = contents;
         this.authorId = authorId;
         this.tag = tag;
@@ -51,7 +55,7 @@ public class PostsResponse {
     }
 
     public static PostsResponse from(Post post, String contents) {
-        return new PostsResponse(post.getPostCode(), post.getTitle(), post.getSubTitle(), contents,
-                post.getAuthorId(), post.getTag(), post.getCreatedAt());
+        return new PostsResponse(post.getPostCode(), post.getTitle(), post.getSubTitle(), post.getBannerImage(),
+                contents, post.getAuthorId(), post.getTag(), post.getCreatedAt());
     }
 }

@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +36,10 @@ public class NoticeController extends ApiController {
     private final NoticeService noticeService;
 
     @ApiOperation(value = "post 목록 조회", notes = "Post 목록을 조회 합니다.")
-    @RequestMapping(value = "/getPostsList", method = RequestMethod.POST)
-    public List<PostItemResponse> getPostsList(@RequestBody PostItemRequest postItemRequest) {
-        return noticeService.getPostList(postItemRequest);
+    @RequestMapping(value = "/getPostsList", method = RequestMethod.GET)
+    public Slice<PostItemResponse> getPostsList(@RequestParam(value="keyword", required=false) String keyword,
+                                                @RequestParam(value="last", required=false) String date, Pageable pageable) {
+        return noticeService.getPostList(keyword, date, pageable);
     }
 
     @ApiOperation(value = "post 조회", notes = "작성된 Post를 조회 합니다.")

@@ -2,10 +2,8 @@ package com.blog.notice.service;
 
 import com.blog.common.constants.Const;
 import com.blog.common.util.FileUploadUtils;
-import com.blog.notice.controller.NoticeController;
 import com.blog.notice.domain.Contents;
 import com.blog.notice.domain.Post;
-import com.blog.notice.model.request.PostItemRequest;
 import com.blog.notice.model.request.PostsRequest;
 import com.blog.notice.model.response.PostItemResponse;
 import com.blog.notice.model.response.PostsResponse;
@@ -15,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -25,7 +25,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
+
+import static com.blog.common.util.StringUtils.usingTernaryOperator;
 
 @Slf4j
 @Service
@@ -50,14 +52,12 @@ public class NoticeServiceImpl implements NoticeService {
         String postCode = postsRequest.getPostItemRequest().getPostCode();
 
         // 게시물 코드가 비어 있으면 예외
-        if (!StringUtils.hasText(postCode)) {
-            throw new IllegalStateException("Post code cannot be empty");
-        }
+        Objects.requireNonNull(postCode, "Post code cannot be empty");
 
         // 게시물이 존재여부
         Long postCount = postRepository.countPostsByCode(postCode);
 
-        if (postCount <= 0) {
+        if (usingTernaryOperator(postCount)) {
             throw new IllegalStateException("Post not found for code: " + postCode);
         }
 
@@ -99,7 +99,7 @@ public class NoticeServiceImpl implements NoticeService {
         // 게시물이 존재여부
         Long postCount = postRepository.countPostsByCode(postCode);
 
-        if (postCount <= 0) {
+        if (usingTernaryOperator(postCount)) {
             throw new IllegalStateException("Post not found for code: " + postCode);
         }
 
@@ -126,10 +126,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public String deletePost(String postCode) {
         Post post = postRepository.findByPostCode(postCode);
-
-        if (post == null) {
-            throw new IllegalStateException("Post code cannot be empty");
-        }
+        Objects.requireNonNull(post, "Post code cannot be empty");
 
         post.setStatus(0);
         postRepository.save(post);
@@ -144,9 +141,8 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<PostItemResponse> getPostList(PostItemRequest request) {
-        List<Post> postList = postRepository.findBySearchOption(request);
-        List<PostItemResponse> response = postList.stream().map(val -> new PostItemResponse(val)).collect(Collectors.toList());
+    public Slice<PostItemResponse> getPostList(String keyword, String date, Pageable pageable) {
+        Slice<PostItemResponse> response = postRepository.findBySearchOption(keyword, date, pageable);
 
         return response;
     }

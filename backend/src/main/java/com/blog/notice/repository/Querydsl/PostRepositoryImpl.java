@@ -1,20 +1,28 @@
 package com.blog.notice.repository.Querydsl;
 
+import lombok.RequiredArgsConstructor;
 import com.blog.notice.domain.Post;
 import com.blog.notice.domain.QContents;
 import com.blog.notice.domain.QPost;
-import com.blog.notice.model.request.PostItemRequest;
+import com.blog.notice.model.response.PostItemResponse;
 import com.blog.notice.model.response.PostsResponse;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.jpa.impl.JPAUpdateClause;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.hasText;
 
@@ -30,7 +38,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return jpaQueryFactory
                 .select(
                         Projections.fields(PostsResponse.class,
-                                qpost.postCode, qpost.title, qpost.subTitle, qpost.authorId,
+                                qpost.postCode, qpost.title, qpost.subTitle, qpost.authorId, qpost.bannerImage,
                                 qpost.updatedAt.as("postsDate"), qpost.tag, qcontents.contents
                                 )
                 )
@@ -44,17 +52,39 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         return hasText(postCode) ? qpost.postCode.eq(postCode) : null;
     }
 
-    public List<Post> findBySearchOption(PostItemRequest request) {
+    private BooleanExpression eqCursorDate(String date) {
+        if (!StringUtils.isEmpty(date)) {
+            return qpost.updatedAt.lt(LocalDateTime.parse(date));
+        }
+        return null;
+    }
+
+    public Slice<PostItemResponse> findBySearchOption(String keyword, String date, Pageable pageable) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        booleanBuilder.and(qpost.status.eq(request.getStatus()));
+        booleanBuilder.and(qpost.status.eq(1));
 //        booleanBuilder.and(qpost.boardId.eq(request.getBoardId()));
 
-        return jpaQueryFactory
+        // 이전 페이지의 마지막 항목의 위치 정보를 가져옴
+        int pageSize = pageable.getPageSize();
+
+        List<Post> result = jpaQueryFactory
                 .selectFrom(qpost)
-                .where(booleanBuilder)
-                .orderBy(qpost.updatedAt.desc())
+                .where(booleanBuilder, eqCursorDate(date))
+                .limit(pageSize+ 1)
+                .orderBy(postSort(pageable))
                 .fetch();
+
+        boolean hasNext = false;
+
+        List<PostItemResponse> post = result.stream().map(val -> new PostItemResponse(val)).collect(Collectors.toList());
+
+        if (post.size() > pageable.getPageSize()) {
+            post.remove(pageable.getPageSize());
+            hasNext = true;
+        }
+
+        return new SliceImpl<>(post, pageable, hasNext);
     }
 
     public Long countPostsByCode(String code) {
@@ -79,5 +109,28 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 if (hasText(post.getTag())) clause.set(qpost.tag, post.getTag());
 
                 clause.execute();
+    }
+
+    /**
+     * OrderSpecifier 를 쿼리로 반환하여 정렬조건을 맞춰준다.
+     * 리스트 정렬
+     * @param page
+     * @return
+     */
+    private OrderSpecifier<?> postSort(Pageable page) {
+        if (!page.getSort().isEmpty()) {
+            for (Sort.Order order : page.getSort()) {
+                Order direction = order.getDirection().isAscending() ? Order.ASC : Order.DESC;
+                switch (order.getProperty()){
+                    case "title":
+                        return new OrderSpecifier(direction, qpost.title);
+                    case "updateDate":
+                        return new OrderSpecifier(direction, qpost.updatedAt);
+                    case "views":
+                        return new OrderSpecifier(direction, qpost.views);
+                }
+            }
+        }
+        return null;
     }
 }

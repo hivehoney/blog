@@ -3,11 +3,13 @@ package com.blog.notice.domain;
 import com.blog.common.domain.BaseEntity;
 import com.blog.common.util.CodeGenerator;
 import com.blog.notice.model.request.PostItemRequest;
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.io.Serializable;
-import java.util.Objects;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 /**

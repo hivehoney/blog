@@ -1,9 +1,10 @@
 package com.blog.notice.service;
 
-import com.blog.notice.model.request.PostItemRequest;
 import com.blog.notice.model.request.PostsRequest;
 import com.blog.notice.model.response.PostItemResponse;
 import com.blog.notice.model.response.PostsResponse;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public interface NoticeService {
 
     String deletePost(String postCode);
 
-    List<PostItemResponse> getPostList(PostItemRequest request);
+    Slice<PostItemResponse> getPostList(String keyword, String date, Pageable pageable);
 
     PostsResponse getPost(String postCode);
 }

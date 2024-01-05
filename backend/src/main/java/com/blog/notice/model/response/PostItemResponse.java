@@ -67,6 +67,6 @@ public class PostItemResponse {
         this.authorId = val.getAuthorId();
         this.tag = val.getTag();
         this.view = val.getViews();
-        this.postsDate = val.getCreatedAt();
+        this.postsDate = val.getUpdatedAt();
     }
 }
