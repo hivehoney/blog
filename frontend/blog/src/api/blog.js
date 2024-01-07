@@ -1,14 +1,21 @@
 import {axiosAPI, axiosAuthAPI} from "./api";
 import {API} from "../config";
+import * as constant from "../common/utils/constant";
 
 export async function getPost(code) {
     const response = await axiosAPI.get(`${API.POST}?code=${code.postCode}`)
     return response
 }
 
-export async function getPostList(data) {
-    const response = await axiosAPI.post(`${API.POSTS}`, data)
-    return response.data
+export async function getPostList({pageParam, keyword}) {
+    const response = await axiosAPI.get(`${API.POSTS}?type=1&keyword=${keyword}&last=${pageParam}&size=${constant.size}&sort=updateDate,desc`);
+    const result = JSON.parse(response.data).data
+
+    return {
+        data: result.content,
+        last: result.last,
+        size: result.size
+    }
 }
 
 export async function deletePost(postCode) {

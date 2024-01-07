@@ -1,7 +1,7 @@
 import {styled} from '@mui/system';
 
 const StyledDiv = styled('div')({
-    minHeight: '90vh',
+    minHeight: '100vh',
     width: '100vw',
     minWidth: '850px',
     display: 'flex',

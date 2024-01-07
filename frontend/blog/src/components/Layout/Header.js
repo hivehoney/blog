@@ -64,7 +64,7 @@ export default function Header() {
     };
 
     // 모바일 영역
-    const query = '(min-width:0px) and (max-width:600px)';
+    const query = '(min-width:0px) and (max-width:700px)';
     const isMobile = useMediaQuery(query, { noSsr: false });
 
     const list = (anchor) => (
@@ -79,9 +79,9 @@ export default function Header() {
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
-            className="main-bg-color02"
+            className="sub-bg-color"
         >
-            <Stack spacing={2} className="main-bg-color02">
+            <Stack spacing={2}>
                 {navItems.map((item) => (
                     <a key={item.name} href={item.path} className="font_bar02">
                         {item.name}
@@ -108,7 +108,6 @@ export default function Header() {
                                     open={state['right']}
                                     onClose={toggleDrawer('right', false)}
                                     onOpen={toggleDrawer('right', true)}
-                                    className="main-bg-color02"
                                 >
                                     {list('right')}
                                 </SwipeableDrawer>

@@ -19,7 +19,7 @@ const CardContainer = ({ date, position, company, description }) => (
                 <Grid item xs={6}>
                     <Typography variant="body1" className="font">
                         {Array.isArray(description)
-                            ? description.map((sentence, index) => <p key={index}>{sentence}</p>)
+                            ? description.map((sentence, index) => <React.Fragment key={index}>{sentence}</React.Fragment>)
                             : description}
                     </Typography>
                 </Grid>

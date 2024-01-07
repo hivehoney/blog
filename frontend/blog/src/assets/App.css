@@ -10,6 +10,7 @@
     --template-card-color3: #ffffff;
     --font-color: #000;
     --container-bar: #0050FF;
+    --button-color: #000;
 
     --color-black: #000;
     --color-white: #fff;
@@ -49,6 +50,7 @@ html.dark {
     --template-card-color3: #1E1E1E;
     --container-bar: #0050FF;
     --font-color: #ffffff;
+    --button-color: #343a40;
     --color-accent: #495057;
     --color-bg: #212529;
     --color-bg-darker: #495057;
@@ -83,6 +85,7 @@ html.dark {
 }
 
 .template-card3 {
+    position: absolute;
     background-color: var(--template-card-color3) !important;
 }
 
@@ -164,11 +167,6 @@ footer {
     color: #0050FF;
 }
 
-.button {
-    backgroundColor: var(--color-black) !important;
-    color: var(--color-white);
-}
-
 /* 전체 링크의 색상과 밑줄 제거 */
 a {
     text-decoration: none;
@@ -193,17 +191,20 @@ img {
 
 /* 버튼 스타일 설정 */
 button {
-    background-color: #dee2e6;
-    color: #fff;
+    display: flex;
+    background-color: var(--button-color);
+    color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
+    align-items: center;
+    font-weight: bold;
 }
 
 /* 버튼에 마우스를 올렸을 때 색상 변경 */
 button:hover {
-    background-color: #0056b3;
+    background-color: #349AFF;
 }
 
 /* 입력 양식 스타일 설정 */

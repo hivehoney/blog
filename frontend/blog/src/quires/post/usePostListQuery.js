@@ -1,6 +1,5 @@
-import {useInfiniteQuery, useQuery, useQueryClient} from "@tanstack/react-query";
+import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 import {getPostList} from "../../api/blog";
-import {useState} from "react";
 
 const QUERY_KEY = "POSTLIST";
 

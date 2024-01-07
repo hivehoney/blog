@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {Box, Button, Container, Grid, Link, Skeleton} from "@mui/material";
+import {Box, Button, Grid, Link, Skeleton} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import {Link as RouterLink} from "react-router-dom";
 import {usePostListQuery} from "../../quires/post/usePostListQuery";
@@ -8,6 +8,7 @@ import PageHeader from "../../components/Layout/PageHeader";
 import {useRecoilState} from "recoil";
 import {tokenState} from "../../common/recoil/GlobalState";
 import PostCard from "../../components/Blog/PostCard";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Tech() {
     const [token, setToken] = useRecoilState(tokenState);
@@ -37,9 +38,11 @@ function Tech() {
                     )
                 )}
                 {hasNextPage && (
-                    <Button onClick={moreDataHandler}>
-                        Load More
-                    </Button>
+                    <Grid container sx={{ justifyContent: "center", marginBottom: '80px' }}>
+                        <button style={{ width:'120px', height:'50px', fontSize: '16px'}} onClick={moreDataHandler}>
+                            <ExpandMoreIcon /> 더 보기
+                        </button>
+                    </Grid>
                 )}
             </Grid>
         </>
