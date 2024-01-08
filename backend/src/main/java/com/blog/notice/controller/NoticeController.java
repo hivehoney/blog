@@ -1,6 +1,7 @@
 package com.blog.notice.controller;
 
 import com.blog.common.controller.ApiController;
+import com.blog.common.domain.UserAccount;
 import com.blog.notice.model.request.ContentsRequest;
 import com.blog.notice.model.request.PostItemRequest;
 import com.blog.notice.model.request.PostsRequest;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -78,8 +80,8 @@ public class NoticeController extends ApiController {
 
     @ApiOperation(value = "post 등록", notes = "post를 등록 합니다.")
     @RequestMapping(value = "/registerPost", method = RequestMethod.PATCH)
-    public String registerPost() {
-        return noticeService.registerPost();
+    public String registerPost(@AuthenticationPrincipal UserAccount userAccount) {
+        return noticeService.registerPost(userAccount);
     }
 
     @ApiOperation(value = "IMG Upload", notes = "IMG를 업로드 합니다.")

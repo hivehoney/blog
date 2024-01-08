@@ -1,8 +1,8 @@
 package com.blog.common.util;
 
+import com.blog.common.constants.Const;
 import com.blog.common.service.RedisService;
 import com.blog.user.domain.Auth;
-import com.blog.user.model.UserDetailsImpl;
 import com.blog.user.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +33,7 @@ public class JwtTokenUtil implements InitializingBean {
 
     private static final String AUTHORITIES_KEY = "role";
     private static final String ID_KEY = "userId";
-    private static final String url = "https://localhost:8080";
+    private static final String url = Const.redisDevSev;
 
     private final String secretKey;
     private static Key signingKey;
@@ -102,8 +103,8 @@ public class JwtTokenUtil implements InitializingBean {
 
     public Authentication getAuthentication(String token) {
         String userId = getClaims(token).get(ID_KEY).toString();
-        UserDetailsImpl userDetailsImpl = userDetailsService.loadUserByUsername(userId);
-        return new UsernamePasswordAuthenticationToken(userDetailsImpl, "", userDetailsImpl.getAuthorities());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public long getTokenExpirationTime(String token) {

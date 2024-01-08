@@ -1,6 +1,6 @@
 package com.blog.user.model;
 
-import com.blog.user.domain.User;
+import com.blog.user.domain.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,25 +10,25 @@ import java.util.Collections;
 
 public class UserDetailsImpl implements UserDetails {
 
-    private final User user;
+    private final Account account;
 
-    public UserDetailsImpl(User user) {
-        this.user = user;
+    public UserDetailsImpl(Account account) {
+        this.account = account;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getKey()));
+        return Collections.singletonList(new SimpleGrantedAuthority(account.getRole().getKey()));
     }
 
     @Override
     public String getUsername() {
-        return user.getUserId();
+        return account.getUserId();
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return account.getPassword();
     }
 
     @Override

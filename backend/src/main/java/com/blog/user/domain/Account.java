@@ -1,14 +1,9 @@
 package com.blog.user.domain;
 
-import com.blog.common.domain.BaseEntity;
 import com.blog.common.domain.BaseTimeEntity;
-import com.blog.notice.domain.Post;
-import com.blog.notice.model.request.PostItemRequest;
 import com.blog.user.model.request.UserRequest;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Optional;
 
 
 /**
@@ -18,7 +13,7 @@ import java.util.Optional;
 @Getter
 @Table(name = "blogUser")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends BaseTimeEntity {
+public class Account extends BaseTimeEntity {
 
     @Id
     @Column(name = "userId", nullable = false, unique = true)
@@ -38,7 +33,7 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @Builder
-    public User(String userId, String name, String password, String email, Role role){
+    public Account(String userId, String name, String password, String email, Role role){
         this.userId = userId;
         this.name = name;
         this.password = password;
@@ -46,12 +41,12 @@ public class User extends BaseTimeEntity {
         this.role = role;
     }
 
-    public static User from(UserRequest request, Role role) {
-        return new User(request.getEmail(),request.getLastName()+request.getFirstName(),
+    public static Account from(UserRequest request, Role role) {
+        return new Account(request.getEmail(),request.getLastName()+request.getFirstName(),
                         request.getPassword(), request.getEmail(), role);
     }
 
-    public User update(String name){
+    public Account update(String name){
         this.name = name;
 
         return this;

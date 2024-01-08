@@ -1,6 +1,7 @@
 package com.blog.notice.service;
 
 import com.blog.common.constants.Const;
+import com.blog.common.domain.UserAccount;
 import com.blog.common.util.FileUploadUtils;
 import com.blog.notice.domain.Contents;
 import com.blog.notice.domain.Post;
@@ -79,12 +80,12 @@ public class NoticeServiceImpl implements NoticeService {
      */
     @Transactional
     @Override
-    public String registerPost() {
+    public String registerPost(UserAccount userAccount) {
         //임시 저장물
         Post post = postRepository.findTopByStatus(2);
 
         if (post == null) {
-            post = Post.of("hive");
+            post = Post.of(userAccount.getUsername());
             Contents content = Contents.of(post.getPostCode());
 
             postRepository.save(post);

@@ -1,7 +1,7 @@
 package com.blog.user.service;
 
 import com.blog.common.exception.DuplicateMemberException;
-import com.blog.user.domain.User;
+import com.blog.user.domain.Account;
 import com.blog.user.model.request.UserRequest;
 import com.blog.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,18 +27,18 @@ public class UserServiceImpl implements UserService {
     public void registerUser(UserRequest userRequest) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        User userInfo = User.builder()
+        Account accountInfo = Account.builder()
                 .userId(userRequest.getUserId())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
                 .name(userRequest.getLastName()+userRequest.getFirstName())
                 .email(userRequest.getEmail())
-                .role(User.Role.USER)
+                .role(Account.Role.USER)
                 .build();
 
-        User user = (User) userRepository.findByUserId(userInfo.getUserId())
+        Account account = (Account) userRepository.findByUserId(accountInfo.getUserId())
                 .map(entity -> {
-                    throw new DuplicateMemberException(userInfo.getUserId());
+                    throw new DuplicateMemberException(accountInfo.getUserId());
                 })
-                .orElseGet(() -> userRepository.save(userInfo));
+                .orElseGet(() -> userRepository.save(accountInfo));
     }
 }

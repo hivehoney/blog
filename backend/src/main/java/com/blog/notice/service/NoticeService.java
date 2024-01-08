@@ -1,5 +1,6 @@
 package com.blog.notice.service;
 
+import com.blog.common.domain.UserAccount;
 import com.blog.notice.model.request.PostsRequest;
 import com.blog.notice.model.response.PostItemResponse;
 import com.blog.notice.model.response.PostsResponse;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface NoticeService {
     String updatePost(PostsRequest postsRequest);
 
-    String registerPost();
+    String registerPost(UserAccount userAccount);
 
     String saveImages(MultipartFile file, String postCode) throws IOException;
 
