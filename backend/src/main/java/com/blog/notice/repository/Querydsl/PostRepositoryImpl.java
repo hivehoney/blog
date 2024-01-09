@@ -100,9 +100,9 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         JPAUpdateClause clause = jpaQueryFactory
                 .update(qpost)
                 .set(qpost.updatedAt, Expressions.constant(LocalDateTime.now()))
-                .set(qpost.status, post.getStatus())
                 .where(qpost.postCode.eq(post.getPostCode()));
 
+                if (post.getStatus() > 0) clause.set(qpost.status, post.getStatus());
                 if (hasText(post.getTitle())) clause.set(qpost.title, post.getTitle());
                 if (hasText(post.getBannerImage())) clause.set(qpost.bannerImage, post.getBannerImage());
                 if (hasText(post.getSubTitle())) clause.set(qpost.subTitle, post.getSubTitle());

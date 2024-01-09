@@ -1,5 +1,6 @@
 package com.blog.notice.controller;
 
+import com.blog.common.constants.Const;
 import com.blog.common.controller.ApiController;
 import com.blog.common.domain.UserAccount;
 import com.blog.notice.model.request.ContentsRequest;
@@ -63,16 +64,11 @@ public class NoticeController extends ApiController {
         ObjectMapper objectMapper = new ObjectMapper();
         PostItemRequest postItemRequest = objectMapper.convertValue(map.get("postInfo"), PostItemRequest.class);
         ContentsRequest contentsRequest = objectMapper.convertValue(map.get("content"), ContentsRequest.class);
-
-        PostsRequest postsRequest = PostsRequest.builder()
-                .postItemRequest(postItemRequest)
-                .contentsRequest(contentsRequest)
-                .build();
-
         List<String> imgFiles = (List<String>) map.get("imgFile");
 
-        String postCode = noticeService.updatePost(postsRequest);
+        noticeService.updatePost(postItemRequest);
         //본문 등록
+        String postCode = noticeService.updateContents(contentsRequest);
         noticeService.clearImages(imgFiles, postCode);
 
         return postCode;
@@ -86,12 +82,20 @@ public class NoticeController extends ApiController {
 
     @ApiOperation(value = "IMG Upload", notes = "IMG를 업로드 합니다.")
     @PostMapping(value = "/imgUpload",  consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam(value = "upload", required = false) MultipartFile request,
-                                                           @RequestParam(value = "postCode") String postCode) throws IOException {
+    public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam(value = "upload") MultipartFile request, @RequestParam(value = "postCode") String postCode,
+                                                           @RequestParam(value = "type", required = false, defaultValue = "0") int type) throws IOException {
+
+        String imgURL = Const.baseImgURL + noticeService.saveImages(request, postCode, type);
+
+        if (type == 1) {
+            noticeService.updateBannerImage(postCode, imgURL);
+        }
+
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("url", "/" + postCode + "/" + noticeService.saveImages(request, postCode));
+        paramMap.put("url", imgURL);
         logger.info(paramMap);
-        return ResponseEntity.ok(paramMap);
+
+         return ResponseEntity.ok(paramMap);
     }
 }
 

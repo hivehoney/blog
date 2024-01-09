@@ -30,14 +30,11 @@ public class JwtTokenUtil implements InitializingBean {
 
     private final UserDetailsServiceImpl userDetailsService;
     private final RedisService redisService;
-
     private static final String AUTHORITIES_KEY = "role";
     private static final String ID_KEY = "userId";
-    private static final String url = Const.redisDevSev;
-
+    private static final String url = Const.redisSev;
     private final String secretKey;
     private static Key signingKey;
-
     private final Long accessTokenValidityInMilliseconds;
     private final Long refreshTokenValidityInMilliseconds;
 

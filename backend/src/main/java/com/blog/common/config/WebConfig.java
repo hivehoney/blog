@@ -20,15 +20,16 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
-                .allowedOriginPatterns("*")
-//                .allowedOrigins(Const.proSev)
-                .allowCredentials(true);
+//                .allowedOriginPatterns("*")
+                .allowedOrigins(Const.proSev)
+                .allowCredentials(true)
+                .exposedHeaders("Authorization");;
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
-                .addResourceLocations("file://"+Const.devImg);
+                .addResourceLocations("file://"+Const.proImg);
     }
 
     @Override

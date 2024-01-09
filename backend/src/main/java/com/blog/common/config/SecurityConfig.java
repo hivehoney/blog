@@ -48,7 +48,7 @@ public class SecurityConfig {
         return (web)
                 -> web
                 .ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()); // 정적 리소스들
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean
@@ -65,7 +65,7 @@ public class SecurityConfig {
                         config.setAllowCredentials(true);
                         config.addExposedHeader("accessToken");
                         config.addExposedHeader("refreshToken");
-                        config.addAllowedOrigin(Const.devSev);
+                        config.addAllowedOrigin(Const.proSev);
                         config.addAllowedHeader("Authorization");
                         config.addAllowedHeader("Content-Type");
                         config.setExposedHeaders(Arrays.asList("Authorization", "Authorization-refresh"));
