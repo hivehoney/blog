@@ -20,11 +20,13 @@ function Tech() {
             <Grid container className="sub-bg-color2" sx={{ display: "flex", justifyContent: "center" }}>
                 <PageHeader title={"Related Posts"} />
                 {token && (
-                    <Link component={RouterLink} to="editor" underline="none" color="White">
-                        <Button variant="contained" endIcon={<EditIcon />}>
-                            Post
-                        </Button>
-                    </Link>
+                    <Grid container sx={{ justifyContent: "center", marginBottom: '80px' }}>
+                        <Link component={RouterLink} to="editor" underline="none" color="White">
+                            <button style={{ width:'120px', height:'50px', fontSize: '16px'}}>
+                                Post <EditIcon />
+                            </button>
+                        </Link>
+                    </Grid>
                 )}
                 {(data ? data : Array.from(new Array(6))).map((item, index) =>
                     item ? (

@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {addUser, userLogin} from "../api/user";
+import {addUser, userLogin, userLogout} from "../api/user";
 
 const QUERY_KEY = "USERINFO";
 
@@ -15,6 +15,11 @@ export const useUserInfo = () => {
         mutationFn: userLogin,
     });
 
+    // logout
+    const logoutUser = useMutation({
+        mutationFn: userLogout,
+    });
+
     const addUserMutation = useMutation({
         mutationFn: addUser,
         onSuccess: function (data) {
@@ -24,6 +29,7 @@ export const useUserInfo = () => {
 
     return {
         loginUser,
+        logoutUser: logoutUser.mutate,
         addUser: addUserMutation.mutate,
         // updateComment: updateCommentMutation.mutate,
         // deleteComment: deleteCommentMutation.mutate

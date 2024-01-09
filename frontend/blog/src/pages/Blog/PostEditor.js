@@ -20,7 +20,6 @@ export default function PostEditor() {
         title: state?.data.title ?? "",
         subTitle: state?.data.subTitle ?? "",
         tag: state?.data.tag ?? "",
-        bannerImage: ""
     });
 
     const onSubmit = async (formData, status) => {

@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 
 export default function Post() {
     const navigate = useNavigate();
-    const postCode  = useParams();
+    const postCode = useParams();
     const { data, deletePost } = usePostsQuery(postCode);
     const [token, setToken] = useRecoilState(tokenState);
 
@@ -81,7 +81,7 @@ export default function Post() {
                                 dangerouslySetInnerHTML={{
                                     __html: data.contents,
                                 }}
-                                sx={{ minHeight: '100vh', minWidth: '50%' }}
+                                sx={{ maxWidth: '800px', mx: 'auto' }}
                             ></Typography>
                         </Grid>
                     </Grid>

@@ -1,7 +1,7 @@
 import { Alert } from "@mui/material";
 
 export function extractFilenames(text) {
-    // 정규표현식을 사용하여 img 태그 안의 src 속성 값을 추출합니다.
+    // 정규표현식을 사용하여 img 태그 안의 src 속성 값을 추출
     const imgSrcRegex = /<img[^>]+src\s*=\s*['"]([^'"]+)['"][^>]*>/g;
     const matches = text.match(imgSrcRegex);
 
@@ -10,11 +10,12 @@ export function extractFilenames(text) {
 
     if (matches) {
         matches.forEach(match => {
-            // 정규표현식을 사용하여 파일명만 추출합니다.
-            const filenameMatch = /\/([^\/]+\.PNG)/g.exec(match);
+            // 정규표현식을 사용하여 파일명만 추출
+            const filenameMatch = /\/([^\/]+)\.([^\/]+)">$/i.exec(match);
             if (filenameMatch) {
                 const filename = filenameMatch[1];
-                filenames.push(filename);
+                const extension = filenameMatch[2];
+                filenames.push(filename+"."+extension);
             }
         });
     }

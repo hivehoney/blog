@@ -11,11 +11,12 @@ import {
     useScrollTrigger
 } from "@mui/material";
 import {NavLink as RouterNavLink, useNavigate} from "react-router-dom";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {tokenState} from "../../common/recoil/GlobalState";
 import SegmentIcon from '@mui/icons-material/Segment';
 import {Stack} from "@mui/joy";
 import ToggleTheme from "../../assets/ToggleTheme";
+import {useUserInfo} from "../../quires/useLoginQuery";
 
 function ElevationScroll(props) {
     const {children, window} = props;
@@ -37,8 +38,9 @@ ElevationScroll.propTypes = {
 
 export default function Header() {
     const navigate = useNavigate();
-    const [token, setToken] = useRecoilState(tokenState);
+    const token = useRecoilValue(tokenState);
     const [state, setState] = React.useState({ right: false });
+    const { logoutUser } = useUserInfo();
     const navItems = [
         {name: 'ABOUT ME', path: '/intro/about'},
         {name: 'RESUME', path: '/intro/resume'},
@@ -46,9 +48,13 @@ export default function Header() {
         {name: 'PROJECTS', path: '/intro/projects'},
     ];
 
-    const logoutToken = () => {
-        setToken('');
-        navigate("/intro/about");
+    const logoutToken = async () => {
+        await logoutUser({token}, {
+            onSuccess:() => {
+                sessionStorage.removeItem('tokenState');
+                navigate("/intro/about");
+            }
+        })
     };
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -122,13 +128,13 @@ export default function Header() {
                                 <div style={{ marginLeft: "-20px" }}>
                                     <ToggleTheme />
                                 </div>
-                                {token ? (
-                                    <Button variant="contained" component={RouterNavLink} onClick={logoutToken} className="" style={{ backgroundColor: '#000000', color: '#FFFFFF', borderRadius: '30px' }}>
-                                        LOGOUT
-                                    </Button>
-                                ) : (
+                                {!token ? (
                                     <Button variant="contained" component={RouterNavLink} to='/login' className="button" style={{ borderRadius: '30px' }}>
                                         Login
+                                    </Button>
+                                ) : (
+                                    <Button variant="contained" component={RouterNavLink} onClick={logoutToken} className="" style={{ backgroundColor: '#000000', color: '#FFFFFF', borderRadius: '30px' }}>
+                                        LOGOUT
                                     </Button>
                                 )}
                             </Box>

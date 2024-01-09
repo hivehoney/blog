@@ -1,4 +1,5 @@
 import {API} from "../../config";
+import {getCookie} from "./Cookies";
 
 export default class UploadAdapter {
 
@@ -17,7 +18,14 @@ export default class UploadAdapter {
 
     _initRequest() {
         const xhr = this.xhr = new XMLHttpRequest();
+
+        const accessToken = getCookie('accessToken');
+        if (!accessToken) {
+            throw new Error('Unauthorized: Access token not found.');
+        }
+
         xhr.open('POST', `${API.IMGUPLOAD}`, true);
+        xhr.setRequestHeader("Authorization", `Bearer ${accessToken}`);
         xhr.responseType = 'json';
     }
 
@@ -36,7 +44,7 @@ export default class UploadAdapter {
             }
 
             resolve({
-                default: `${API.IMGURL}` + response.data.url
+                default: response.data.url
             })
         })
     }

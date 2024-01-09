@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {API} from "../../config";
+import {axiosAuthAPI} from "../../api/api";
 
 export default function InputFileUpload({ code, handleChange }) {
     const [image, setImage] = useState({
@@ -43,16 +44,14 @@ export default function InputFileUpload({ code, handleChange }) {
 
                 formData.append('upload', image.image_file);
                 formData.append('postCode', code);
+                formData.append('type', 1);
 
-                const response = await fetch(`${API.IMGUPLOAD}`, {
-                    method: "POST",
-                    body: formData,
-                });
+                const response = await axiosAuthAPI.post(`${API.IMGUPLOAD}`, formData)
 
                 if (response.ok) {
                     const responseText = await response.text();
                     const img = JSON.parse(responseText);
-                    const imgSrc = `${API.IMGURL}` + JSON.parse(img).data.url;
+                    const imgSrc = JSON.parse(img).data.url;
 
                     handleChange({
                         target: {

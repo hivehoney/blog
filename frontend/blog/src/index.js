@@ -12,7 +12,7 @@ const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             suspense: true,
-            refetchOnWindowFocus: false,
+            refetchOnWindowFocus: true,
             retry: 0,
         },
         mutations: {

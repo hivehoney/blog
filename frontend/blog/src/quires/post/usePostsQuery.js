@@ -7,10 +7,10 @@ export const usePostsQuery = (postCode) => {
     const queryClient = useQueryClient();
 
     const { data } = useQuery({
-        queryKey: [QUERY_KEY],
-        queryFn: () => getPost(postCode),
+        queryKey: [QUERY_KEY, postCode],
+        queryFn: async () => await getPost(postCode),
         config: {staleTime: 60000, keepPreviousData: true},
-        enabled: !!postCode
+        enabled: !postCode
     });
 
     //다음 데이터 로딩

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {getCookie, setCookie} from '../common/utils/Cookies';
+import {dev_URL, pro_URL} from "../config";
 
-const BASE_URL = 'http://localhost:8080/';
+const BASE_URL = `${dev_URL}`;
 
 const axiosApi = (url, options) => {
     const instance = axios.create({ baseURL: url, ...options });
@@ -15,7 +16,7 @@ const axiosAuthApi = (url, options) => {
 
 const redirectToLoginPage = () => {
     const isDev = window.location.hostname === 'localhost';
-    window.location.href = isDev ? 'http://localhost:3000/login' : 'http://hive.com/login';
+    window.location.href = isDev ? `${dev_URL}` : `${pro_URL}`;
 };
 
 const interceptors = (instance) => {
@@ -28,7 +29,7 @@ const interceptors = (instance) => {
                     throw new Error('Unauthorized: Access token not found.');
                 }
 
-                config.headers['Content-Type'] = 'application/json';
+                // config.headers['Content-Type'] = 'application/json';
                 config.headers['Authorization'] = `Bearer ${accessToken}`;
 
                 return config;
