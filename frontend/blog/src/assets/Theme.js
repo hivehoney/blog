@@ -1,7 +1,22 @@
 import {createTheme} from '@mui/material/styles';
 
 const theme = createTheme({
-
+    typography: {
+        poster: {
+            color: "#fff",
+            wordWrap: "break-word",
+            whiteSpace: 'pre-line'
+        }
+    },
+    components: {
+        MuiTypography: {
+            defaultProps: {
+                variantMapping: {
+                    poster: 'h1',
+                },
+            },
+        },
+    }
 });
 
 export default theme;

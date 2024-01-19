@@ -17,11 +17,11 @@ function ErrorFallback({ error, resetErrorBoundary }) {
     };
 
     return (
-        <div className="error-fallback-wrapper" style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <div className="error-fallback-wrapper" style={{position: 'absolute', top: '50%', textAlign: 'center'}}>
             <div className="inner">
                 <h2 className="title">{title}</h2>
                 <p className="content">{content}</p>
-                <button type="button" onClick={onClickHandler}>
+                <button type="button" onClick={onClickHandler} style={{ display: 'block', margin: 'auto' }}>
                     {buttonMessage}
                 </button>
             </div>

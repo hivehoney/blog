@@ -12,5 +12,6 @@ export const API = {
     USERREGISTER: `/api/user/register`,
     LOGIN: `/api/user/login`,
     LOGOUT: `/api/user/logout`,
+    DownloadPdf: `/api/user/download`,
     MYPAGE: `/api/mypage`,
 };

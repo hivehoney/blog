@@ -4,25 +4,7 @@ import {Typography} from "@mui/material";
 import {Stack} from "@mui/joy";
 import Box from "@mui/material/Box";
 import CardImageContainer from "../../components/util/CardImageContainer";
-
-const projectsData = [
-    {
-        date: '2035 - Present',
-        position: '에스원 ESP',
-        company: 'JNESS(제이니스)',
-        description: [
-            "I'm a paragraph. Click here to add your own text and edit me.",
-            "It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.",
-            "I’m a great place for you to tell a story and let your users know a little more about you.",
-            "I'm a paragraph. Click here to add your own text and edit me.",
-            "It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.",
-            "I’m a great place for you to tell a story and let your users know a little more about you.",
-            "I'm a paragraph. Click here to add your own text and edit me.",
-            "It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font.",
-            "I’m a great place for you to tell a story and let your users know a little more about you.",
-        ]
-    }
-];
+import {projectsData1, projectsData2, projectsData3} from "../../api/resume";
 
 const Projects = () => {
     return (
@@ -34,11 +16,29 @@ const Projects = () => {
                             <div className="flag-bullet" style={{ marginRight: "10px" }} />
                             Projects
                         </Typography>
-                        <Typography component="h3" className="font" variant="h6" sx={{ mt: 10, mb: 10 }}>
-                            I'm a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font. I’m a great place for you to tell a story and let your users know a little more about you.
-                        </Typography>
-                        <Box>
-                            {projectsData.map((entry, index) => (
+                        <Box sx={{ width: '100%' }}>
+                            <Typography className="font weight blue" variant="h5" sx={{ mt: 10, mb: 2 }}>
+                                2021.01 - 2022.09
+                            </Typography>
+                            <Typography className="font weight" variant="h5" sx={{ mb: 2 }}>
+                                (주) 제이니스
+                            </Typography>
+                            <Typography className="font weight" variant="subtitle1" sx={{ alignSelf: 'flex-start', mb:3 }}>
+                                350여 고객사, 약 60만대 PC를 제어하는 근태관리 시스템(PC-OFF) <br />
+                                음란물 차단 및 PC 사용시간을 제어하는 자녀보호 프로그램
+                            </Typography>
+                            {projectsData1.map((entry, index) => (
+                                <CardImageContainer sx={{ width: '100%' }} key={index} {...entry} />
+                            ))}
+                            {projectsData2.map((entry, index) => (
+                                <CardImageContainer sx={{ width: '100%' }} key={index} {...entry} />
+                            ))}
+                        </Box>
+                        <Box sx={{ width: '100%' }}>
+                            <Typography className="font weight" variant="h5" sx={{ mt: 10, mb: 2 }}>
+                                개인 프로젝트
+                            </Typography>
+                            {projectsData3.map((entry, index) => (
                                 <CardImageContainer sx={{ width: '100%' }} key={index} {...entry} />
                             ))}
                         </Box>

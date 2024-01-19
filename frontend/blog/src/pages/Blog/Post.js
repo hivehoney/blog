@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Avatar, Box, CircularProgress, Typography} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 import LongMenu from "../../components/util/LongMenu";
@@ -9,6 +9,9 @@ import {useRecoilState} from "recoil";
 import {tokenState} from "../../common/recoil/GlobalState";
 import PageImage from "../../components/Layout/PageImage";
 import Grid from "@mui/material/Grid";
+import hljs from "highlight.js";
+import 'highlight.js/styles/github-dark-dimmed.css';
+import '../../assets/content-styles.css';
 
 export default function Post() {
     const navigate = useNavigate();
@@ -28,6 +31,12 @@ export default function Post() {
         });
     };
 
+    useEffect(() => {
+        document.querySelectorAll("pre code").forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+    }, [data.contents]);
+
     return (
         <>
             {!data ? (
@@ -37,7 +46,7 @@ export default function Post() {
             ) : (
                 <>
                     <Grid container component="main" className="main-bg-content">
-                        <PageImage imgSrc={data.bannerImage} title={data.title} />
+                        <PageImage imgSrc={data.bannerImage} title={data.title} date={data.postsDate} author={data.authorId} />
                         <Grid
                             item
                             xs={12}
@@ -77,11 +86,11 @@ export default function Post() {
                             <HorizonLine />
                             <Typography
                                 variant="body1"
-                                className="font"
+                                className="font ck-content"
                                 dangerouslySetInnerHTML={{
                                     __html: data.contents,
                                 }}
-                                sx={{ maxWidth: '800px', mx: 'auto' }}
+                                sx={{ maxWidth: '800px', mx: 'auto', minHeight: '100vh' }}
                             ></Typography>
                         </Grid>
                     </Grid>

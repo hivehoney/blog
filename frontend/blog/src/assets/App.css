@@ -8,9 +8,16 @@
     --template-card-color: #F4ECE6;
     --template-card-color2: #f8f9fa;
     --template-card-color3: #ffffff;
+    --template-card-color4: #ffffff;
+    --main-bg-content: #ffffff;
     --font-color: #000;
     --container-bar: #0050FF;
     --button-color: #000;
+
+    --sub1: #00171F;
+    --sub2: #003459;
+    --sub3: #007EA7;
+
 
     --color-black: #000;
     --color-white: #fff;
@@ -48,7 +55,9 @@ html.dark {
     --template-card-color: #1E1E1E;
     --template-card-color2: #1E1E1E;
     --template-card-color3: #1E1E1E;
+    --template-card-color4: #1E1E1E;
     --container-bar: #0050FF;
+    --main-bg-content: #1E1E1E;
     --font-color: #ffffff;
     --button-color: #343a40;
     --color-accent: #495057;
@@ -89,24 +98,25 @@ html.dark {
     background-color: var(--template-card-color3) !important;
 }
 
+.template-card4 {
+    background-color: var(--template-card-color3) !important;
+}
+
 .main-bg-content {
-    background-color: var(--template-card-color2);
+    background-color: var(--main-bg-content);
 }
 
 .avatar-container {
     text-align: center;
-    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
 }
 
 .flag-indicator {
     width: 10px;
     height: 50px;
-    background-color: var(--container-bar);
 }
 
 .flag-bullet {
@@ -144,6 +154,11 @@ footer {
     font-weight: bold;
 }
 
+.image_font {
+    color: #fff;
+    word-wrap: break-word;
+}
+
 .font_bar{
     fonnt: var(--font_7);
     font-weight: bold;
@@ -165,6 +180,10 @@ footer {
 
 .blue {
     color: #0050FF;
+}
+
+.orange {
+    color: #ffA500;
 }
 
 /* 전체 링크의 색상과 밑줄 제거 */
@@ -227,7 +246,7 @@ table {
 }
 
 th, td {
-    border: 1px solid #ccc;
+    border: 1px solid;
     padding: 8px;
     text-align: left;
 }

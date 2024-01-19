@@ -3,6 +3,7 @@ import CKEDITOR from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
 import styles from '../../assets/App.css';
 import UploadAdapter from "../../common/utils/UploadAdapter";
 import {Typography} from "@mui/material";
+import ckContent from '../../assets/content-styles.css';
 
 function MyCustomUploadAdapterPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -23,7 +24,7 @@ export default function Editor({code, data}) {
         CKEDITOR.MultiRootEditor
             .create(editorConfig, {
                 extraPlugins: [MyCustomUploadAdapterPlugin]
-            })
+            },)
             .then( editor => {
                 window.editor = editor;
 
@@ -43,20 +44,19 @@ export default function Editor({code, data}) {
                 } );
             } )
             .catch( error => {
-                console.error( 'There was a problem initializing the editor.', error );
+                console.error( 'There was a problem initializing the editor.', error);
             } );
     }, []);
 
     return (
         <>
-            <div className={styles}>
+            <div>
                 <div className="editor">
                     <div id="content">
                         <Typography
                             variant="body1"
-                            sx={{
-                                minHeight: '100vh',
-                            }}
+                            className={ckContent}
+                            sx={{ minHeight: '100vh' }}
                             dangerouslySetInnerHTML={{
                                 __html: (data) ? data : '내용을 입력해 주세요',
                             }}

@@ -47,13 +47,14 @@ export default function InputFileUpload({ code, handleChange }) {
                 formData.append('type', 1);
 
                 const response = await axiosAuthAPI.post(`${API.IMGUPLOAD}`, formData)
+                const data = JSON.parse(response.data)
 
-                if (response.ok) {
-                    const responseText = await response.text();
+                if (data.status == 200) {
+                    /*const responseText = await response.text();
                     const img = JSON.parse(responseText);
-                    const imgSrc = JSON.parse(img).data.url;
+                    const imgSrc = JSON.parse(img).data.url;*/
 
-                    handleChange({
+                    /*handleChange({
                         target: {
                             name: "bannerImage",
                             value: imgSrc
@@ -63,7 +64,7 @@ export default function InputFileUpload({ code, handleChange }) {
                     setImage({
                         image_file: "",
                         preview_URL: imgSrc,
-                    });
+                    });*/
                     alert("서버에 등록이 완료되었습니다!");
                 } else {
                     throw new Error('이미지 업로드 실패');

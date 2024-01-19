@@ -1,19 +1,17 @@
 import * as React from "react";
 import {Typography} from "@mui/material";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
-export default function PageImage({ imgSrc, title }) {
+export default function PageImage({ imgSrc, title, date, author }) {
     return (
         <Grid
             item
-            alignItems="center"
             xs={12}
             sm={4}
             md={12}
             sx={{
-                backgroundImage: `
-              linear-gradient(
-                    to right, 
+                backgroundImage: ` linear-gradient(to right, 
                     rgba(0, 0, 0, 0.5),
                     rgba(0, 0, 0, 0.5)
                   ),
@@ -23,27 +21,19 @@ export default function PageImage({ imgSrc, title }) {
                 backgroundPosition: 'center',
                 minHeight: '100vh',
                 minWidth: '100vw',
-                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
             }}
         >
-            <Typography
-                variant="h1"
-                sx={{
-                    position: 'absolute',
-                    color: '#fff',
-                    fontSize: '45px',
-                    fontWeight: '700',
-                    lineHeight: '46px',
-                    top: '50%',
-                    left: '50%',
-                    maxWidth: '500px',
-                    wordWrap: 'break-word',
-                    textAlign: 'center',
-                    transform: 'translate(-50%, -50%)',
-                }}
-            >
-                {title}
-            </Typography>
+            <Box sx={{ width: '600px', mx: 'auto', textAlign: 'center' }}>
+                <Typography variant="poster">
+                    {title}
+                </Typography>
+                <Typography className="image_font">
+                    {date} | {author}
+                </Typography>
+            </Box>
         </Grid>
     )
 };
