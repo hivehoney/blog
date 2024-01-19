@@ -11,9 +11,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriUtils;
+
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @RestController
@@ -110,6 +117,21 @@ public class UserController extends ApiController {
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .build();
+    }
+
+    @ApiOperation(value = "PDF 다운로드", notes = "PDF를 다운로드 합니다.")
+    @RequestMapping(value = "/download/{fileName}", method = RequestMethod.GET)
+    public ResponseEntity<Resource> downloadPDF(@PathVariable String fileName) throws MalformedURLException {
+
+        ClassPathResource classPathResource = new ClassPathResource("pdf/resume.pdf");
+
+        String encodeUploadFileName = UriUtils.encode(classPathResource.getFilename(), StandardCharsets.UTF_8);
+        String contentDisposition = "attachment; filename=\"" + encodeUploadFileName + "\"";
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+                .body(classPathResource);
     }
 }
 

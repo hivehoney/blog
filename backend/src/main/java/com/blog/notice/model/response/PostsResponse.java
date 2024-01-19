@@ -39,7 +39,7 @@ public class PostsResponse {
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "yyyy년 MM월 dd일 HH시 mm분", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime postsDate;
 
     public PostsResponse(String postCode, String title, String subTitle, String bannerImage, String contents,

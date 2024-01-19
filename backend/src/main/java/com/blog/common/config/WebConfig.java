@@ -4,6 +4,7 @@ import com.blog.common.constants.Const;
 import com.blog.common.interceptor.CommonInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -23,7 +24,8 @@ public class WebConfig implements WebMvcConfigurer {
 //                .allowedOriginPatterns("*")
                 .allowedOrigins(Const.proSev)
                 .allowCredentials(true)
-                .exposedHeaders("Authorization");;
+                .exposedHeaders(HttpHeaders.CONTENT_DISPOSITION)
+                .exposedHeaders("Authorization");
     }
 
     @Override
