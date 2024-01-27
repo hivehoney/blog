@@ -29,7 +29,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
-import static com.blog.common.util.StringUtils.usingTernaryOperator;
+import static com.blog.common.util.StringUtil.usingTernaryOperator;
 
 @Slf4j
 @Service
@@ -156,6 +156,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
 
         String fileName = System.currentTimeMillis() + StringUtils.cleanPath(file.getOriginalFilename());
+
         String subPath = (type == 1) ? "/bannerImage" : "";
         Path uploadDir = Paths.get(Const.proImg, postCode + subPath);
 

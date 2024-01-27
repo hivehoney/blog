@@ -50,27 +50,10 @@ export default function InputFileUpload({ code, handleChange }) {
                 const data = JSON.parse(response.data)
 
                 if (data.status == 200) {
-                    /*const responseText = await response.text();
-                    const img = JSON.parse(responseText);
-                    const imgSrc = JSON.parse(img).data.url;*/
-
-                    /*handleChange({
-                        target: {
-                            name: "bannerImage",
-                            value: imgSrc
-                        },
-                    });
-
-                    setImage({
-                        image_file: "",
-                        preview_URL: imgSrc,
-                    });*/
                     alert("서버에 등록이 완료되었습니다!");
                 } else {
                     throw new Error('이미지 업로드 실패');
                 }
-
-                // const imgSrc = `${API.IMGURL}` + JSON.parse(imgSrc).data.url;
             }
         } catch (error) {
             console.error('Error:', error);

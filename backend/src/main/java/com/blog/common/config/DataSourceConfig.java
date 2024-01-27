@@ -27,13 +27,11 @@ import java.util.Map;
 public class DataSourceConfig {
 
     private final Environment env;
+    private final AcmeCorpPhysicalNamingStrategy acmeCorpPhysicalNamingStrategy;
 
-    @Autowired
-    AcmeCorpPhysicalNamingStrategy acmeCorpPhysicalNamingStrategy;
-
-    @Autowired
-    public DataSourceConfig(Environment env) {
+    public DataSourceConfig(Environment env, AcmeCorpPhysicalNamingStrategy acmeCorpPhysicalNamingStrategy) {
         this.env = env;
+        this.acmeCorpPhysicalNamingStrategy = acmeCorpPhysicalNamingStrategy;
     }
 
     // 기본 데이터 소스 설정

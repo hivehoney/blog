@@ -1,8 +1,11 @@
 package com.blog.common.util;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Random;
 
-public class StringUtils {
+public class StringUtil {
     public static String randomStr(int length) {
         Random random = new Random();
         StringBuilder str = new StringBuilder();
@@ -27,5 +30,20 @@ public class StringUtils {
 
     public static boolean usingTernaryOperator(Number num) {
         return num == null || num.intValue() == 0;
+    }
+
+    public static LocalDateTime parseDateFormat(String dateString) {
+        String DEFAULT_DATE_FORMAT = "yyyy.MM.dd HH:mm";
+        return parseDateFormat(dateString, DEFAULT_DATE_FORMAT);
+    }
+
+    public static LocalDateTime parseDateFormat(String dateString, String format) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            return LocalDateTime.parse(dateString, formatter);
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 public class PostsRequest {
@@ -15,9 +17,12 @@ public class PostsRequest {
     @ApiModelProperty(notes = "contents -> post와 연관된 content 테이블에 저장")
     private ContentsRequest contentsRequest;
 
+    List<String> imgFiles;
+
     @Builder
-    public PostsRequest(PostItemRequest postItemRequest, ContentsRequest contentsRequest) {
+    public PostsRequest(PostItemRequest postItemRequest, ContentsRequest contentsRequest, List<String> imgFiles) {
         this.postItemRequest = postItemRequest;
         this.contentsRequest = contentsRequest;
+        this.imgFiles = imgFiles;
     }
 }

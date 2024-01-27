@@ -1,5 +1,6 @@
 package com.blog.notice.repository.Querydsl;
 
+import com.blog.common.util.StringUtil;
 import com.blog.notice.domain.Post;
 import com.blog.notice.domain.QContents;
 import com.blog.notice.domain.QPost;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +57,8 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 
     private BooleanExpression eqCursorDate(String date) {
         if (!StringUtils.isEmpty(date)) {
-            return qpost.updatedAt.lt(LocalDateTime.parse(date));
+            LocalDateTime dateTime = StringUtil.parseDateFormat(date);
+            return qpost.updatedAt.lt(dateTime);
         }
         return null;
     }

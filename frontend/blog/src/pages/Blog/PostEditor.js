@@ -23,16 +23,15 @@ export default function PostEditor() {
     });
 
     const onSubmit = async (formData, status) => {
-        const content = { postCode: postCode, contents: window.editor.getData({ rootName: 'content' }) };
-        const imgFile = utils.extractFilenames(content.contents);
+        const contents = window.editor.getData({ rootName: 'content' });
 
-        const postInfo = {
-            ... (formData ? formData : postItem),
-            status: status,
-            postCode: postCode,
+        const requestData = {
+            postItemRequest: { ...(formData || postItem), status, postCode },
+            contentsRequest: { postCode: postCode, contents: contents },
+            imgFile: utils.extractFilenames(contents)
         };
 
-        await updatePost({postInfo, content, imgFile}, {
+        await updatePost(requestData, {
             onSuccess:() => {
                 document.querySelector('[role="toolbar"]').remove();
                 window.history.back();
