@@ -15,9 +15,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
+import org.springframework.data.web.SlicedResourcesAssembler;
+import org.springframework.hateoas.*;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -42,19 +40,23 @@ public class NoticeController extends ApiController {
 
     @ApiOperation(value = "post 목록 조회", notes = "Post 목록을 조회 합니다.")
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
-    public CollectionModel<EntityModel<PostItemResponse>> getPostsList(
+    public SlicedModel<EntityModel<PostItemResponse>> getPostsList(
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "last", required = false) String date, Pageable pageable) {
+            @RequestParam(value = "last", required = false) String date, Pageable pageable
+            , SlicedResourcesAssembler<PostItemResponse> assembler) {
 
         Slice<PostItemResponse> postList = noticeService.getPostList(keyword, date, pageable);
-
-        CollectionModel<EntityModel<PostItemResponse>> postResources = ResponseModelAssembler.addSelfLinks(postList);
+        SlicedModel<EntityModel<PostItemResponse>> postResources = ResponseModelAssembler.addSelfLinks(postList, assembler);
 
         // 목록에 대한 Self 링크 추가
-        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getPostsList(keyword, date, pageable))
-                .withRel("posts").withType("GET");
+        Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass())
+                        .getPostsList(keyword, date, pageable, assembler))
+                .withRel("posts")
+                .withType("GET");
 
-        return CollectionModel.of(postResources, selfLink);
+        postResources.add(selfLink);
+
+        return postResources;
     }
 
     @ApiOperation(value = "post 조회", notes = "작성된 Post를 조회 합니다.")
